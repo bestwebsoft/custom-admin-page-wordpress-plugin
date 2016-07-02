@@ -1,0 +1,289 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: custom-admin-page\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-27 17:21+0300\n"
+"PO-Revision-Date: 2016-06-27 17:21+0300\n"
+"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
+"((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: custom-admin-page.php:37
+msgid "Custom Admin Page Settings"
+msgstr "Настройки Custom Admin Page"
+
+#: custom-admin-page.php:171
+msgid "Add New Page"
+msgstr "Добавить новую страницу"
+
+#: custom-admin-page.php:203
+msgid "Choose file"
+msgstr "Выберите файл"
+
+#: custom-admin-page.php:204
+msgid "No file chosen"
+msgstr "Файл не выбран"
+
+#: custom-admin-page.php:205
+msgid "Add image"
+msgstr "Добавить изображение"
+
+#: custom-admin-page.php:206
+msgid "Change image"
+msgstr "Изменить изображение"
+
+#: custom-admin-page.php:207
+msgid "Warning: You can add an image only"
+msgstr "Внимание: Вы можете добавить только изображение"
+
+#: custom-admin-page.php:208
+msgid "OK"
+msgstr "OK"
+
+#: custom-admin-page.php:209
+msgid "Cancel"
+msgstr "Отмена"
+
+#: custom-admin-page.php:210
+msgid "Permalink saved"
+msgstr "Постоянная ссылка сохранена"
+
+#: custom-admin-page.php:234 includes/pages.php:512
+msgid "Permalink"
+msgstr "Постоянная ссылка"
+
+#: custom-admin-page.php:236 includes/pages.php:514
+msgid "Edit permalink"
+msgstr "Редактировать постоянную ссылку"
+
+#: custom-admin-page.php:236 includes/pages.php:140 includes/pages.php:514
+msgid "Edit"
+msgstr "Редактировать"
+
+#: custom-admin-page.php:257 custom-admin-page.php:269
+msgid "Settings"
+msgstr "Настройки"
+
+#: custom-admin-page.php:270
+msgid "FAQ"
+msgstr "FAQ"
+
+#: custom-admin-page.php:271
+msgid "Support"
+msgstr "Тех. поддержка"
+
+#: includes/pages.php:22
+msgid "page"
+msgstr "страница"
+
+#: includes/pages.php:23
+msgid "pages"
+msgstr "страницы"
+
+#: includes/pages.php:51
+msgid "No pages in trash"
+msgstr "Страниц в корзине не найдено"
+
+#: includes/pages.php:51
+msgid "No pages yet"
+msgstr "Страниц не найдено"
+
+#: includes/pages.php:61
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/pages.php:62
+msgid "Capability"
+msgstr "Уровень доступа"
+
+#: includes/pages.php:63 includes/pages.php:560
+msgid "Parent"
+msgstr "Родительская"
+
+#: includes/pages.php:86 includes/pages.php:143
+msgid "Delete Permanently"
+msgstr "Удалить навсегда"
+
+#: includes/pages.php:87 includes/pages.php:144
+msgid "Restore"
+msgstr "Восстановить"
+
+#: includes/pages.php:89 includes/pages.php:141 includes/pages.php:171
+msgid "Trash"
+msgstr "Удалить"
+
+#: includes/pages.php:112
+msgid "Empty title"
+msgstr "без названия"
+
+#: includes/pages.php:114
+msgid "in trash"
+msgstr "в корзине"
+
+#: includes/pages.php:170
+msgid "All"
+msgstr "Все"
+
+#: includes/pages.php:229
+msgid "Pages per page"
+msgstr "Страниц на странице"
+
+#: includes/pages.php:291
+msgid "Some errors occurred"
+msgstr "Возникли некоторые ошибки"
+
+#: includes/pages.php:292
+msgid "Page data saved. Refresh the page to see changes."
+msgstr "Данные страницы сохранены. Обновите страницу, чтобы увидеть изменения."
+
+#: includes/pages.php:293
+msgid "Page updated. Refresh the page to see changes."
+msgstr "Страница обновлена. Обновите страницу, чтобы увидеть изменения."
+
+#: includes/pages.php:294
+msgid "Selected pages were moved to the trash"
+msgstr "Выбранные страницы перемещены в корзину"
+
+#: includes/pages.php:295
+msgid "Selected pages were restored from the trash"
+msgstr "Выбранные страницы восстановлены из корзины"
+
+#: includes/pages.php:296
+msgid "Selected pages were deleted"
+msgstr "Выбранные страницы удалены"
+
+#: includes/pages.php:297
+msgid "No pages was selected"
+msgstr "Страниц не выбрано"
+
+#: includes/pages.php:448 includes/pages.php:479
+msgid "Edit page"
+msgstr "Редактировать страницу"
+
+#: includes/pages.php:449 includes/pages.php:480
+msgid "Update page"
+msgstr "Обновить страницу"
+
+#: includes/pages.php:497
+msgid "Add New page"
+msgstr "Добавить новую страницу"
+
+#: includes/pages.php:498
+msgid "Save page"
+msgstr "Сохранить страницу"
+
+#: includes/pages.php:506
+msgid "Enter Page Title"
+msgstr "Введите заголовок страницы"
+
+#: includes/pages.php:518
+msgid "Slug"
+msgstr "Слаг"
+
+#: includes/pages.php:522
+msgid "Content"
+msgstr "Содержание"
+
+#: includes/pages.php:543
+msgid "Page Attributes"
+msgstr "Атрибуты страницы"
+
+#: includes/pages.php:547
+msgid "Capability level"
+msgstr "Уровень доступа"
+
+#: includes/pages.php:550
+msgid "The capability required for this menu to be displayed to the user."
+msgstr "Уровень доступа этого меню требуемый для отображения пользователю."
+
+#: includes/pages.php:562
+msgid "no parent"
+msgstr "нет родительской"
+
+#: includes/pages.php:572
+msgid "Position"
+msgstr "Позиция"
+
+#: includes/pages.php:575 includes/pages.php:587
+msgid "Optional"
+msgstr "Необязательное"
+
+#: includes/pages.php:575
+msgid "The position in the menu order this one should appear."
+msgstr "Позиция в меню."
+
+#: includes/pages.php:584
+msgid "Icon"
+msgstr "Иконка"
+
+#: includes/pages.php:587
+msgid "The URL to the icon to be used for this menu."
+msgstr "URL-адрес иконки, используемой для этого меню."
+
+#: includes/pages.php:589
+#, php-format
+msgid ""
+"Pass a base64-encoded SVG using a data URI, which will be colored to match "
+"the color scheme. This should begin with %s."
+msgstr ""
+"Введите base64-кодированное SVG с помощью данных URI, которое будет окрашено "
+"в соответствии с цветовой схемой. Оно должно начинаться с %s."
+
+#: includes/pages.php:590
+#, php-format
+msgid "Pass the name of a Dashicons helper class to use a font icon, e.g. %s."
+msgstr ""
+"Введите имя вспомогательного класса Dashicons, чтобы использовать значок "
+"шрифта, например, %s."
+
+#: includes/pages.php:591
+#, php-format
+msgid ""
+"Pass %s to leave div.wp-menu-image empty so an icon can be added via CSS."
+msgstr ""
+"Введите %s, чтобы оставить div.wp-menu-image пустым, таким образом иконка "
+"может быть добавлена с помощью CSS."
+
+#: includes/pages.php:596
+msgid "Add Image"
+msgstr "Добавить изображение"
+
+#: includes/pages.php:596
+msgid "Change Image"
+msgstr "Изменить изображение"
+
+#: includes/pages.php:607
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Результаты поиска для &#8220;%s&#8221;"
+
+#: includes/pages.php:609
+msgid "Filter pages list"
+msgstr "Фильтр списка страниц"
+
+#: includes/pages.php:612
+msgid "search"
+msgstr "поиск"
+
+#~ msgid "1 item"
+#~ msgid_plural "%s items"
+#~ msgstr[0] "1 элемент"
+#~ msgstr[1] "%s элемента"
+#~ msgstr[2] "%s элементов"
+#~ msgstr[3] "%s элемент"
+
+#~ msgid "Select Page"
+#~ msgstr "Выберите Страницу"
+
+#~ msgid "Pages list navigation"
+#~ msgstr "Навигации списка страниц"

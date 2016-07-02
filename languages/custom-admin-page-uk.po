@@ -1,0 +1,289 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: custom-admin-page\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-27 17:21+0300\n"
+"PO-Revision-Date: 2016-06-27 17:21+0300\n"
+"Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.5.4\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
+"((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: custom-admin-page.php:37
+msgid "Custom Admin Page Settings"
+msgstr "Налаштування Custom Admin Page"
+
+#: custom-admin-page.php:171
+msgid "Add New Page"
+msgstr "Додати нову сторінку"
+
+#: custom-admin-page.php:203
+msgid "Choose file"
+msgstr "Оберіть файл"
+
+#: custom-admin-page.php:204
+msgid "No file chosen"
+msgstr "не обрано"
+
+#: custom-admin-page.php:205
+msgid "Add image"
+msgstr "Додати зображення"
+
+#: custom-admin-page.php:206
+msgid "Change image"
+msgstr "Змінити зображення"
+
+#: custom-admin-page.php:207
+msgid "Warning: You can add an image only"
+msgstr "Увага: Ви можете додати тільки зображення"
+
+#: custom-admin-page.php:208
+msgid "OK"
+msgstr "Добре"
+
+#: custom-admin-page.php:209
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: custom-admin-page.php:210
+msgid "Permalink saved"
+msgstr "Постійне посилання збережено"
+
+#: custom-admin-page.php:234 includes/pages.php:512
+msgid "Permalink"
+msgstr "Постійне посилання"
+
+#: custom-admin-page.php:236 includes/pages.php:514
+msgid "Edit permalink"
+msgstr "Редагувати постійне посилання"
+
+#: custom-admin-page.php:236 includes/pages.php:140 includes/pages.php:514
+msgid "Edit"
+msgstr "Редагувати"
+
+#: custom-admin-page.php:257 custom-admin-page.php:269
+msgid "Settings"
+msgstr "Налаштування"
+
+#: custom-admin-page.php:270
+msgid "FAQ"
+msgstr "FAQ"
+
+#: custom-admin-page.php:271
+msgid "Support"
+msgstr "Техпідтримка"
+
+#: includes/pages.php:22
+msgid "page"
+msgstr "сторінка"
+
+#: includes/pages.php:23
+msgid "pages"
+msgstr "сторінки"
+
+#: includes/pages.php:51
+msgid "No pages in trash"
+msgstr "Сторінок в кошику не знайдено"
+
+#: includes/pages.php:51
+msgid "No pages yet"
+msgstr "Сторінок не знайдено"
+
+#: includes/pages.php:61
+msgid "Title"
+msgstr "Назва"
+
+#: includes/pages.php:62
+msgid "Capability"
+msgstr "Рівень доступу"
+
+#: includes/pages.php:63 includes/pages.php:560
+msgid "Parent"
+msgstr "Предок"
+
+#: includes/pages.php:86 includes/pages.php:143
+msgid "Delete Permanently"
+msgstr "Видалити остаточно"
+
+#: includes/pages.php:87 includes/pages.php:144
+msgid "Restore"
+msgstr "Відновити"
+
+#: includes/pages.php:89 includes/pages.php:141 includes/pages.php:171
+msgid "Trash"
+msgstr "Кошик"
+
+#: includes/pages.php:112
+msgid "Empty title"
+msgstr "без назви"
+
+#: includes/pages.php:114
+msgid "in trash"
+msgstr "в кошику"
+
+#: includes/pages.php:170
+msgid "All"
+msgstr "Всі"
+
+#: includes/pages.php:229
+msgid "Pages per page"
+msgstr "Сторінок на сторінці"
+
+#: includes/pages.php:291
+msgid "Some errors occurred"
+msgstr "Виникли деякі помилки"
+
+#: includes/pages.php:292
+msgid "Page data saved. Refresh the page to see changes."
+msgstr "Дані сторінки збережені. Оновіть сторінку, щоб побачити зміни."
+
+#: includes/pages.php:293
+msgid "Page updated. Refresh the page to see changes."
+msgstr "Сторінка оновлена. Оновіть сторінку, щоб побачити зміни."
+
+#: includes/pages.php:294
+msgid "Selected pages were moved to the trash"
+msgstr "Обрані сторінки переміщено до кошика"
+
+#: includes/pages.php:295
+msgid "Selected pages were restored from the trash"
+msgstr "Обрані сторінки відновлено ​​з кошика."
+
+#: includes/pages.php:296
+msgid "Selected pages were deleted"
+msgstr "Обрані сторінки видалено назавжди"
+
+#: includes/pages.php:297
+msgid "No pages was selected"
+msgstr "Сторінок не обрано"
+
+#: includes/pages.php:448 includes/pages.php:479
+msgid "Edit page"
+msgstr "Редагувати сторінку"
+
+#: includes/pages.php:449 includes/pages.php:480
+msgid "Update page"
+msgstr "Оновити сторінку"
+
+#: includes/pages.php:497
+msgid "Add New page"
+msgstr "Добавить сторінку"
+
+#: includes/pages.php:498
+msgid "Save page"
+msgstr "Зберегти сторінку"
+
+#: includes/pages.php:506
+msgid "Enter Page Title"
+msgstr "Введіть назву сторінки"
+
+#: includes/pages.php:518
+msgid "Slug"
+msgstr "Слаг"
+
+#: includes/pages.php:522
+msgid "Content"
+msgstr "Зміст"
+
+#: includes/pages.php:543
+msgid "Page Attributes"
+msgstr "Атрибути сторінки"
+
+#: includes/pages.php:547
+msgid "Capability level"
+msgstr "Рівень доступу"
+
+#: includes/pages.php:550
+msgid "The capability required for this menu to be displayed to the user."
+msgstr "Рівень доступу цього меню необхідний для відображення користувачеві."
+
+#: includes/pages.php:562
+msgid "no parent"
+msgstr "без предка"
+
+#: includes/pages.php:572
+msgid "Position"
+msgstr "Порядок"
+
+#: includes/pages.php:575 includes/pages.php:587
+msgid "Optional"
+msgstr "Необов'язково"
+
+#: includes/pages.php:575
+msgid "The position in the menu order this one should appear."
+msgstr "Позиція в меню."
+
+#: includes/pages.php:584
+msgid "Icon"
+msgstr "Значок"
+
+#: includes/pages.php:587
+msgid "The URL to the icon to be used for this menu."
+msgstr "URL-адресу іконки, використовуваної для цього меню."
+
+#: includes/pages.php:589
+#, php-format
+msgid ""
+"Pass a base64-encoded SVG using a data URI, which will be colored to match "
+"the color scheme. This should begin with %s."
+msgstr ""
+"Введіть base64-кодоване SVG за допомогою даних URI, яке буде забарвлено "
+"відповідно до колірної схеми. Воно повинно починатися з %s."
+
+#: includes/pages.php:590
+#, php-format
+msgid "Pass the name of a Dashicons helper class to use a font icon, e.g. %s."
+msgstr ""
+"Введіть ім'я допоміжного класу Dashicons, щоб використовувати значок шрифту, "
+"наприклад, %s."
+
+#: includes/pages.php:591
+#, php-format
+msgid ""
+"Pass %s to leave div.wp-menu-image empty so an icon can be added via CSS."
+msgstr ""
+"Введіть %s, щоб залишити div.wp-menu-image порожнім, таким чином іконка може "
+"бути додана за допомогою CSS."
+
+#: includes/pages.php:596
+msgid "Add Image"
+msgstr "Додати зображення"
+
+#: includes/pages.php:596
+msgid "Change Image"
+msgstr "Змінити зображення"
+
+#: includes/pages.php:607
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr "Результати пошуку для &#8220;%s&#8221;"
+
+#: includes/pages.php:609
+msgid "Filter pages list"
+msgstr "Фільтр списку сторінок"
+
+#: includes/pages.php:612
+msgid "search"
+msgstr "пошук"
+
+#~ msgid "1 item"
+#~ msgid_plural "%s items"
+#~ msgstr[0] "1 елемент"
+#~ msgstr[1] "%s елемента"
+#~ msgstr[2] "%s елементів"
+#~ msgstr[3] "%s елемент"
+
+#~ msgid "Select Page"
+#~ msgstr "Оберіть Сторінку"
+
+#~ msgid "Pages list navigation"
+#~ msgstr "Навігації списку сторінок"
