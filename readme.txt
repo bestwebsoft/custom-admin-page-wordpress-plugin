@@ -8,11 +8,13 @@ Stable tag: 0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add custom page to admin panel.
+Add unlimited custom pages to WordPress admin dashboard.
 
 == Description ==
 
 Try this convenient tool for adding custom pages to admin panel in the easiest way. You can add as many pages as you want and fill them with the necessary content using TinyMCE. 
+
+http://www.youtube.com/watch?v=Ecvb7F2sATs
 
 <a href="http://wordpress.org/plugins/custom-admin-page/faq/" target="_blank">Custom Admin Page by BestWebSoft FAQ</a>
 

@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Custom Admin Page by BestWebSoft
-Plugin URI: http://bestwebsoft.com/products/
-Description: Plugin adds custom admin pages on your site.
+Plugin URI: http://bestwebsoft.com/products/custom-admin-page/
+Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
