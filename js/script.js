@@ -93,6 +93,13 @@
 				$( '.cstmdmnpg_position, .cstmdmnpg_icon' ).hide();
 		}).trigger( 'change' );
 
+		$( 'select[name="cstmdmnpg_capability_level"]').focus( function() {
+			$( '#cstmdmnpg_capability_level' ).attr( 'checked', 'checked' );
+		});
+		$( 'input[name="cstmdmnpg_capability"]').focus( function() {
+			$( '#cstmdmnpg_capability' ).attr( 'checked', 'checked' );
+		});
+
 		if ( $( '.cstmdmnpg-upload-image' ).length > 0 ) {
 
 			/**

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: custom-admin-page\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-27 17:21+0300\n"
-"PO-Revision-Date: 2016-06-27 17:21+0300\n"
+"POT-Creation-Date: 2016-10-03 15:45+0300\n"
+"PO-Revision-Date: 2016-10-03 15:47+0300\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language: ru_RU\n"
@@ -22,63 +22,63 @@ msgstr ""
 msgid "Custom Admin Page Settings"
 msgstr "Настройки Custom Admin Page"
 
-#: custom-admin-page.php:171
+#: custom-admin-page.php:177
 msgid "Add New Page"
 msgstr "Добавить новую страницу"
 
-#: custom-admin-page.php:203
+#: custom-admin-page.php:209
 msgid "Choose file"
 msgstr "Выберите файл"
 
-#: custom-admin-page.php:204
+#: custom-admin-page.php:210
 msgid "No file chosen"
 msgstr "Файл не выбран"
 
-#: custom-admin-page.php:205
+#: custom-admin-page.php:211
 msgid "Add image"
 msgstr "Добавить изображение"
 
-#: custom-admin-page.php:206
+#: custom-admin-page.php:212
 msgid "Change image"
 msgstr "Изменить изображение"
 
-#: custom-admin-page.php:207
+#: custom-admin-page.php:213
 msgid "Warning: You can add an image only"
 msgstr "Внимание: Вы можете добавить только изображение"
 
-#: custom-admin-page.php:208
+#: custom-admin-page.php:214
 msgid "OK"
 msgstr "OK"
 
-#: custom-admin-page.php:209
+#: custom-admin-page.php:215
 msgid "Cancel"
 msgstr "Отмена"
 
-#: custom-admin-page.php:210
+#: custom-admin-page.php:216
 msgid "Permalink saved"
 msgstr "Постоянная ссылка сохранена"
 
-#: custom-admin-page.php:234 includes/pages.php:512
+#: custom-admin-page.php:240 includes/pages.php:519
 msgid "Permalink"
 msgstr "Постоянная ссылка"
 
-#: custom-admin-page.php:236 includes/pages.php:514
+#: custom-admin-page.php:242 includes/pages.php:521
 msgid "Edit permalink"
 msgstr "Редактировать постоянную ссылку"
 
-#: custom-admin-page.php:236 includes/pages.php:140 includes/pages.php:514
+#: custom-admin-page.php:242 includes/pages.php:140 includes/pages.php:521
 msgid "Edit"
 msgstr "Редактировать"
 
-#: custom-admin-page.php:257 custom-admin-page.php:269
+#: custom-admin-page.php:263 custom-admin-page.php:275
 msgid "Settings"
 msgstr "Настройки"
 
-#: custom-admin-page.php:270
+#: custom-admin-page.php:276
 msgid "FAQ"
 msgstr "FAQ"
 
-#: custom-admin-page.php:271
+#: custom-admin-page.php:277
 msgid "Support"
 msgstr "Тех. поддержка"
 
@@ -102,11 +102,11 @@ msgstr "Страниц не найдено"
 msgid "Title"
 msgstr "Заголовок"
 
-#: includes/pages.php:62
+#: includes/pages.php:62 includes/pages.php:554
 msgid "Capability"
 msgstr "Уровень доступа"
 
-#: includes/pages.php:63 includes/pages.php:560
+#: includes/pages.php:63 includes/pages.php:576
 msgid "Parent"
 msgstr "Родительская"
 
@@ -166,71 +166,79 @@ msgstr "Выбранные страницы удалены"
 msgid "No pages was selected"
 msgstr "Страниц не выбрано"
 
-#: includes/pages.php:448 includes/pages.php:479
+#: includes/pages.php:452 includes/pages.php:486
 msgid "Edit page"
 msgstr "Редактировать страницу"
 
-#: includes/pages.php:449 includes/pages.php:480
+#: includes/pages.php:453 includes/pages.php:487
 msgid "Update page"
 msgstr "Обновить страницу"
 
-#: includes/pages.php:497
+#: includes/pages.php:504
 msgid "Add New page"
 msgstr "Добавить новую страницу"
 
-#: includes/pages.php:498
+#: includes/pages.php:505
 msgid "Save page"
 msgstr "Сохранить страницу"
 
-#: includes/pages.php:506
+#: includes/pages.php:513
 msgid "Enter Page Title"
 msgstr "Введите заголовок страницы"
 
-#: includes/pages.php:518
+#: includes/pages.php:525
 msgid "Slug"
 msgstr "Слаг"
 
-#: includes/pages.php:522
+#: includes/pages.php:529
 msgid "Content"
 msgstr "Содержание"
 
-#: includes/pages.php:543
+#: includes/pages.php:550
 msgid "Page Attributes"
 msgstr "Атрибуты страницы"
 
-#: includes/pages.php:547
-msgid "Capability level"
-msgstr "Уровень доступа"
-
-#: includes/pages.php:550
+#: includes/pages.php:557
 msgid "The capability required for this menu to be displayed to the user."
 msgstr "Уровень доступа этого меню требуемый для отображения пользователю."
 
-#: includes/pages.php:562
+#: includes/pages.php:563
+msgid "Level"
+msgstr "Уровень"
+
+#: includes/pages.php:573
+msgid "see"
+msgstr "см."
+
+#: includes/pages.php:573
+msgid "Roles and Capabilities"
+msgstr "Роли и Возможности"
+
+#: includes/pages.php:578
 msgid "no parent"
 msgstr "нет родительской"
 
-#: includes/pages.php:572
+#: includes/pages.php:588
 msgid "Position"
 msgstr "Позиция"
 
-#: includes/pages.php:575 includes/pages.php:587
+#: includes/pages.php:591 includes/pages.php:603
 msgid "Optional"
 msgstr "Необязательное"
 
-#: includes/pages.php:575
+#: includes/pages.php:591
 msgid "The position in the menu order this one should appear."
 msgstr "Позиция в меню."
 
-#: includes/pages.php:584
+#: includes/pages.php:600
 msgid "Icon"
 msgstr "Иконка"
 
-#: includes/pages.php:587
+#: includes/pages.php:603
 msgid "The URL to the icon to be used for this menu."
 msgstr "URL-адрес иконки, используемой для этого меню."
 
-#: includes/pages.php:589
+#: includes/pages.php:605
 #, php-format
 msgid ""
 "Pass a base64-encoded SVG using a data URI, which will be colored to match "
@@ -239,14 +247,14 @@ msgstr ""
 "Введите base64-кодированное SVG с помощью данных URI, которое будет окрашено "
 "в соответствии с цветовой схемой. Оно должно начинаться с %s."
 
-#: includes/pages.php:590
+#: includes/pages.php:606
 #, php-format
 msgid "Pass the name of a Dashicons helper class to use a font icon, e.g. %s."
 msgstr ""
 "Введите имя вспомогательного класса Dashicons, чтобы использовать значок "
 "шрифта, например, %s."
 
-#: includes/pages.php:591
+#: includes/pages.php:607
 #, php-format
 msgid ""
 "Pass %s to leave div.wp-menu-image empty so an icon can be added via CSS."
@@ -254,26 +262,29 @@ msgstr ""
 "Введите %s, чтобы оставить div.wp-menu-image пустым, таким образом иконка "
 "может быть добавлена с помощью CSS."
 
-#: includes/pages.php:596
+#: includes/pages.php:612
 msgid "Add Image"
 msgstr "Добавить изображение"
 
-#: includes/pages.php:596
+#: includes/pages.php:612
 msgid "Change Image"
 msgstr "Изменить изображение"
 
-#: includes/pages.php:607
+#: includes/pages.php:623
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Результаты поиска для &#8220;%s&#8221;"
 
-#: includes/pages.php:609
+#: includes/pages.php:625
 msgid "Filter pages list"
 msgstr "Фильтр списка страниц"
 
-#: includes/pages.php:612
+#: includes/pages.php:628
 msgid "search"
 msgstr "поиск"
+
+#~ msgid "Capability level"
+#~ msgstr "Уровень доступа"
 
 #~ msgid "1 item"
 #~ msgid_plural "%s items"

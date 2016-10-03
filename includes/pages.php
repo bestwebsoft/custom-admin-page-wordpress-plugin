@@ -313,7 +313,11 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 
 					$page_parent	= ! empty( $_REQUEST['cstmdmnpg_parent'] ) ? stripslashes( $_REQUEST['cstmdmnpg_parent'] ) : NULL;
 					$icon 			= ! empty( $_REQUEST['cstmdmnpg_icon'] ) ? stripslashes( $_REQUEST['cstmdmnpg_icon'] ) : '';
-					$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? intval( $_REQUEST['cstmdmnpg_capability'] ) : 0;
+					
+					if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && $_REQUEST['cstmdmnpg_capability_type'] == 'level' ) 
+						$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability_level'] ) ? intval( $_REQUEST['cstmdmnpg_capability_level'] ) : 0;
+					else
+						$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? trim( esc_attr( $_REQUEST['cstmdmnpg_capability'] ) ) : 'read';
 					$position		= ! empty( $_REQUEST['cstmdmnpg_position'] ) ? intval( $_REQUEST['cstmdmnpg_position'] ) : NULL;
 				}
 
@@ -454,7 +458,10 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 						$page_content	= ! empty( $_REQUEST['cstmdmnpg_content'] ) ? stripslashes( $_REQUEST['cstmdmnpg_content'] ) : '';
 						$page_parent	= ! empty( $_REQUEST['cstmdmnpg_parent'] ) ? stripslashes( $_REQUEST['cstmdmnpg_parent'] ) : NULL;
 						$icon 			= ! empty( $_REQUEST['cstmdmnpg_icon'] ) ? stripslashes( $_REQUEST['cstmdmnpg_icon'] ) : '';
-						$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? intval( $_REQUEST['cstmdmnpg_capability'] ) : 0;
+						if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && $_REQUEST['cstmdmnpg_capability_type'] == 'level' ) 
+							$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability_level'] ) ? intval( $_REQUEST['cstmdmnpg_capability_level'] ) : 0;
+						else
+							$capability 	= ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? trim( esc_attr( $_REQUEST['cstmdmnpg_capability'] ) ) : 'read';
 						$position		= ! empty( $_REQUEST['cstmdmnpg_position'] ) ? intval( $_REQUEST['cstmdmnpg_position'] ) : NULL;
 
 						if ( empty( $page_slug ) )
@@ -538,24 +545,33 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 						wp_editor( wp_unslash( $page_content ), 'cstmdmnpg_content', $settings );
 					} else { ?>
 						<textarea class="cstmdmnpg_content_area" rows="5" autocomplete="off" cols="40" name="cstmdmnpg_content" id="cstmdmnpg_content"><?php echo wp_unslash( $page_content ); ?></textarea>
-					<?php }?>
+					<?php } ?>
 				</div>
 				<h3><span><?php _e( 'Page Attributes', 'custom-admin-page' ); ?></span></h3>
 				<div class="postbox">						
 					<div class="inside">						
 						<div>
-							<strong><?php _e( 'Capability level', 'custom-admin-page' ); ?> *</strong>
+							<strong><?php _e( 'Capability', 'custom-admin-page' ); ?> *</strong>
 							<div class="bws_help_box dashicons dashicons-editor-help">
 								<div class="bws_hidden_help_text" style="min-width: 200px;">
 									<?php _e( 'The capability required for this menu to be displayed to the user.', 'custom-admin-page' ); ?>
 								</div>
 							</div>
 						</div>
-						<select name="cstmdmnpg_capability">
-							<?php for ( $i=0; $i<=10; $i++ ) { ?>
-								<option value="<?php echo $i; ?>" <?php if ( isset( $capability ) && $capability == $i ) echo 'selected '; ?>><?php echo $i; ?></option>
-							<?php } ?>
-						</select>
+						<label>
+							<input id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $capability ) && is_numeric( $capability ) ) echo 'checked '; ?>/>
+							<?php _e( 'Level', 'custom-admin-page' ); ?> 
+							<select name="cstmdmnpg_capability_level">
+								<?php for ( $i=0; $i<=10; $i++ ) { ?>
+									<option value="<?php echo $i; ?>" <?php if ( isset( $capability ) && $capability == $i ) echo 'selected '; ?>><?php echo $i; ?></option>
+								<?php } ?>
+							</select>
+						</label><br />
+						<label>
+							<input id="cstmdmnpg_capability" type="radio" name="cstmdmnpg_capability_type" value="name" <?php if ( isset( $capability ) && ! is_numeric( $capability ) ) echo 'checked '; ?>/> 
+							<input type="text" name="cstmdmnpg_capability" value="<?php if ( isset( $capability ) && ! is_numeric( $capability ) ) echo $capability; ?>" />
+							<span class="bws_info"><?php _e( 'see', 'custom-admin-page' ); ?> <a href="https://codex.wordpress.org/Roles_and_Capabilities" target="_blank"><?php _e( 'Roles and Capabilities', 'custom-admin-page' ); ?></a></span>
+						</label>						
 						<hr/>
 						<div><strong><?php _e( 'Parent', 'custom-admin-page' ); ?></strong></div>
 						<select name="cstmdmnpg_parent">

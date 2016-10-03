@@ -1,12 +1,12 @@
 <?php
 /*
 Plugin Name: Custom Admin Page by BestWebSoft
-Plugin URI: http://bestwebsoft.com/products/custom-admin-page/
+Plugin URI: http://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/
 Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1
+Version: 0.1.1
 Author URI: http://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -91,7 +91,7 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 if ( ! function_exists( 'cstmdmnpg_admin_init' ) ) {
 	function cstmdmnpg_admin_init() {
 		global $bws_plugin_info, $cstmdmnpg_plugin_info;
-		if ( ! isset( $bws_plugin_info ) || empty( $bws_plugin_info ) )
+		if ( empty( $bws_plugin_info ) )
 			$bws_plugin_info = array( 'id' => '614', 'version' => $cstmdmnpg_plugin_info["Version"] );
 	}
 }
@@ -104,25 +104,31 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 	function cstmdmnpg_create_table() {
 		global $wpdb;
 
-		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}cstmdmnpg_pages'" ) )
-			return false;
+		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}cstmdmnpg_pages'" ) ) {
+			/**
+			 * @since 0.1.1
+			 * @todo remove after 03.04.2017
+			 */
+			$wpdb->query( "ALTER TABLE `{$wpdb->prefix}cstmdmnpg_pages` CHANGE `capability` `capability` VARCHAR(255) NOT NULL;" );
+		} else {
 
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-		$sql_query =
-			"CREATE TABLE `{$wpdb->prefix}cstmdmnpg_pages` (
-			`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-			`page_title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-			`page_slug` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,			
-			`page_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-			`capability` VARCHAR( 255 ) NOT NULL DEFAULT '0',
-			`parent_page` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-			`icon` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-			`position` TINYINT DEFAULT NULL,	
-			`page_status` INT( 1 ) NOT NULL DEFAULT '0',
-			PRIMARY KEY ( `id` )
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-		dbDelta( $sql_query );
+			$sql_query =
+				"CREATE TABLE `{$wpdb->prefix}cstmdmnpg_pages` (
+				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+				`page_title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+				`page_slug` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,			
+				`page_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+				`capability` VARCHAR( 255 ) NOT NULL DEFAULT '0',
+				`parent_page` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+				`icon` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+				`position` TINYINT DEFAULT NULL,	
+				`page_status` INT( 1 ) NOT NULL DEFAULT '0',
+				PRIMARY KEY ( `id` )
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+			dbDelta( $sql_query );
+		}
 	}
 }
 
@@ -133,7 +139,7 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 	function cstmdmnpg_settings() {
 		global $cstmdmnpg_options, $cstmdmnpg_plugin_info;
-		$db_version = '1.0';
+		$db_version = '1.1';
 
 		$cstmdmnpg_options_defaults = array(
 			'plugin_option_version' 	=> $cstmdmnpg_plugin_info["Version"],
@@ -267,7 +273,7 @@ if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
 			if ( ! is_network_admin() )
 				$links[]	=	'<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
-			$links[]	=	'<a href="http://bestwebsoft.com/products/custom-admin-page/faq/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
+			$links[]	=	'<a href="http://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/faq/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
 			$links[]	=	'<a href="http://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
 		}
 		return $links;

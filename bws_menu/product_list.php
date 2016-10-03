@@ -238,6 +238,13 @@ $bws_plugins = array(
 		'link'			=> 'http://bestwebsoft.com/products/job-board/?k=b0c504c9ce6edd6692e04222af3fed6f&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
 		'settings'		=> 'admin.php?page=job-board.php'
 	),
+	'bws-latest-posts/bws-latest-posts.php' => array(
+		'category'		=> array( 'content-and-media' ),
+		'name'			=> 'Latest Posts',
+		'description'	=> 'Add latest posts or latest posts for selected categories widgets to WordPress website.',
+		'link'			=> 'http://bestwebsoft.com/products/latest-posts/?k=ef4e125aadadd8d219140daa184a9399&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
+		'settings'		=> 'admin.php?page=latest-posts.php'
+	),
 	'limit-attempts/limit-attempts.php' => array(
 		'category'		=> array( 'security', 'recommended' ),
 		'name'			=> 'Limit Attempts',
@@ -460,27 +467,32 @@ $bws_plugins = array(
 		'name'			=> 'Zendesk Help Center',
 		'description'	=> 'Backup and export Zendesk Help Center content automatically to your WordPress website database.',
 		'link'			=> 'http://bestwebsoft.com/products/zendesk-help-center/?k=2a5fd2f4b2f4bde46f2ca44b8d15846d&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-		'settings'		=> 'admin.php?page=zendesk_hc.php&tab=settings',
+		'settings'		=> 'admin.php?page=zendesk_hc.php&action=settings',
 		'pro_version'	=> 'zendesk-help-center-pro/zendesk-help-center-pro.php',
 		'purchase' 		=> 'http://bestwebsoft.com/products/zendesk-help-center/buy/?k=45199e4538b5befe4d9566868a61a3aa&pn=' . $bws_plugin_info["id"] . '&v=' . $bws_plugin_info["version"] . '&wp_v=' . $wp_version,
-		'pro_settings'	=> 'admin.php?page=zendesk_hc.php&tab=settings'
+		'pro_settings'	=> 'admin.php?page=zendesk_hc_pro.php&tab=settings'
 	)
 );	
 
-$themes = array(
+$themes = array(	
+	(object) array( 
+		'name' 		=> 'Opening',
+		'slug' 		=> 'opening',
+		'href' 		=> 'http://bestwebsoft.com/products/opening-job-board-wordpress-theme/'
+	),
 	(object) array( 
 		'name' 		=> 'Real Estate',
 		'slug' 		=> 'realestate',
 		'href' 		=> 'http://bestwebsoft.com/products/real-estate-creative-wordpress-theme/'
 	),
 	(object) array( 
+		'name' 		=> 'Renty',
+		'slug' 		=> 'renty',
+		'href' 		=> 'http://bestwebsoft.com/products/renty-car-rental-booking-wordpress-theme/'
+	),
+	(object) array( 
 		'name' 		=> 'Unity',
 		'slug' 		=> 'unity',
 		'href' 		=> 'http://bestwebsoft.com/products/unity-multipurpose-wordpress-theme/'
-	),
-	(object) array( 
-		'name' 		=> 'Opening',
-		'slug' 		=> 'opening',
-		'href' 		=> 'http://bestwebsoft.com/products/opening-job-board-wordpress-theme/'
 	)
 );

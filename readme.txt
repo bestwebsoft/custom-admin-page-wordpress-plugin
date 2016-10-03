@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: http://bestwebsoft.com/donate/
 Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 3.8
-Tested up to: 4.5.3
-Stable tag: 0.1
+Tested up to: 4.6.1
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,15 +16,12 @@ Try this convenient tool for adding custom pages to admin panel in the easiest w
 
 http://www.youtube.com/watch?v=Ecvb7F2sATs
 
-<a href="http://wordpress.org/plugins/custom-admin-page/faq/" target="_blank">Custom Admin Page by BestWebSoft FAQ</a>
-
-<a href="http://support.bestwebsoft.com" target="_blank">Custom Admin Page by BestWebSoft Support</a>
-
 = Features =
 
+* Add and manage unlimited custom pages
 * Set capability level, page position, page icon
-* Ability to add page to existing pages
 * Add content using TinyMCE
+* Add page to existing pages
 
 If you have a feature, suggestion or idea you'd like to see in the plugin, we'd love to hear about it! <a href="http://support.bestwebsoft.com/hc/en-us/requests/new" target="_blank">Suggest a Feature</a>
 
@@ -69,10 +66,16 @@ Please make sure that the problem hasn't been discussed yet on our forum (<a hre
 
 == Changelog ==
 
-= V0.1 - 28.06.2015 =
+= V0.1.1 - 03.10.2016 =
+* NEW : An ability to set certain capability instead of capability level 
+
+= V0.1 - 28.06.2016 =
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V0.1.1 =
+* Functionality expanded
 
 = V0.1 =
 The Custom Admin Page by BestWebSoft plugin is ready for use.
