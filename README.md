@@ -1,9 +1,7 @@
-<a href="http://bestwebsoft.com/products/custom-admin-page/" target=_blank>Custom Admin Page WordPress Plugin</a>
+<a href="http://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target=_blank>Custom Admin Page WordPress Plugin</a>
 ========================
 
 Add unlimited custom pages to WordPress admin dashboard.
-
-<img src="http://bestwebsoft.com/wp-content/uploads/2016/06/custom-admin-page-banner-website.jpg" />
 
 <p>Try this convenient tool for adding custom pages to admin panel in the easiest way. You can add as many pages as you want and fill them with the necessary content using TinyMCE.</p>
 
