@@ -1,17 +1,17 @@
 <?php
 /*
 Plugin Name: Custom Admin Page by BestWebSoft
-Plugin URI: http://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/
+Plugin URI: https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/
 Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.1
-Author URI: http://bestwebsoft.com/
+Version: 0.1.2
+Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2016  BestWebSoft  ( http://support.bestwebsoft.com )
+/*  © Copyright 2017  BestWebSoft  ( https://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -104,14 +104,7 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 	function cstmdmnpg_create_table() {
 		global $wpdb;
 
-		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}cstmdmnpg_pages'" ) ) {
-			/**
-			 * @since 0.1.1
-			 * @todo remove after 03.04.2017
-			 */
-			$wpdb->query( "ALTER TABLE `{$wpdb->prefix}cstmdmnpg_pages` CHANGE `capability` `capability` VARCHAR(255) NOT NULL;" );
-		} else {
-
+		if ( ! $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}cstmdmnpg_pages'" ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 			$sql_query =
@@ -129,6 +122,8 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 			dbDelta( $sql_query );
 		}
+
+		register_uninstall_hook( __FILE__, 'cstmdmnpg_uninstall' );
 	}
 }
 
@@ -273,8 +268,8 @@ if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
 			if ( ! is_network_admin() )
 				$links[]	=	'<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
-			$links[]	=	'<a href="http://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/faq/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
-			$links[]	=	'<a href="http://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
+			$links[]	=	'<a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
+			$links[]	=	'<a href="https://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
 		}
 		return $links;
 	}
@@ -310,6 +305,7 @@ if ( ! function_exists( 'cstmdmnpg_uninstall' ) ) {
 	}
 }
 
+register_activation_hook( __FILE__, 'cstmdmnpg_create_table' );
 /* Initialization plugin*/
 add_action( 'init', 'cstmdmnpg_init' );
 add_action( 'plugins_loaded', 'cstmdmnpg_plugins_loaded' );
@@ -324,5 +320,3 @@ add_filter( 'plugin_row_meta', 'cstmdmnpg_links', 10, 2 );
 add_action( 'admin_notices', 'cstmdmnpg_plugin_banner' );
 
 add_action( 'wp_ajax_cstmdmnpg-sample-permalink', 'wp_ajax_cstmdmnpg_sample_permalink' );
-
-register_uninstall_hook( __FILE__, 'cstmdmnpg_uninstall' );
