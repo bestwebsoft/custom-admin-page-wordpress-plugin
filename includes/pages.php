@@ -552,11 +552,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 					<div class="inside">						
 						<div>
 							<strong><?php _e( 'Capability', 'custom-admin-page' ); ?> *</strong>
-							<div class="bws_help_box dashicons dashicons-editor-help">
-								<div class="bws_hidden_help_text" style="min-width: 200px;">
-									<?php _e( 'The capability required for this menu to be displayed to the user.', 'custom-admin-page' ); ?>
-								</div>
-							</div>
+							<?php echo bws_add_help_box( __( 'The capability required for this menu to be displayed to the user.', 'custom-admin-page' ) ); ?>
 						</div>
 						<label>
 							<input id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $capability ) && is_numeric( $capability ) ) echo 'checked '; ?>/>
@@ -586,11 +582,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 							<hr/>
 							<div>
 								<strong><?php _e( 'Position', 'custom-admin-page' ); ?></strong>
-								<div class="bws_help_box dashicons dashicons-editor-help">
-									<div class="bws_hidden_help_text" style="min-width: 200px;">
-										(<?php _e( 'Optional', 'custom-admin-page' ); ?>) <?php _e( 'The position in the menu order this one should appear.', 'custom-admin-page' ); ?>
-									</div>
-								</div>	
+								<?php echo bws_add_help_box( __( 'The position in the menu order this one should appear.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')' ); ?>
 							</div>					
 							<input type="number" min="1" max="10000" name="cstmdmnpg_position" value="<?php echo $position; ?>" />
 						</div>						
@@ -598,15 +590,14 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 							<hr/>
 							<div>
 								<strong><?php _e( 'Icon', 'custom-admin-page' ); ?></strong>
-								<div class="bws_help_box dashicons dashicons-editor-help">
-									<div class="bws_hidden_help_text" style="min-width: 200px;">
-										(<?php _e( 'Optional', 'custom-admin-page' ); ?>) <?php _e( 'The URL to the icon to be used for this menu.', 'custom-admin-page' ); ?>
-										<ul>
-											<li>* <?php printf( __( 'Pass a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ); ?></li>
-											<li>* <?php printf( __( 'Pass the name of a Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ); ?></li>
-											<li>* <?php printf( __( 'Pass %s to leave div.wp-menu-image empty so an icon can be added via CSS.', 'custom-admin-page' ), "<strong>'none'</strong>" ); ?></li>
-									</div>
-								</div>
+								<?php echo bws_add_help_box( 
+									__( 'The URL to the icon to be used for this menu.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')
+									<ul>
+										<li>* ' .  sprintf( __( 'Pass a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ) . '</li>
+										<li>* ' .  sprintf( __( 'Pass the name of a Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ) . '</li>
+										<li>* ' .  sprintf( __( 'Pass %s to leave div.wp-menu-image empty so an icon can be added via CSS.', 'custom-admin-page' ), "<strong>'none'</strong>" ) . '</li>
+									</ul>'
+								); ?>
 							</div>
 							<input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_icon" value="<?php echo $icon; ?>" />
 							<input class="button-secondary cstmdmnpg-upload-image" type="button" value="<?php echo ( empty( $icon ) ) ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>" />

@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.2
+Version: 0.1.3
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -77,7 +77,7 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 		}
 
 		/* Function check if plugin is compatible with current WP version  */
-		bws_wp_min_version_check( plugin_basename( __FILE__ ), $cstmdmnpg_plugin_info, '3.8' );
+		bws_wp_min_version_check( plugin_basename( __FILE__ ), $cstmdmnpg_plugin_info, '3.9' );
 
 		/* Get/Register and check settings for plugin */
 		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] )
@@ -199,6 +199,8 @@ if ( ! function_exists ( 'cstmdmnpg_admin_head' ) ) {
 		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] ) {
 
 			wp_enqueue_script( 'cstmdmnpg-script', plugins_url( 'js/script.js', __FILE__ ), array( 'jquery' ) );
+
+			bws_enqueue_settings_scripts();
 
 			$script_vars = array(
 				'chooseFile'		=> __( 'Choose file', 'custom-admin-page' ),

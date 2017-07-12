@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
-Requires at least: 3.8
-Tested up to: 4.7.3
-Stable tag: 0.1.2
+Requires at least: 3.9
+Tested up to: 4.8
+Stable tag: 0.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Add unlimited custom pages to WordPress admin dashboard.
 
 Simple plugin which adds unlimited custom pages to your WordPress admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, choose page position and icon.
 
-Download, install, and add your own admin pages in few clicks!
+Download, install, and add your own admin pages in a few clicks!
 
 https://www.youtube.com/watch?v=Ecvb7F2sATs
 
@@ -49,7 +49,7 @@ Some of these translations are not complete. We are constantly adding new featur
 
 = Recommended Plugins =
 
-* [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=f33e1bb49ee6d97b299ba2d41e6ff4c2) - Automatically check and update WordPress core with all installed plugins to the latest versions. Manual mode, email notifications and backups of all your files and database before updating.
+* [Updater](https://bestwebsoft.com/products/wordpress/plugins/updater/?k=f33e1bb49ee6d97b299ba2d41e6ff4c2) - Automatically check and update WordPress website core with all installed plugins and themes to the latest versions.
 
 == Installation ==
 
@@ -77,6 +77,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V0.1.3 - 12.07.2017 =
+* Update : We updated all functionality for wordpress 4.8.
+
 = V0.1.2 - 17.04.2017 =
 * Bugfix : Multiple Cross-Site Scripting (XSS) vulnerability was fixed.
 
@@ -87,6 +90,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V0.1.3 =
+* The compatibility with new WordPress version updated.
 
 = V0.1.2 =
 * Bugs fixed.
