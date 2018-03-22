@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.3
+Version: 0.1.4
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -42,12 +42,26 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 		add_action( 'load-' . $settings, 'cstmdmnpg_add_tabs' );
 
 		$pages = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=0", ARRAY_A );
-		foreach ( $pages as $page ) {
-			if ( ! empty( $page['parent_page'] ) ) {
-			
-				add_submenu_page( $page['parent_page'], $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content' );
-			} else {
-				add_menu_page( $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content', $page['icon'], $page['position'] );
+		if ( ! empty( $pages ) ){
+			foreach ( $pages as $page ) {
+				if ( ! empty( $page['parent_page'] ) && $page['parent_page'] != $page['page_title'] ) {
+					if ( is_numeric( $page['capability'] ) && in_array( intval( $page['capability'] ), range( 0, 10 ) ) ) {
+						add_submenu_page( $page['parent_page'], $page['page_title'], $page['page_title'], 'level_' . $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content' );
+					} else {
+						add_submenu_page( $page['parent_page'], $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content' );
+					}
+				} else {
+					if ( ! empty( $page['icon'] ) ) {
+						$icon = $page['icon'] . '" style="max-width: 20px; max-height: 20px;';
+					} else {
+						$icon = '';
+					}
+					if ( is_numeric( $page['capability'] ) && in_array( intval( $page['capability'] ), range( 0, 10 ) ) ) {
+						add_menu_page( $page['page_title'], $page['page_title'], 'level_' . $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content', $icon, $page['position'] );
+					} else {
+						add_menu_page( $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content', $icon, $page['position'] );
+					}
+				}
 			}
 		}
 	}
@@ -73,7 +87,7 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 		if ( empty( $cstmdmnpg_plugin_info ) ) {
 			if ( ! function_exists( 'get_plugin_data' ) )
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			$cstmdmnpg_plugin_info = get_plugin_data( dirname(__FILE__) . '/custom-admin-page.php' );
+			$cstmdmnpg_plugin_info = get_plugin_data( dirname( __FILE__ ) . '/custom-admin-page.php' );
 		}
 
 		/* Function check if plugin is compatible with current WP version  */
@@ -111,15 +125,15 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 				"CREATE TABLE `{$wpdb->prefix}cstmdmnpg_pages` (
 				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 				`page_title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-				`page_slug` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,			
+				`page_slug` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 				`page_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 				`capability` VARCHAR( 255 ) NOT NULL DEFAULT '0',
 				`parent_page` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
 				`icon` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-				`position` TINYINT DEFAULT NULL,	
+				`position` TINYINT DEFAULT NULL,
 				`page_status` INT( 1 ) NOT NULL DEFAULT '0',
 				PRIMARY KEY ( `id` )
-				) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+				) DEFAULT CHARSET=utf8;";
 			dbDelta( $sql_query );
 		}
 
@@ -137,17 +151,18 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 		$db_version = '1.1';
 
 		$cstmdmnpg_options_defaults = array(
-			'plugin_option_version' 	=> $cstmdmnpg_plugin_info["Version"],
-			'suggest_feature_banner'	=> 1	
+			'plugin_option_version'		=> $cstmdmnpg_plugin_info["Version"],
+			'suggest_feature_banner'	=> 1
 		);
 
 		/* install the option defaults */
-		if ( ! get_option( 'cstmdmnpg_options' ) )
+		if ( ! get_option( 'cstmdmnpg_options' ) ) {
 			add_option( 'cstmdmnpg_options', $cstmdmnpg_options_defaults );
+		}
 		$cstmdmnpg_options = get_option( 'cstmdmnpg_options' );
 
 		if ( ! isset( $cstmdmnpg_options['plugin_option_version'] ) || $cstmdmnpg_options['plugin_option_version'] != $cstmdmnpg_plugin_info["Version"] ) {
-			$cstmdmnpg_options	= array_merge( $cstmdmnpg_options_defaults, $cstmdmnpg_options );
+			$cstmdmnpg_options = array_merge( $cstmdmnpg_options_defaults, $cstmdmnpg_options );
 			$update_option = true;
 		}
 
@@ -157,8 +172,9 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 			$update_option = true;
 		}
 
-		if ( isset( $update_option ) ) 
+		if ( isset( $update_option ) ) {
 			update_option( 'cstmdmnpg_options', $cstmdmnpg_options );
+		}
 	}
 }
 
@@ -170,8 +186,9 @@ if ( ! function_exists ( 'cstmdmnpg_settings_page' ) ) {
 		global $cstmdmnpg_plugin_info;  ?>
 		<div class="wrap">
 			<h1>Custom Admin Page <a href="<?php echo wp_nonce_url( '?page=custom-admin-page.php&cstmdmnpg_tab_action=new', 'custom-admin-page-new' ); ?>" class="add-new-h2 cstmdmnpg_add_new_button"><?php _e( 'Add New Page', 'custom-admin-page' ); ?></a></h1>
-			<?php if ( ! function_exists( 'cstmdmnpg_display_pages' ) )
+			<?php if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 				require_once( dirname( __FILE__ ) . '/pages.php' );
+			}
 
 			cstmdmnpg_display_pages();
 			bws_plugin_reviews_block( $cstmdmnpg_plugin_info['Name'], 'custom-admin-page' ); ?>
@@ -196,6 +213,7 @@ if ( ! function_exists ( 'cstmdmnpg_page_content' ) ) {
 /* Add stylesheets */
 if ( ! function_exists ( 'cstmdmnpg_admin_head' ) ) {
 	function cstmdmnpg_admin_head() {
+		wp_enqueue_style( 'cstmdmnpg-stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
 		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] ) {
 
 			wp_enqueue_script( 'cstmdmnpg-script', plugins_url( 'js/script.js', __FILE__ ), array( 'jquery' ) );
@@ -203,15 +221,10 @@ if ( ! function_exists ( 'cstmdmnpg_admin_head' ) ) {
 			bws_enqueue_settings_scripts();
 
 			$script_vars = array(
-				'chooseFile'		=> __( 'Choose file', 'custom-admin-page' ),
-				'notSelected'		=> __( 'No file chosen', 'custom-admin-page' ),
-				'addImageLabel'		=> __( 'Add image', 'custom-admin-page' ),
-				'changeImageLabel'	=> __( 'Change image', 'custom-admin-page' ),
-				'errorInsertImage'	=> __( 'Warning: You can add an image only', 'custom-admin-page' ),
-				'ok' 				=> __( 'OK', 'custom-admin-page' ),
-				'cancel' 			=> __( 'Cancel', 'custom-admin-page' ),
-				'permalinkSaved' 	=> __( 'Permalink saved', 'custom-admin-page' ),
-				'ajax_nonce'    	=> wp_create_nonce( 'cstmdmnpg_ajax_nonce' )
+				'changeImageLabel'	=> __( 'Change Image', 'custom-admin-page' ),
+				'ok'				=> __( 'OK', 'custom-admin-page' ),
+				'cancel'			=> __( 'Cancel', 'custom-admin-page' ),
+				'ajax_nonce'		=> wp_create_nonce( 'cstmdmnpg_ajax_nonce' )
 			);
 			wp_localize_script( 'cstmdmnpg-script', 'cstmdmnpgScriptVars', $script_vars );
 		}
@@ -230,7 +243,7 @@ if ( ! function_exists( 'wp_ajax_cstmdmnpg_sample_permalink' ) ) {
 		$page_parent = isset( $_POST['parent_slug'] )? esc_attr( $_POST['parent_slug'] ) : 0;
 
 		if ( empty( $slug ) )
-			$slug = ! empty( $title ) ? sanitize_title( $title ) : 'cstmdmnpg-page-' . $page_id; 
+			$slug = ! empty( $title ) ? sanitize_title( $title ) : 'cstmdmnpg-page-' . $page_id;
 
 		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/(\?.*)$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' )  . 'page=';
 		?>
@@ -268,10 +281,11 @@ if ( ! function_exists( 'cstmdmnpg_action_links' ) ) {
 if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 	function cstmdmnpg_links( $links, $file ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
-			if ( ! is_network_admin() )
-				$links[]	=	'<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
-			$links[]	=	'<a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
-			$links[]	=	'<a href="https://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
+			if ( ! is_network_admin() ) {
+				$links[]='<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
+			}
+			$links[] = '<a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
+			$links[] = '<a href="https://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
 		}
 		return $links;
 	}

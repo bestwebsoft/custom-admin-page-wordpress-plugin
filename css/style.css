@@ -1,0 +1,9 @@
+.cstmdmnpg-image-url {
+	margin-bottom: 10px;
+}
+@media only screen and ( max-width: 410px ) {
+	.cstmdmnpg_add_new_button {
+		display: inline-block;
+		margin-top: 15px;
+	}
+}

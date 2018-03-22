@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 3.9
-Tested up to: 4.8
-Stable tag: 0.1.3
+Tested up to: 4.9.4
+Stable tag: 0.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,12 +21,12 @@ https://www.youtube.com/watch?v=Ecvb7F2sATs
 = Features =
 
 * Add unlimited number of custom pages
-* Manage your custom page using TinyMCE editor 
+* Manage your custom page using TinyMCE editor
 * Make custom pages available for certain user roles
-* Add custom page to parent page 
+* Add custom page to parent page
 * Set custom page order
 * Choose custom page icon for the sidebar menu
-* Compatible with latest WordPress version 
+* Compatible with latest WordPress version
 * Incredibly simple settings for fast setup without modifying code
 * Detailed step-by-step documentation and videos
 
@@ -38,14 +38,14 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Help & Support =
 
-Visit our Help Center if you have any questions, our friendly Support Team is happy to help — <https://support.bestwebsoft.com/>
+Visit our Help Center if you have any questions, our friendly Support Team is happy to help - <https://support.bestwebsoft.com/>
 
 = Translation =
 
 * Russian (ru_RU)
 * Ukrainian (uk)
 
-Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO [files Poedit](https://www.poedit.net/download.php).
+Some of these translations are not complete. We are constantly adding new features which should be translated. If you would like to create your own language pack or update the existing one, you can send [the text of PO and MO files](https://codex.wordpress.org/Translating_WordPress) to [BestWebSoft](https://support.bestwebsoft.com/hc/en-us/requests/new) and we'll add it to the plugin. You can download the latest version of the program for work with PO and MO files [Poedit](https://www.poedit.net/download.php).
 
 = Recommended Plugins =
 
@@ -77,6 +77,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V0.1.4 - 22.03.2018 =
+* Bugfix : Bugs related to the pictures size in the admin menu and capability level have been fixed.
+
 = V0.1.3 - 12.07.2017 =
 * Update : We updated all functionality for wordpress 4.8.
 
@@ -90,6 +93,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V0.1.4 =
+* Bugs fixed.
+* Usability improved.
 
 = V0.1.3 =
 * The compatibility with new WordPress version updated.
