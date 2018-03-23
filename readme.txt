@@ -4,7 +4,7 @@ Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 3.9
 Tested up to: 4.9.4
-Stable tag: 0.1.4
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -75,7 +75,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 3. Custom page added by the plugin.
 4. Custom child page added by the plugin.
 
+
 == Changelog ==
+
+= V0.1.5 - 23.03.2018 =
+* Update : We updated all functionality for wordpress 4.9.4.
 
 = V0.1.4 - 22.03.2018 =
 * Bugfix : Bugs related to the pictures size in the admin menu and capability level have been fixed.
@@ -94,6 +98,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Upgrade Notice ==
 
+= V0.1.5 =
+* The compatibility with new WordPress version updated.
+
 = V0.1.4 =
 * Bugs fixed.
 * Usability improved.
@@ -105,7 +112,7 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * Bugs fixed.
 
 = V0.1.1 =
-* Functionality expanded
+* Functionality expanded.
 
 = V0.1 =
 The Custom Admin Page by BestWebSoft plugin is ready for use.
