@@ -371,14 +371,14 @@ div.bws_banner_on_plugin_page .icon {
 }
 .bws_banner_to_settings_joint .bws-more:after {
     content: "\f347";
-    font-family: dashicons;
+    font-family: 'dashicons';
     margin: 0 5px;
     top: 2px;
     position: relative;
 }
 .bws_banner_to_settings_joint .bws-less:after {
     content: "\f343";
-    font-family: dashicons;
+    font-family: 'dashicons';
     margin: 0 5px;
     top: 2px;
     position: relative;

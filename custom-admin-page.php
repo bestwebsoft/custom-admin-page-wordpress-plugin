@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.5
+Version: 0.1.6
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -36,9 +36,9 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 		bws_general_menu();
 		$settings = add_submenu_page( 'bws_panel', __( 'Custom Admin Page Settings', 'custom-admin-page' ), 'Custom Admin Page', 'manage_options', 'custom-admin-page.php', 'cstmdmnpg_settings_page' );
 
-		if ( ! function_exists( 'cstmdmnpg_screen_options' ) )
+		if ( ! function_exists( 'cstmdmnpg_screen_options' ) ) {
 			require_once( dirname( __FILE__ ) . '/includes/pages.php' );
-
+		}
 		add_action( 'load-' . $settings, 'cstmdmnpg_add_tabs' );
 
 		$pages = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=0", ARRAY_A );
@@ -52,7 +52,11 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 					}
 				} else {
 					if ( ! empty( $page['icon'] ) ) {
-						$icon = $page['icon'] . '" style="max-width: 20px; max-height: 20px;';
+						if ( filter_var( $page['icon'], FILTER_VALIDATE_URL ) ) {
+							$icon = $page['icon'] . '" style="max-width: 20px; max-height: 20px;';
+						} else {
+							$icon = $page['icon'];
+						}
 					} else {
 						$icon = '';
 					}
@@ -66,7 +70,6 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 		}
 	}
 }
-
 if ( ! function_exists( 'cstmdmnpg_plugins_loaded' ) ) {
 	function cstmdmnpg_plugins_loaded() {
 		/* Internationalization, first(!) */
@@ -85,17 +88,19 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 		bws_include_init( plugin_basename( __FILE__ ) );
 
 		if ( empty( $cstmdmnpg_plugin_info ) ) {
-			if ( ! function_exists( 'get_plugin_data' ) )
+			if ( ! function_exists( 'get_plugin_data' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			}
 			$cstmdmnpg_plugin_info = get_plugin_data( dirname( __FILE__ ) . '/custom-admin-page.php' );
 		}
 
-		/* Function check if plugin is compatible with current WP version  */
+		/* Function check if plugin is compatible with current WP version */
 		bws_wp_min_version_check( plugin_basename( __FILE__ ), $cstmdmnpg_plugin_info, '3.9' );
 
 		/* Get/Register and check settings for plugin */
-		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] )
+		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] ) {
 			cstmdmnpg_settings();
+		}
 	}
 }
 
@@ -105,8 +110,9 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 if ( ! function_exists( 'cstmdmnpg_admin_init' ) ) {
 	function cstmdmnpg_admin_init() {
 		global $bws_plugin_info, $cstmdmnpg_plugin_info;
-		if ( empty( $bws_plugin_info ) )
+		if ( empty( $bws_plugin_info ) ) {
 			$bws_plugin_info = array( 'id' => '614', 'version' => $cstmdmnpg_plugin_info["Version"] );
+		}
 	}
 }
 
@@ -129,7 +135,7 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 				`page_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
 				`capability` VARCHAR( 255 ) NOT NULL DEFAULT '0',
 				`parent_page` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-				`icon` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+				`icon` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
 				`position` TINYINT DEFAULT NULL,
 				`page_status` INT( 1 ) NOT NULL DEFAULT '0',
 				PRIMARY KEY ( `id` )
@@ -147,7 +153,7 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
  */
 if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 	function cstmdmnpg_settings() {
-		global $cstmdmnpg_options, $cstmdmnpg_plugin_info;
+		global $cstmdmnpg_options, $cstmdmnpg_plugin_info, $wpdb;
 		$db_version = '1.1';
 
 		$cstmdmnpg_options_defaults = array(
@@ -162,6 +168,13 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 		$cstmdmnpg_options = get_option( 'cstmdmnpg_options' );
 
 		if ( ! isset( $cstmdmnpg_options['plugin_option_version'] ) || $cstmdmnpg_options['plugin_option_version'] != $cstmdmnpg_plugin_info["Version"] ) {
+			/**
+			 * @deprecated
+			 * @since 0.1.6
+			 * @todo remove after 27.01.2019
+			 */
+			$wpdb->query( "ALTER TABLE `{$wpdb->prefix}cstmdmnpg_pages` MODIFY icon TEXT" );
+			/* @todo end */
 			$cstmdmnpg_options = array_merge( $cstmdmnpg_options_defaults, $cstmdmnpg_options );
 			$update_option = true;
 		}
@@ -183,7 +196,7 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
  */
 if ( ! function_exists ( 'cstmdmnpg_settings_page' ) ) {
 	function cstmdmnpg_settings_page () {
-		global $cstmdmnpg_plugin_info;  ?>
+		global $cstmdmnpg_plugin_info; ?>
 		<div class="wrap">
 			<h1>Custom Admin Page <a href="<?php echo wp_nonce_url( '?page=custom-admin-page.php&cstmdmnpg_tab_action=new', 'custom-admin-page-new' ); ?>" class="add-new-h2 cstmdmnpg_add_new_button"><?php _e( 'Add New Page', 'custom-admin-page' ); ?></a></h1>
 			<?php if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
@@ -242,10 +255,11 @@ if ( ! function_exists( 'wp_ajax_cstmdmnpg_sample_permalink' ) ) {
 		$page_id = isset( $_POST['page_id'] )? sanitize_title( $_POST['page_id'] ) : 0;
 		$page_parent = isset( $_POST['parent_slug'] )? esc_attr( $_POST['parent_slug'] ) : 0;
 
-		if ( empty( $slug ) )
+		if ( empty( $slug ) ) {
 			$slug = ! empty( $title ) ? sanitize_title( $title ) : 'cstmdmnpg-page-' . $page_id;
+		}
 
-		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/(\?.*)$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' )  . 'page=';
+		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/(\?.*)$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' ) . 'page=';
 		?>
 		<strong><?php _e( 'Permalink', 'custom-admin-page' ); ?>:</strong>
 		<span id="sample-permalink"><?php echo self_admin_url( $url ); ?><span id="editable-post-name"><?php echo $slug; ?></span></span>
@@ -258,7 +272,7 @@ if ( ! function_exists( 'wp_ajax_cstmdmnpg_sample_permalink' ) ) {
 if ( ! function_exists ( 'cstmdmnpg_plugin_banner' ) ) {
 	function cstmdmnpg_plugin_banner() {
 		global $hook_suffix, $cstmdmnpg_plugin_info;
-		if ( $hook_suffix == 'plugins.php' ) {
+		if ( 'plugins.php' == $hook_suffix ) {
 			bws_plugin_banner_to_settings( $cstmdmnpg_plugin_info, 'cstmdmnpg_options', 'custom-admin-page', 'admin.php?page=custom-admin-page.php' );
 		} elseif ( isset( $_REQUEST['page'] ) && 'custom-admin-page.php' == $_REQUEST['page'] ) {
 			bws_plugin_suggest_feature_banner( $cstmdmnpg_plugin_info, 'cstmdmnpg_options', 'custom-admin-page' );
@@ -297,9 +311,9 @@ if ( ! function_exists( 'cstmdmnpg_uninstall' ) ) {
 		global $wpdb;
 		if ( is_multisite() ) {
 			/* Get all blog ids */
-			$blogids  = $wpdb->get_col( "SELECT `blog_id` FROM $wpdb->blogs" );
+			$blogids = $wpdb->get_col( "SELECT `blog_id` FROM $wpdb->blogs" );
 			$old_blog = $wpdb->blogid;
-			$tables   = '';
+			$tables = '';
 			foreach ( $blogids as $blog_id ) {
 				switch_to_blog( $blog_id );
 				delete_option( 'cstmdmnpg_options' );

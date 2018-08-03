@@ -45,15 +45,15 @@
 					if ( box.hasClass( 'hidden' ) ) {
 						box.fadeIn( 'fast', function() {
 							box.removeClass( 'hidden' );
-						});
+						} );
 					}
 
 					buttons.html( buttonsOrig );
 					permalink.html( permalinkOrig );
 					real_slug.val( new_slug );
 					$( '.edit-slug' ).focus();
-				});
-			});
+				} );
+			} );
 
 			buttons.children( '.cancel' ).click( function() {
 				$( '#view-post-btn' ).show();
@@ -62,7 +62,7 @@
 				permalink.html( permalinkOrig );
 				real_slug.val( revert_slug );
 				$( '.edit-slug' ).focus();
-			});
+			} );
 
 			for ( i = 0; i < full.length; ++i ) {
 				if ( '%' == full.charAt( i ) )
@@ -82,22 +82,22 @@
 				}
 			} ).keyup( function() {
 				real_slug.val( this.value );
-			}).focus();
-		});
+			} ).focus();
+		} );
 
 		$( 'select[name=cstmdmnpg_parent]' ).change( function() {
 			if ( '' == $( 'select[name="cstmdmnpg_parent"] option:selected' ).val() )
 				$( '.cstmdmnpg_position, .cstmdmnpg_icon' ).show();
 			else
 				$( '.cstmdmnpg_position, .cstmdmnpg_icon' ).hide();
-		}).trigger( 'change' );
+		} ).trigger( 'change' );
 
-		$( 'select[name="cstmdmnpg_capability_level"]').focus( function() {
+		$( 'select[name="cstmdmnpg_capability_level"]' ).focus( function() {
 			$( '#cstmdmnpg_capability_level' ).attr( 'checked', 'checked' );
-		});
-		$( 'input[name="cstmdmnpg_capability"]').focus( function() {
+		} );
+		$( 'input[name="cstmdmnpg_capability"]' ).focus( function() {
 			$( '#cstmdmnpg_capability' ).attr( 'checked', 'checked' );
-		});
+		} );
 
 		if ( $( '.cstmdmnpg-upload-image' ).length > 0 ) {
 
@@ -143,7 +143,7 @@
 					var attachment = file_frame.state().get( 'selection' ).first().toJSON();
 
 					/* Do something with attachment.id and/or attachment.url here */
-					button.val( cstmdmnpgScriptVars['changeImageLabel'] );
+					buttons.val( cstmdmnpgScriptVars['changeImageLabel'] );
 					imageUrl.val( attachment.url ).trigger( 'change' );
 
 					/* Restore the main post ID */

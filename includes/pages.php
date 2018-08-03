@@ -154,8 +154,8 @@ if ( ! class_exists( 'Cstmdmnpg_Pages_List' ) ) {
 			$all_count = $trash_count = 0;
 			/* get count of pages by status */
 			$filters_count = $wpdb->get_results (
-				"SELECT COUNT(`id`) AS `all`,
-					( SELECT COUNT(`id`) FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=1 ) AS `trash`
+				"SELECT COUNT( `id` ) AS `all`,
+					( SELECT COUNT( `id` ) FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=1 ) AS `trash`
 				FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=0;"
 			);
 			foreach ( $filters_count as $count ) {
@@ -203,7 +203,7 @@ if ( ! class_exists( 'Cstmdmnpg_Pages_List' ) ) {
 		 */
 		protected function items_count() {
 			global $wpdb;
-			$sql_query = "SELECT COUNT(`id`) FROM `" . $wpdb->prefix . "cstmdmnpg_pages`";
+			$sql_query = "SELECT COUNT( `id` ) FROM `" . $wpdb->prefix . "cstmdmnpg_pages`";
 			if ( isset( $_REQUEST['s'] ) && ( ! empty( $_REQUEST['s'] ) ) )
 				$sql_query .= "WHERE `page_title` LIKE '%" . esc_html( trim( $_REQUEST['s'] ) ) . "%'";
 			elseif ( isset( $_REQUEST['status'] ) && 'trash' == $_REQUEST['status'] )
@@ -215,8 +215,6 @@ if ( ! class_exists( 'Cstmdmnpg_Pages_List' ) ) {
 		}
 	}
 } /* end of class definition */
-
-
 /**
  * Add screen options and initialize instance of class Cstmdmnpg_Pages_List
  * @return void
@@ -271,12 +269,14 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 		$tab_action = isset( $_REQUEST['cstmdmnpg_tab_action'] ) && ( ! in_array( $_REQUEST['cstmdmnpg_tab_action'], array( 'new', 'edit' ) ) ) ? $_REQUEST['cstmdmnpg_tab_action'] : false;
 		/* bulk actions */
 		$action = isset( $_POST['action'] ) && in_array( $_POST['action'], array( 'trash', 'delete', 'restore' ) ) ? $_POST['action'] : false;
-		if ( ! $action )
+		if ( ! $action ) {
 			$action = isset( $_POST['action2'] ) && in_array( $_POST['action2'], array( 'trash', 'delete', 'restore' ) ) ? $_POST['action2'] : false;
+		}
 
 		$page_id = empty( $_REQUEST['cstmdmnpg_page_id'] ) ? 0 : $_REQUEST['cstmdmnpg_page_id'];
-		if ( ! $action )
+		if ( ! $action ) {
 			$action = $tab_action;
+		}
 		if ( $action && in_array( $action, array( 'trash', 'restore', 'delete' ) ) && ! is_array( $page_id ) ) {
 			$nonce_action = 'custom-admin-page-' . $action . $page_id;
 			$nonce_query_arg = '_wpnonce';
@@ -289,7 +289,7 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 			$list_messages = array(
 				'error'			=> __( 'Some errors occurred', 'custom-admin-page' ),
 				'add'			=> __( 'Page has been saved. Refresh the page to see the changes.', 'custom-admin-page' ),
-				'update'		=> __( 'Page has been updated. Refresh the page to see the changes.', 'custom-admin-page' ),
+				'update'		=> __( 'Page has been updated.', 'custom-admin-page' ),
 				'trash'			=> __( 'Selected pages were moved to the trash.', 'custom-admin-page' ),
 				'restore'		=> __( 'Selected pages were restored from the trash.', 'custom-admin-page' ),
 				'delete'		=> __( 'Selected pages were deleted.', 'custom-admin-page' ),
@@ -308,14 +308,16 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 						$page_content = addslashes( $page_content );
 					}
 					$page_slug = ! empty( $_REQUEST['cstmdmnpg_page_slug'] ) ? sanitize_title( $_REQUEST['cstmdmnpg_page_slug'] ) : '';
-					if ( empty( $page_slug ) && ! empty( $page_title ) )
+					if ( empty( $page_slug ) && ! empty( $page_title ) ) {
 						$page_slug = sanitize_title( $page_title );
+					}
 
 					$page_parent = ! empty( $_REQUEST['cstmdmnpg_parent'] ) ? stripslashes( $_REQUEST['cstmdmnpg_parent'] ) : NULL;
 					$icon = ! empty( $_REQUEST['cstmdmnpg_icon'] ) ? stripslashes( $_REQUEST['cstmdmnpg_icon'] ) : '';
 
-					if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && $_REQUEST['cstmdmnpg_capability_type'] == 'level' )
+					if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && 'level' == $_REQUEST['cstmdmnpg_capability_type'] ) {
 						$capability = ! empty( $_REQUEST['cstmdmnpg_capability_level'] ) ? intval( $_REQUEST['cstmdmnpg_capability_level'] ) : 0;
+					}
 					else
 						$capability = ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? trim( esc_attr( $_REQUEST['cstmdmnpg_capability'] ) ) : 'read';
 					$position = intval( $_REQUEST['cstmdmnpg_position'] ) >= 0 ? intval( $_REQUEST['cstmdmnpg_position'] ) : NULL;
@@ -324,7 +326,7 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 				/* for bulk actions */
 				if ( is_array( $page_id ) ) {
 					$page_id = implode( ',', $page_id );
-					$value = " IN (" . $page_id . ")";
+					$value = " IN ( " . $page_id . " )";
 				} else {
 					$value = "=" . $page_id;
 				}
@@ -379,9 +381,9 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 					case 'update':
 
 						$existing_title = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}cstmdmnpg_pages` WHERE `page_title` = '{$page_title}'" );
-						foreach ($existing_title as $key => $value) {
-							if ( $page_id == $existing_title[$key]->id ) {
-								$page_id = $existing_title[$key]->id;
+						foreach ( $existing_title as $key => $value ) {
+							if ( $page_id == $existing_title[ $key ]->id ) {
+								$page_id = $existing_title[ $key ]->id;
 								break;
 							}
 						}
@@ -416,16 +418,18 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
 							$old_status = 1;
 							$new_status = 0;
 						}
-						$result = $wpdb->query( "UPDATE `" . $wpdb->prefix . "cstmdmnpg_pages` SET `page_status`=replace(page_status, " . $old_status . ", " . $new_status . ") WHERE `id`" . $value );
+						$result = $wpdb->query( "UPDATE `" . $wpdb->prefix . "cstmdmnpg_pages` SET `page_status`=replace( page_status, " . $old_status . ", " . $new_status . " ) WHERE `id`" . $value );
 						break;
 					case 'delete':
 						global $cstmdmnpg_options;
 						$result = $wpdb->query( "DELETE FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `id`" . $value );
 						$ids = is_array( $_REQUEST['cstmdmnpg_page_id'] ) ? $_REQUEST['cstmdmnpg_page_id'] : array( $_REQUEST['cstmdmnpg_page_id'] );
-						if ( isset( $cstmdmnpg_options['page_for_pdf'] ) && in_array( $cstmdmnpg_options['page_for_pdf'], $ids ) )
+						if ( isset( $cstmdmnpg_options['page_for_pdf'] ) && in_array( $cstmdmnpg_options['page_for_pdf'], $ids ) ) {
 							$cstmdmnpg_options['page_for_pdf'] = 0;
-						if ( isset( $cstmdmnpg_options['page_for_print'] ) && in_array( $cstmdmnpg_options['page_for_print'], $ids ) )
+						}
+						if ( isset( $cstmdmnpg_options['page_for_print'] ) && in_array( $cstmdmnpg_options['page_for_print'], $ids ) ) {
 							$cstmdmnpg_options['page_for_print'] = 0;
+						}
 						update_option( 'cstmdmnpg_options', $cstmdmnpg_options );
 						break;
 					case 'edit':
@@ -451,14 +455,16 @@ if ( ! function_exists( 'cstmdmnpg_handle_action' ) ) {
  */
 if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 	function cstmdmnpg_display_pages() {
-		global $wpdb, $cstmdmnpg_pages_list, $menu, $submenu, $_registered_pages;
+		global $wpdb, $cstmdmnpg_pages_list, $menu, $page_slug, $page_title, $display_empty_page;
+		$message = $error = '';
 		$action_message = cstmdmnpg_handle_action();
 		$error = isset( $action_message['error'] ) && ( ! empty( $action_message['error'] ) ) ? $action_message['error'] : '';
 		if ( ! $error ) {
 			$message = isset( $action_message['done'] ) && ( ! empty( $action_message['done'] ) ) ? $action_message['done'] : '';
 		}
-
-		$display_empty_page = false; ?>
+		if( isset( $_REQUEST['cstmdmnpg_tab_action'] ) ) {
+			$display_empty_page = false;
+		} ?>
 		<div class="updated fade below-h2"<?php if ( empty( $message ) ) echo " style=\"display:none\""; ?>><p><strong><?php echo $message; ?></strong></p></div>
 		<div class="error below-h2"<?php if ( empty( $error ) ) echo " style=\"display:none\""; ?>><p><strong><?php echo $error; ?></strong></p></div>
 		<form id="cstmdmnpg_page_form" method="post">
@@ -476,18 +482,19 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 						$page_content	= ! empty( $_REQUEST['cstmdmnpg_content'] ) ? stripslashes( $_REQUEST['cstmdmnpg_content'] ) : '';
 						$page_parent	= ! empty( $_REQUEST['cstmdmnpg_parent'] ) ? stripslashes( $_REQUEST['cstmdmnpg_parent'] ) : NULL;
 						$icon			= ! empty( $_REQUEST['cstmdmnpg_icon'] ) ? stripslashes( $_REQUEST['cstmdmnpg_icon'] ) : '';
-						if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && $_REQUEST['cstmdmnpg_capability_type'] == 'level' ) {
+						if ( ! empty( $_REQUEST['cstmdmnpg_capability_type'] ) && 'level' == $_REQUEST['cstmdmnpg_capability_type'] ) {
 							$capability = ! empty( $_REQUEST['cstmdmnpg_capability_level'] ) ? intval( $_REQUEST['cstmdmnpg_capability_level'] ) : 0;
 						} else {
 							$capability = ! empty( $_REQUEST['cstmdmnpg_capability'] ) ? trim( esc_attr( $_REQUEST['cstmdmnpg_capability'] ) ) : 'read';
 						}
-						$position		= intval( $_REQUEST['cstmdmnpg_position'] ) >= 0 ? intval( $_REQUEST['cstmdmnpg_position'] ) : NULL;
+						$position = intval( $_REQUEST['cstmdmnpg_position'] ) >= 0 ? intval( $_REQUEST['cstmdmnpg_position'] ) : NULL;
 
-						if ( empty( $page_slug ) )
+						if ( empty( $page_slug ) && empty( $action_message['error'] ) ) {
 							$page_slug = ! empty( $page_title ) ? sanitize_title( $page_title ) : 'cstmdmnpg-page-' . $page_id;
+						}
 						break;
 					case 'edit': /* display content of page if we go from 'pages list'-page */
-						$page_id = ( ! isset( $_REQUEST['cstmdmnpg_page_id'] ) ) || empty( $_REQUEST['cstmdmnpg_page_id'] ) ? 0 : $_REQUEST['cstmdmnpg_page_id'];
+						$page_id = ( ! isset( $_REQUEST['cstmdmnpg_page_id'] ) ) ? 0 : intval( $_REQUEST['cstmdmnpg_page_id'] );
 						check_admin_referer( 'custom-admin-page-edit' . $page_id );
 						if ( empty( $page_id ) || 0 === $page_id ) {
 							$display_empty_page = true;
@@ -518,12 +525,19 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 						$display_empty_page = true;
 						break;
 				}
+				if ( isset( $_GET['cstmdmnpg_tab_action'] ) && 'new' == $_GET['cstmdmnpg_tab_action'] && "No pages were selected." == ( $action_message['error'] || "Such name already exists" == $action_message['error'] ) ) {
+					$tab_action = 'new';
+					$display_empty_page = true;
+				} 
 				if ( $display_empty_page ) {
 					$title			= __( 'Title', 'custom-admin-page' );
 					$button_title	= __( 'Save', 'custom-admin-page' );
 					$tab_action		= 'add';
 					$page_id		= 0;
-					$page_title = $page_content = $icon = $position = '';
+					$page_title = $page_slug = $page_content = $icon = $position = '';
+				}
+				if ( "Such name already exists" == $action_message["error"] ) {
+					$button_title = __( 'Save', 'custom-admin-page' ); 
 				} ?>
 				<h2><?php echo $title; ?></h2>
 				<div id="titlediv">
@@ -577,7 +591,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 											<td style="padding: 0;">
 												<fieldset>
 													<label>
-														<input id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $capability ) && is_numeric( $capability ) ) echo 'checked '; ?>/>
+														<input checked = "checked" id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $capability ) && is_numeric( $capability ) ) echo "checked" ; ?>/>
 														<?php _e( 'Level', 'custom-admin-page' ); ?>
 													</label>
 												<fieldset>
@@ -612,7 +626,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 								<th><?php _e( 'Parent', 'custom-admin-page' ); ?></th>
 								<td>
 									<select name="cstmdmnpg_parent" style="max-width:100%;">
-										<option value="">(<?php _e( 'no parent', 'custom-admin-page' ); ?>)</option>
+										<option value="">( <?php _e( 'no parent', 'custom-admin-page' ); ?> )</option>
 										<?php foreach ( $menu as $menu_slug ) {
 											if ( '' != $menu_slug[0] && $menu_slug[0] != $page_title ) { ?>
 												<option style="word-break: break-all;" value="<?php echo $menu_slug[2]; ?>" <?php if ( ! empty( $page_parent ) && $menu_slug[2] == $page_parent ) echo 'selected';?>><?php echo $menu_slug[0]; ?></option>
@@ -624,7 +638,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 							<tr>
 								<th>
 									<?php _e( 'Order', 'custom-admin-page' );
-									echo bws_add_help_box( __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')' ); ?>
+									echo bws_add_help_box( __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )' ); ?>
 								</th>
 								<td>
 									<input type="number" min="1" max="10000" name="cstmdmnpg_position" value="<?php if ( $position ) echo $position; ?>" />
@@ -634,7 +648,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 								<th>
 									<?php _e( 'Icon', 'custom-admin-page' );
 									echo bws_add_help_box(
-										__( 'Icon URL for this menu.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')
+										__( 'Icon URL for this menu.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )
 										<ul>
 											<li>* ' . sprintf( __( 'Enter a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ) . '</li>
 											<li>* ' . sprintf( __( 'Enter the name of the Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ) . '</li>
@@ -645,14 +659,13 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 								<td>
 									<fieldset>
 										<input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_icon" value="<?php echo $icon; ?>" />
-										<input class="button-secondary cstmdmnpg-upload-image hide-if-no-js" type="button" value="<?php echo ( empty( $icon ) ) ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>" />
+										<input class="button-secondary cstmdmnpg-upload-image hide-if-no-js" type="button" value="<?php echo ( empty( $icon ) ) ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>"/>
 									</fieldset>
 								</td>
 							</tr>
 						</table>
 						<div class="cstmdmnpg_icon">
 							<div>
-
 
 							</div>
 						</div>

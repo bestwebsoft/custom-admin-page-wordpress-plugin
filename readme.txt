@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 3.9
-Tested up to: 4.9.4
-Stable tag: 0.1.5
+Tested up to: 4.9.8
+Stable tag: 0.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V0.1.6 - 03.08.2018 =
+* NEW : The bug with icons uploading has been fixed.
+
 = V0.1.5 - 23.03.2018 =
 * Update : We updated all functionality for wordpress 4.9.4.
 
@@ -97,6 +100,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V0.1.6 =
+* Bug fixed. 
 
 = V0.1.5 =
 * The compatibility with new WordPress version updated.
