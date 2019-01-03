@@ -641,7 +641,7 @@ if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 									echo bws_add_help_box( __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )' ); ?>
 								</th>
 								<td>
-									<input type="number" min="1" max="10000" name="cstmdmnpg_position" value="<?php if ( $position ) echo $position; ?>" />
+									<input type="number"  min="1" max="10000" name="cstmdmnpg_position" value="<?php if ( $position ) echo $position; ?>" />
 								</td>
 							</tr>
 							<tr>

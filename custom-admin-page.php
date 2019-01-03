@@ -6,12 +6,12 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.6
+Version: 0.1.7
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2017  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2019  BestWebSoft  ( https://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -19,7 +19,7 @@ License: GPLv2 or later
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See theА
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
@@ -199,6 +199,13 @@ if ( ! function_exists ( 'cstmdmnpg_settings_page' ) ) {
 		global $cstmdmnpg_plugin_info; ?>
 		<div class="wrap">
 			<h1>Custom Admin Page <a href="<?php echo wp_nonce_url( '?page=custom-admin-page.php&cstmdmnpg_tab_action=new', 'custom-admin-page-new' ); ?>" class="add-new-h2 cstmdmnpg_add_new_button"><?php _e( 'Add New Page', 'custom-admin-page' ); ?></a></h1>
+			<noscript>
+            	<div class="error below-h2">
+                	<p><strong><?php _e( 'WARNING', 'custom-admin-page' ); ?>
+                            :</strong> <?php _e( 'The plugin works correctly only if JavaScript is enabled.', 'custom-admin-page' ); ?>
+                	</p>
+            	</div>
+        	</noscript>
 			<?php if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
 				require_once( dirname( __FILE__ ) . '/pages.php' );
 			}
@@ -259,7 +266,7 @@ if ( ! function_exists( 'wp_ajax_cstmdmnpg_sample_permalink' ) ) {
 			$slug = ! empty( $title ) ? sanitize_title( $title ) : 'cstmdmnpg-page-' . $page_id;
 		}
 
-		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/(\?.*)$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' ) . 'page=';
+		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/( \?.* )$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' ) . 'page=';
 		?>
 		<strong><?php _e( 'Permalink', 'custom-admin-page' ); ?>:</strong>
 		<span id="sample-permalink"><?php echo self_admin_url( $url ); ?><span id="editable-post-name"><?php echo $slug; ?></span></span>

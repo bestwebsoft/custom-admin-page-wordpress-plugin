@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: custom-admin-page\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-21 17:23+0200\n"
-"PO-Revision-Date: 2018-03-21 17:23+0200\n"
+"POT-Creation-Date: 2018-12-21 17:23+0200\n"
+"PO-Revision-Date: 2018-12-21 17:23+0200\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language: uk\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 2.2\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
 "((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -22,43 +22,51 @@ msgstr ""
 msgid "Custom Admin Page Settings"
 msgstr "Налаштування Custom Admin Page"
 
-#: custom-admin-page.php:188
+#: custom-admin-page.php:201
 msgid "Add New Page"
 msgstr "Додати нову сторінку"
 
-#: custom-admin-page.php:224 includes/pages.php:648
+#: custom-admin-page.php:204
+msgid "WARNING"
+msgstr "УВАГА"
+
+#: custom-admin-page.php:205
+msgid "The plugin works correctly only if JavaScript is enabled."
+msgstr "Плагін працює правильно, лише якщо ввімкнено JavaScript."
+
+#: custom-admin-page.php:244 includes/pages.php:662
 msgid "Change Image"
 msgstr "Змінити зображення"
 
-#: custom-admin-page.php:225
+#: custom-admin-page.php:245
 msgid "OK"
 msgstr "Добре"
 
-#: custom-admin-page.php:226
+#: custom-admin-page.php:246
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: custom-admin-page.php:250 includes/pages.php:537
+#: custom-admin-page.php:271 includes/pages.php:551
 msgid "Permalink"
 msgstr "Постійне посилання"
 
-#: custom-admin-page.php:252 includes/pages.php:539
+#: custom-admin-page.php:273 includes/pages.php:553
 msgid "Edit permalink"
 msgstr "Редагувати постійне посилання"
 
-#: custom-admin-page.php:252 includes/pages.php:139 includes/pages.php:539
+#: custom-admin-page.php:273 includes/pages.php:139 includes/pages.php:553
 msgid "Edit"
 msgstr "Редагувати"
 
-#: custom-admin-page.php:273 custom-admin-page.php:285
+#: custom-admin-page.php:294 custom-admin-page.php:306
 msgid "Settings"
 msgstr "Налаштування"
 
-#: custom-admin-page.php:287
+#: custom-admin-page.php:308
 msgid "FAQ"
 msgstr "FAQ"
 
-#: custom-admin-page.php:288
+#: custom-admin-page.php:309
 msgid "Support"
 msgstr "Техпідтримка"
 
@@ -78,15 +86,15 @@ msgstr "Сторінок в кошику не знайдено."
 msgid "No pages yet."
 msgstr "Сторінок не знайдено."
 
-#: includes/pages.php:61 includes/pages.php:522
+#: includes/pages.php:61 includes/pages.php:533
 msgid "Title"
 msgstr "Назва"
 
-#: includes/pages.php:62 includes/pages.php:573 includes/pages.php:599
+#: includes/pages.php:62 includes/pages.php:587 includes/pages.php:613
 msgid "Capability"
 msgstr "Рівень доступу"
 
-#: includes/pages.php:63 includes/pages.php:612
+#: includes/pages.php:63 includes/pages.php:626
 msgid "Parent"
 msgstr "Предок"
 
@@ -110,7 +118,7 @@ msgstr "в кошику"
 msgid "All"
 msgstr "Всі"
 
-#: includes/pages.php:228
+#: includes/pages.php:226
 msgid "Pages per page"
 msgstr "Сторінок на сторінці"
 
@@ -123,8 +131,10 @@ msgid "Page has been saved. Refresh the page to see the changes."
 msgstr "Дані сторінки збережені. Оновіть сторінку, щоб побачити зміни."
 
 #: includes/pages.php:292
-msgid "Page has been updated. Refresh the page to see the changes."
-msgstr "Сторінка оновлена. Оновіть сторінку, щоб побачити зміни."
+#, fuzzy
+#| msgid "Pages per page"
+msgid "Page has been updated."
+msgstr "Сторінок на сторінці"
 
 #: includes/pages.php:293
 msgid "Selected pages were moved to the trash."
@@ -146,80 +156,80 @@ msgstr "Не вибрано жодної сторінки."
 msgid "Such name already exists"
 msgstr "Таке ім'я вже існує"
 
-#: includes/pages.php:470 includes/pages.php:504
+#: includes/pages.php:476 includes/pages.php:511
 msgid "Edit page"
 msgstr "Редагувати сторінку"
 
-#: includes/pages.php:471 includes/pages.php:505
+#: includes/pages.php:477 includes/pages.php:512
 msgid "Update page"
 msgstr "Оновити сторінку"
 
-#: includes/pages.php:523
+#: includes/pages.php:534 includes/pages.php:540
 msgid "Save"
 msgstr "Зберегти"
 
-#: includes/pages.php:531
+#: includes/pages.php:545
 msgid "Enter Page Title"
 msgstr "Введіть назву сторінки"
 
-#: includes/pages.php:543
+#: includes/pages.php:557
 msgid "Slug"
 msgstr "Слаг"
 
-#: includes/pages.php:547
+#: includes/pages.php:561
 msgid "Content"
 msgstr "Зміст"
 
-#: includes/pages.php:568
+#: includes/pages.php:582
 msgid "Page Attributes"
 msgstr "Атрибути сторінки"
 
-#: includes/pages.php:573
+#: includes/pages.php:587
 msgid ""
 "The capability level required for this menu to be displayed to the user."
 msgstr "Рівень доступу цього меню необхідний для відображення користувачеві."
 
-#: includes/pages.php:581
+#: includes/pages.php:595
 msgid "Level"
 msgstr "Рівень користувача"
 
-#: includes/pages.php:591 includes/pages.php:605
+#: includes/pages.php:605 includes/pages.php:619
 msgid "see"
 msgstr "дивись"
 
-#: includes/pages.php:591
+#: includes/pages.php:605
 msgid "Levels"
 msgstr "Рівні користувача"
 
-#: includes/pages.php:605
+#: includes/pages.php:619
 msgid "Capabilities"
 msgstr "Рівні доступу"
 
-#: includes/pages.php:615
+#: includes/pages.php:629
 msgid "no parent"
 msgstr "без предка"
 
-#: includes/pages.php:626
+#: includes/pages.php:640
 msgid "Order"
 msgstr "Порядок"
 
-#: includes/pages.php:627
+#: includes/pages.php:641
 msgid "The order in the menu where this page will appear."
 msgstr "Позиція в меню."
 
-#: includes/pages.php:627 includes/pages.php:637
+#: includes/pages.php:641 includes/pages.php:651
 msgid "Optional"
 msgstr "Необов'язково"
 
-#: includes/pages.php:635
+#: includes/pages.php:649
 msgid "Icon"
 msgstr "Значок"
 
-#: includes/pages.php:637
+#: includes/pages.php:651
 msgid "Icon URL for this menu."
 msgstr "URL-адресу іконки, використовуваної для цього меню."
 
-#: includes/pages.php:639
+#: includes/pages.php:653
 #, php-format
 msgid ""
 "Enter a base64-encoded SVG using a data URI, which will be colored to match "
@@ -228,7 +238,7 @@ msgstr ""
 "Введіть base64-кодоване SVG за допомогою даних URI, яке буде забарвлено "
 "відповідно до колірної схеми. Воно повинно починатися з %s."
 
-#: includes/pages.php:640
+#: includes/pages.php:654
 #, php-format
 msgid ""
 "Enter the name of the Dashicons helper class to use a font icon, e.g. %s."
@@ -236,7 +246,7 @@ msgstr ""
 "Введіть ім'я допоміжного класу Dashicons, щоб використовувати значок шрифту, "
 "наприклад, %s."
 
-#: includes/pages.php:641
+#: includes/pages.php:655
 #, php-format
 msgid ""
 "Enter %s to leave div.wp-menu-image empty so the icon can be added via CSS."
@@ -244,22 +254,25 @@ msgstr ""
 "Введіть %s, щоб залишити div.wp-menu-image порожнім, таким чином іконка може "
 "бути додана за допомогою CSS."
 
-#: includes/pages.php:648
+#: includes/pages.php:662
 msgid "Add Image"
 msgstr "Додати зображення"
 
-#: includes/pages.php:668
+#: includes/pages.php:681
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
 msgstr "Результати пошуку для &#8220;%s&#8221;"
 
-#: includes/pages.php:670
+#: includes/pages.php:683
 msgid "Page filter"
 msgstr "Фільтр списку сторінок"
 
-#: includes/pages.php:673
+#: includes/pages.php:686
 msgid "Search"
 msgstr "Пошук"
+
+#~ msgid "Page has been updated. Refresh the page to see the changes."
+#~ msgstr "Сторінка оновлена. Оновіть сторінку, щоб побачити зміни."
 
 #~ msgid "Change image"
 #~ msgstr "Змінити зображення"
