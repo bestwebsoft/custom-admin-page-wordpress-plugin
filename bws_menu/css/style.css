@@ -150,8 +150,6 @@ body[class*="-bws-panel"] .update-nag {
     font-size: 13px;
     padding: 8px 19px 8px 9px;
     text-align: left;
-    width: 20px;
-    height: 20px;
 }
 .bws-membership .bws-button {
     background: #dd6930;
@@ -363,9 +361,8 @@ a.bws_donate {
     font: 400 20px/1 dashicons;
     width: 20px;
     vertical-align: bottom;
-    margin-left: -5px;
+    margin-left: -5px; 
 }
-
 .bws-filter-top-inside {
     display: none;
     margin: 25px 0;
