@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 0.1.8
+Version: 1.0.0
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -32,44 +32,164 @@ License: GPLv2 or later
  */
 if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 	function cstmdmnpg_add_pages() {
-		global $wpdb;
-		bws_general_menu();
-		$settings = add_submenu_page( 'bws_panel', __( 'Custom Admin Page Settings', 'custom-admin-page' ), 'Custom Admin Page', 'manage_options', 'custom-admin-page.php', 'cstmdmnpg_settings_page' );
+		global $wpdb, $submenu, $cstmdmnpg_plugin_info, $wp_version;
+        add_submenu_page(
+			'edit.php?post_type=bws-admin_page',
+			'BWS Panel',
+			'BWS Panel',
+			'manage_options',
+			'cstmdmnpg-bws-panel',
+			'bws_add_menu_render'
+		);
+        if ( isset( $submenu['edit.php?post_type=bws-admin_page'] ) ) {
+            $submenu['edit.php?post_type=bws-admin_page'][] = array(
+                '<span style="color:#d86463"> ' . __( 'Upgrade to Pro', 'custom-admin-page' ) . '</span>',
+                'manage_options',
+                'https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=f70bb9152d792af52f023f902590145e&pn=614&v=' . $cstmdmnpg_plugin_info["Version"] . '&wp_v=' . $wp_version
+            );
+        }
 
-		if ( ! function_exists( 'cstmdmnpg_screen_options' ) ) {
-			require_once( dirname( __FILE__ ) . '/includes/pages.php' );
-		}
-		add_action( 'load-' . $settings, 'cstmdmnpg_add_tabs' );
+        $old_table_name = $wpdb->prefix . 'cstmdmnpg_pages';
 
-		$pages = $wpdb->get_results( "SELECT * FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status`=0", ARRAY_A );
-		if ( ! empty( $pages ) ){
+        if( $wpdb->get_var( "SHOW TABLES LIKE '$old_table_name'" ) == $old_table_name ) {
+            cstmdmnpg_remove_old_table( $old_table_name );
+        }
+
+        $statuses = array( 'publish' );
+        if ( current_user_can( 'read_private_posts' ) ) {
+            $statuses[] = 'private';
+        }
+
+        $pages = get_posts( array(
+            'post_type' => 'bws-admin_page',
+            'post_status' => $statuses
+        ) );
+
+		if ( ! empty( $pages ) ) {
 			foreach ( $pages as $page ) {
-				if ( ! empty( $page['parent_page'] ) && $page['parent_page'] != $page['page_title'] ) {
-					if ( is_numeric( $page['capability'] ) && in_array( intval( $page['capability'] ), range( 0, 10 ) ) ) {
-						add_submenu_page( $page['parent_page'], $page['page_title'], $page['page_title'], 'level_' . $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content' );
+
+			    if ( null != $page->post_type ) {
+                    $post_meta = get_post_meta( $page->ID, $page->post_type, true );
+                } else {
+                    $post_meta = $wpdb->get_row( "SELECT `capability`, `parent_page` AS 'parent', `position` AS 'order', `icon` FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `id` = " . $page->ID, ARRAY_A );
+			    }
+
+				if ( ! empty( $post_meta['parent'] ) && $post_meta['parent'] != $page->post_title ) {
+					if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
+						add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content' );
 					} else {
-						add_submenu_page( $page['parent_page'], $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content' );
+						add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content' );
 					}
 				} else {
-					if ( ! empty( $page['icon'] ) ) {
-						if ( filter_var( $page['icon'], FILTER_VALIDATE_URL ) ) {
-							$icon = $page['icon'] . '" style="max-width: 20px; max-height: 20px;';
+					if ( ! empty( $post_meta['icon'] ) ) {
+						if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
+							$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
 						} else {
-							$icon = $page['icon'];
+							$icon = $post_meta['icon'];
 						}
 					} else {
 						$icon = '';
 					}
-					if ( is_numeric( $page['capability'] ) && in_array( intval( $page['capability'] ), range( 0, 10 ) ) ) {
-						add_menu_page( $page['page_title'], $page['page_title'], 'level_' . $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content', $icon, $page['position'] );
+					if ( '' == $post_meta['order'] ) {
+                        $post_meta['order'] = null;
+                    }
+					if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
+						add_menu_page( $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
 					} else {
-						add_menu_page( $page['page_title'], $page['page_title'], $page['capability'], $page['page_slug'], 'cstmdmnpg_page_content', $icon, $page['position'] );
+						add_menu_page( $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
 					}
 				}
 			}
 		}
-	}
+    }
 }
+
+if ( ! function_exists( 'cstmdmnpg_remove_old_table' ) ) {
+    function cstmdmnpg_remove_old_table( $old_table_name ) {
+        global $wpdb;
+
+        if ( is_multisite() ) {
+            /* Get all blog ids */
+            $blogids = $wpdb->get_col( "SELECT `blog_id` FROM $wpdb->blogs" );
+            $old_blog = $wpdb->blogid;
+            $tables = '';
+            foreach ( $blogids as $blog_id ) {
+                switch_to_blog( $blog_id );
+                $old_table_name = '`' . $wpdb->prefix . 'cstmdmnpg_pages`';
+                cstmdmnpg_transfer_data( $old_table_name );
+                if ( ! empty( $tables ) ) {
+                    $tables .= ', ';
+                }
+                $tables .= "`$old_table_name`";
+            }
+            $wpdb->query( "DROP TABLE IF EXISTS " . $tables . ";" );
+            switch_to_blog( $old_blog );
+            restore_current_blog();
+        } else {
+            cstmdmnpg_transfer_data( $old_table_name );
+            $wpdb->query( "DROP TABLE IF EXISTS `$old_table_name`;" );
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_transfer_data' ) ) {
+    function cstmdmnpg_transfer_data( $table_name ) {
+        global $wpdb;
+
+        $pages = $wpdb->get_results( "SELECT * FROM `$table_name`", ARRAY_A );
+
+        $page_arr = array(
+            'post_title'    => '',
+            'post_name'     => '',
+            'post_content'  => '',
+            'post_type'     => 'bws-admin_page',
+            'post_status'   => '',
+        );
+
+        if ( ! empty( $pages ) ) {
+            foreach ( $pages as $page ) {
+
+                $page_arr['post_title'] = $page['page_title'];
+
+                if ( cstmdmnpg_is_slug_exist( $page['page_slug'] ) ) {
+                    $i = 1;
+                    $page['page_slug'] = $page['page_slug'] . '-' . $i;
+                    while ( cstmdmnpg_is_slug_exist( $page['page_slug'] ) ) {
+                        $page['page_slug'] = str_replace( $i - 1, $i, $page['page_slug'] );
+                        $i++;
+                    }
+                }
+                $page_arr['post_name'] = $page['page_slug'];
+
+                $page_arr['post_content'] = $page['page_content'];
+                $page_arr['post_status'] = 0 == $page['page_status'] ? 'publish' : 'trash';
+                $page_id = wp_insert_post( $page_arr );
+
+                $data = array(
+                    'capability'      => $page['capability'],
+                    'parent'          => $page['parent_page'],
+                    'order'           => $page['position'],
+                    'icon'            => $page['icon'],
+                );
+
+                update_post_meta( $page_id, 'bws-admin_page', $data );
+            }
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_is_slug_exist' ) ) {
+    function cstmdmnpg_is_slug_exist( $slug ) {
+        $post = array(
+            'name' => $slug,
+            'post_type'   => 'bws-admin_page',
+            'numberposts' => 1
+        );
+
+        return !! get_posts( $post );
+    }
+}
+
 if ( ! function_exists( 'cstmdmnpg_plugins_loaded' ) ) {
 	function cstmdmnpg_plugins_loaded() {
 		/* Internationalization, first(!) */
@@ -98,22 +218,75 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
 		bws_wp_min_version_check( plugin_basename( __FILE__ ), $cstmdmnpg_plugin_info, '3.9' );
 
 		/* Get/Register and check settings for plugin */
-		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] ) {
+		if ( isset( $GLOBALS['post_type'] ) && 'bws-admin_page' == $GLOBALS['post_type'] ) {
 			cstmdmnpg_settings();
 		}
+
+		/* Register custom post type */
+        register_post_type('bws-admin_page',
+            array(
+                'labels'                => array(
+                                            'name'                  => __( 'Custom Admin Page', 'custom-admin-page' ),
+                                            'singular_name'         => __( 'Custom Admin Page', 'custom-admin-page' ),
+                                            'all_items'             => __( 'Admin Pages', 'custom-admin-page' ),
+                                            'add_new'               => __( 'Add New Page', 'custom-admin-page' ),
+                                            'add_new_item'          => __( 'Custom Admin Page', 'custom-admin-page' ),
+                                            'edit_item'				=> __( 'Custom Admin Page', 'custom-admin-page' ),
+                                            'search_items'			=> __( 'Search pages', 'custom-admin-page' ),
+                                            'not_found'				=> __( 'No page found', 'custom-admin-page' ),
+                                            'not_found_in_trash'	=> __( 'No page found in Trash', 'custom-admin-page' ),
+                                            'item_published'        => __( 'Admin Page published', 'custom-admin-page' ),
+                                            'item_updated'          => __( 'Admin Page updated', 'custom-admin-page' ),
+                                        ),
+                'supports'              => array(
+                                            'title',
+                                            'editor',
+                                        ),
+                'public'                => true,
+                'publicly_queryable'    => false,
+                'show_in_rest'          => true,
+                'register_meta_box_cb'	=> 'cstmdmnpg_add_meta_boxes',
+            )
+        );
 	}
 }
 
 /**
- *
+ * Checks wether or not current page
+ * - edit.php
+ * - post.php
+ * - post-new.php
+ * 
+ * for bws-admin_page
  */
+if ( ! function_exists( 'cstmdmnpg_is_our_cpt' ) ) {
+    function cstmdmnpg_is_our_cpt() {
+        return ( isset( $_GET['post_type'] ) && 'bws-admin_page' == $_GET['post_type'] ) || ( isset( $_GET['post'] ) && 'bws-admin_page' == get_post_type( $_GET['post'] ) );
+    }
+}
+
 if ( ! function_exists( 'cstmdmnpg_admin_init' ) ) {
 	function cstmdmnpg_admin_init() {
 		global $bws_plugin_info, $cstmdmnpg_plugin_info;
-		if ( empty( $bws_plugin_info ) ) {
+
+        /* Turning WPBakery front editor off on our CPT */
+        if ( function_exists( 'vc_disable_frontend' ) ) {
+            vc_disable_frontend();
+        }
+
+        if ( empty( $bws_plugin_info ) ) {
 			$bws_plugin_info = array( 'id' => '614', 'version' => $cstmdmnpg_plugin_info["Version"] );
 		}
-	}
+    }
+}
+
+
+if ( ! function_exists( 'cstmdmnpg_add_plugin_review' ) ) {
+    function cstmdmnpg_add_plugin_review() {
+        global $cstmdmnpg_plugin_info;
+
+        return bws_plugin_reviews_block( $cstmdmnpg_plugin_info['Name'], 'custom-admin-page' );
+    }
 }
 
 /**
@@ -122,27 +295,6 @@ if ( ! function_exists( 'cstmdmnpg_admin_init' ) ) {
 */
 if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
 	function cstmdmnpg_create_table() {
-		global $wpdb;
-
-		if ( ! $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}cstmdmnpg_pages'" ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
-			$sql_query =
-				"CREATE TABLE `{$wpdb->prefix}cstmdmnpg_pages` (
-				`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-				`page_title` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-				`page_slug` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-				`page_content` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-				`capability` VARCHAR( 255 ) NOT NULL DEFAULT '0',
-				`parent_page` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-				`icon` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-				`position` TINYINT DEFAULT NULL,
-				`page_status` INT( 1 ) NOT NULL DEFAULT '0',
-				PRIMARY KEY ( `id` )
-				) DEFAULT CHARSET=utf8;";
-			dbDelta( $sql_query );
-		}
-
 		register_uninstall_hook( __FILE__, 'cstmdmnpg_uninstall' );
 	}
 }
@@ -153,12 +305,12 @@ if ( ! function_exists( 'cstmdmnpg_create_table' ) ) {
  */
 if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 	function cstmdmnpg_settings() {
-		global $cstmdmnpg_options, $cstmdmnpg_plugin_info, $wpdb;
+		global $cstmdmnpg_options, $cstmdmnpg_plugin_info;
 		$db_version = '1.1';
 
 		$cstmdmnpg_options_defaults = array(
 			'plugin_option_version'		=> $cstmdmnpg_plugin_info["Version"],
-			'suggest_feature_banner'	=> 1
+			'suggest_feature_banner'	=> 1,
 		);
 
 		/* install the option defaults */
@@ -168,13 +320,6 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 		$cstmdmnpg_options = get_option( 'cstmdmnpg_options' );
 
 		if ( ! isset( $cstmdmnpg_options['plugin_option_version'] ) || $cstmdmnpg_options['plugin_option_version'] != $cstmdmnpg_plugin_info["Version"] ) {
-			/**
-			 * @deprecated
-			 * @since 0.1.6
-			 * @todo remove after 27.01.2019
-			 */
-			$wpdb->query( "ALTER TABLE `{$wpdb->prefix}cstmdmnpg_pages` MODIFY icon TEXT" );
-			/* @todo end */
 			$cstmdmnpg_options = array_merge( $cstmdmnpg_options_defaults, $cstmdmnpg_options );
 			$update_option = true;
 		}
@@ -191,88 +336,505 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 	}
 }
 
-/**
- * Add admin page
- */
-if ( ! function_exists ( 'cstmdmnpg_settings_page' ) ) {
-	function cstmdmnpg_settings_page () {
-		global $cstmdmnpg_plugin_info; ?>
-		<div class="wrap">
-			<h1>Custom Admin Page <a href="<?php echo wp_nonce_url( '?page=custom-admin-page.php&cstmdmnpg_tab_action=new', 'custom-admin-page-new' ); ?>" class="add-new-h2 cstmdmnpg_add_new_button"><?php _e( 'Add New Page', 'custom-admin-page' ); ?></a></h1>
-			<noscript>
-            	<div class="error below-h2">
-                	<p><strong><?php _e( 'WARNING', 'custom-admin-page' ); ?>
-                            :</strong> <?php _e( 'The plugin works correctly only if JavaScript is enabled.', 'custom-admin-page' ); ?>
-                	</p>
-            	</div>
-        	</noscript>
-			<?php if ( ! function_exists( 'cstmdmnpg_display_pages' ) ) {
-				require_once( dirname( __FILE__ ) . '/pages.php' );
-			}
+if ( ! function_exists( 'cstmdmnpg_custom_columns' ) ) {
+    function cstmdmnpg_custom_columns( $columns ) {
 
-			cstmdmnpg_display_pages();
-			bws_plugin_reviews_block( $cstmdmnpg_plugin_info['Name'], 'custom-admin-page' ); ?>
-		</div>
-	<?php }
+        $new_columns = array(
+            'capability'    => __( 'Capability', 'custom-admin-page' ),
+            'parent'        => __( 'Parent', 'custom-admin-page' ),
+        );
+
+        unset( $columns['date'] );
+
+        $filtered_columns = array_merge( $columns, $new_columns );
+
+        return $filtered_columns;
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_custom_columns_content' ) ) {
+    function cstmdmnpg_custom_columns_content( $column ) {
+        global $post, $menu;
+
+        switch ( $column ) {
+            case 'capability' :
+                $capability = get_post_meta( $post->ID, 'bws-admin_page', true );
+
+                echo ( ! empty( $capability ) ? $capability['capability'] : '' );
+                break;
+
+            case 'parent' :
+                $parent = get_post_meta( $post->ID, 'bws-admin_page', true );
+                if ( ! empty( $parent['parent'] ) ) {
+                    foreach ( $menu as $menu_slug ) {
+                        if ( $parent['parent'] == $menu_slug[2] ) {
+                            $parent = $menu_slug[0];
+                            break;
+                        }
+                    }
+                }
+
+                echo ( ! empty( $parent ) && ! is_array( $parent ) ? $parent : '' );
+                break;
+
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_custom_columns_sortable' ) ) {
+    function cstmdmnpg_custom_columns_sortable( $columns ) {
+
+        // Comment if you need these columns to be sortable and write the functionality to make them sort right
+        unset( $columns['capability'] );
+        unset( $columns['parent'] );
+
+        return $columns;
+    }
+}
+
+/**
+ * Add help tab
+ */
+if ( ! function_exists( 'cstmdmnpg_add_help_tab' ) ) {
+    function cstmdmnpg_add_help_tab() {
+        $screen = get_current_screen();
+
+        $args = array(
+            'id'		=> 'cstmdmnpg',
+            'section'	=> ''
+        );
+        bws_help_tab( $screen, $args );
+    }
+}
+
+/**
+ * Add custom fields
+ */
+if ( ! function_exists( 'cstmdmnpg_add_meta_boxes' ) ) {
+    function cstmdmnpg_add_meta_boxes() {
+        add_meta_box("page_attributes", __( 'Page Attributes', 'custom-admin-page' ), "cstmdmnpg_post_custom_box", "bws-admin_page", "normal", "low");
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
+    function cstmdmnpg_post_custom_box() {
+        global $post, $menu;
+
+        $page_title = get_the_title( $post->ID );
+
+        $post_meta = get_post_meta( $post->ID, 'bws-admin_page', true );
+
+        ?>
+        <table class="form-table">
+            <tr>
+                <th><?php _e( 'Capability', 'custom-admin-page' ); ?> *<?php echo bws_add_help_box( __( 'The capability level required for this menu to be displayed to the user.', 'custom-admin-page' ) ); ?></th>
+                <td>
+                    <table>
+                        <tr>
+                            <td style="padding: 0;">
+                                <fieldset>
+                                    <label>
+                                        <input checked="checked" id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $post_meta['capability'] ) && is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
+                                        <?php _e( 'Level', 'custom-admin-page' ); ?>
+                                    </label>
+                                    <fieldset>
+                            </td>
+                            <td style="padding: 0;">
+                                <select name="cstmdmnpg_capability_level">
+                                    <?php for ( $i = 0; $i <= 10; $i++ ) { ?>
+                                        <option value="<?php echo $i; ?>" <?php if ( isset( $post_meta['capability'] ) && $post_meta['capability'] == $i ) echo 'selected '; ?>><?php echo $i; ?></option>
+                                    <?php } ?>
+                                </select>
+                                <span class="bws_info"><?php _e( 'see', 'custom-admin-page' ); ?> <a href="https://codex.wordpress.org/User_Levels#User_Level_Capabilities" target="_blank"><?php _e( 'Levels', 'custom-admin-page' ); ?></a></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0;">
+                                <fieldset>
+                                    <label for="cstmdmnpg_capability_type">
+                                        <input id="cstmdmnpg_capability_type" type="radio" name="cstmdmnpg_capability_type" value="name" <?php if ( isset( $post_meta['capability'] ) && ! is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
+                                        <?php _e( 'Capability', 'custom-admin-page' ); ?>
+                                    </label>
+                                </fieldset>
+                            </td>
+                            <td style="padding: 0;">
+                                <input type="text" id="cstmdmnpg_capability_type" name="cstmdmnpg_capability" value="<?php if ( isset( $post_meta['capability'] ) && ! is_numeric( $post_meta['capability'] ) ) echo $post_meta['capability']; ?>" />
+                                <span class="bws_info"><?php _e( 'see', 'custom-admin-page' ); ?> <a href="https://wordpress.org/support/article/roles-and-capabilities/#capabilities" target="_blank"><?php _e( 'Capabilities', 'custom-admin-page' ); ?></a></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <th><?php _e( 'Parent', 'custom-admin-page' ); ?></th>
+                <td>
+                    <select name="cstmdmnpg_parent" style="max-width:100%;">
+                        <option value="">( <?php _e( 'no parent', 'custom-admin-page' ); ?> )</option>
+                        <?php foreach ( $menu as $menu_slug ) {
+                            if ( '' != $menu_slug[0] && $menu_slug[0] != $page_title ) { ?>
+                                <option style="word-break: break-all;" value="<?php echo $menu_slug[2]; ?>" <?php if ( isset( $post_meta['parent'] ) && $menu_slug[2] == $post_meta['parent'] ) echo 'selected';?>><?php echo $menu_slug[0]; ?></option>
+                            <?php }
+                        } ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <?php _e( 'Order', 'custom-admin-page' );
+                    echo bws_add_help_box( __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )' ); ?>
+                </th>
+                <td>
+                    <input type="number"  min="1" max="10000" name="cstmdmnpg_position" value="<?php if ( isset( $post_meta['order'] ) ) echo $post_meta['order']; ?>" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <?php _e( 'Icon', 'custom-admin-page' );
+                    echo bws_add_help_box(
+                        __( 'Icon URL for this menu.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )
+                                    <ul>
+                                        <li>* ' . sprintf( __( 'Enter a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ) . '</li>
+                                        <li>* ' . sprintf( __( 'Enter the name of the Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ) . '</li>
+                                        <li>* ' . sprintf( __( 'Enter %s to leave div.wp-menu-image empty so the icon can be added via CSS.', 'custom-admin-page' ), "<strong>'none'</strong>" ) . '</li>
+                                    </ul>'
+                    ); ?>
+                </th>
+                <td>
+                    <fieldset>
+                        <input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_icon" value="<?php if ( isset( $post_meta['icon'] ) ) echo $post_meta['icon']; ?>" />
+                        <input class="button-secondary cstmdmnpg-upload-image hide-if-no-js" type="button" value="<?php echo ( empty( $post_meta['icon'] ) ) ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>"/>
+                    </fieldset>
+                </td>
+            </tr>
+        </table>
+        <div class="cstmdmnpg_icon">
+            <div>
+
+            </div>
+        </div>
+        <?php
+    }
+}
+
+/**
+ * Save custom field data when creating/updating posts
+ */
+if ( ! function_exists( 'cstmdmnpg_save_custom_fields' ) ) {
+    function cstmdmnpg_save_custom_fields( $post_id, $post ) {
+
+        /* Don't store custom data twice */
+        if ( 'bws-admin_page' != $post->post_type || wp_is_post_revision( $post_id ) ) {
+			return;
+        }
+
+        /* Verify this came from the our screen and with proper authorization, because save_post can be triggered at other times */
+        if ( ! current_user_can( 'edit_page', $post->ID ) ) {
+            return $post->ID;
+        }
+
+        if ( ! isset(
+        		$_POST['cstmdmnpg_capability_type'],
+	            $_POST['cstmdmnpg_capability'],
+	            $_POST['cstmdmnpg_capability_level'],
+	            $_POST['cstmdmnpg_parent'],
+	            $_POST['cstmdmnpg_icon'],
+	            $_POST['cstmdmnpg_position']
+        ) ) {
+			return;
+        }
+
+        $is_builder  = preg_match( '/(\[vc_)|(\[et_)|(<!-- wp:)/', $post->post_content, $match );
+        $capability_role = '' == $_POST['cstmdmnpg_capability'] ? 'read' : $_POST['cstmdmnpg_capability'];
+        $capability = 'name' == $_POST['cstmdmnpg_capability_type'] ? $capability_role : $_POST['cstmdmnpg_capability_level'];
+        $icon = '' == $_POST['cstmdmnpg_parent'] ? $_POST['cstmdmnpg_icon'] : '';
+
+        $data = array(
+            'capability'      => $capability,
+            'parent'          => $_POST['cstmdmnpg_parent'],
+            'order'           => $_POST['cstmdmnpg_position'],
+            'icon'            => $icon,
+            'isBuilder'       => $is_builder,
+        );
+        $data = esc_sql( $data );
+        
+        update_post_meta( $post->ID, 'bws-admin_page', $data );
+    }
 }
 
 if ( ! function_exists ( 'cstmdmnpg_page_content' ) ) {
 	function cstmdmnpg_page_content () {
-		global $wpdb;
+        global $post;
+        
 		if ( isset( $_REQUEST['page'] ) ) {
-			$page_content = $wpdb->get_var( $wpdb->prepare( "SELECT `page_content` FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `page_status` = 0 AND `page_slug` = %s", $_REQUEST['page'] ) );
-			if ( ! empty( $page_content ) ) { ?>
-				<div class="wrap">
-					<?php echo apply_filters( 'the_content', wp_unslash( $page_content ) ); ?>
-				</div>
-			<?php }
+            $post = get_page_by_path( $_REQUEST['page'], OBJECT, 'bws-admin_page' );
+
+            if ( ! empty( $post ) ) {
+                if ( post_password_required( $post->ID ) ) {
+                    echo get_the_password_form( $post->ID );
+                    return;
+                }
+                ?>			
+                <div <?php body_class( 'wrap' ); ?> >
+                    <?php
+                    $divi_theme_active  = defined( 'ET_BUILDER_THEME' );
+                    $divi_plugin_active = function_exists( 'et_is_builder_plugin_active' ) &&  et_is_builder_plugin_active();
+                    if ( $divi_theme_active || $divi_plugin_active ) {
+                        echo cstmdmnpg_add_divi_wrap( $post->post_content ) ;
+                    } else {
+                        echo apply_filters( 'the_content', wp_unslash( $post->post_content ) );
+                    }
+                    ?>
+                </div>
+                <?php
+            }
 		}
 	}
 }
 
-/* Add stylesheets */
+if ( ! function_exists( 'cstmdmnpg_add_divi_wrap' ) ) {
+    function cstmdmnpg_add_divi_wrap( $content ) {
+        $wrap  = '<div id="et-boc">';
+        $wrap .= '<div id="et_builder_outer_content" class="et_builder_outer_content">';
+        $wrap .= '<div class="et_builder_inner_content et_pb_gutters3">';
+
+        $wrap .= apply_filters( 'the_content', wp_unslash( $content ) );
+
+        $wrap .= '</div></div></div>';
+
+        return $wrap;
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_page_builder_support' ) ) {
+    function cstmdmnpg_page_builder_support() {
+        global $wpdb;
+        
+        if ( isset( $_GET['page'] ) ) {
+            $page_id = $wpdb->get_var( "SELECT `ID` FROM `" . $wpdb->posts . "` WHERE `post_type` = 'bws-admin_page' AND `post_name` = '" . $_GET['page'] . "'" );
+
+            if ( $page_id ) {
+
+                if ( class_exists( 'Vc_Base' ) && class_exists( 'WPBMap' ) ) {
+                    WPBMap::addAllMappedShortcodes();
+
+                    $WPB = new Vc_Base();
+                    $WPB->frontCss();
+                    $WPB->addFrontCss();
+                    $WPB->addNoScript();
+                    $WPB->frontJsRegister();
+                    $WPB->fixPContent();
+                }
+
+                if ( defined( 'ET_BUILDER_DIR' ) ) {
+
+                    require_once( ET_BUILDER_DIR . 'class-et-builder-element.php' );
+                    require_once( ET_BUILDER_DIR . 'ab-testing.php' );
+                    do_action( 'et_builder_framework_loaded' );
+
+                    et_builder_init_global_settings();
+                    et_builder_add_main_elements();
+
+                    if ( defined( 'ET_BUILDER_THEME' ) ) {
+                        et_divi_load_scripts_styles();
+                    } else {
+                        wp_enqueue_script( 'divi-builder-custom-script', ET_BUILDER_PLUGIN_URI . '/js/divi-builder.min.js', array( 'jquery' ) , ET_BUILDER_VERSION, true );
+                    }
+                    et_builder_load_modules_styles();
+                    _action_et_pb_box_shadow_overlay();
+                }
+            }
+        }
+    }
+}
+
+/* Enable Divi Classic Builder on our CPT, because Divi does not have backend editor compatible with gutenberg */
+if ( ! function_exists( 'cstmdmnpg_enable_classic_editor' ) ) {
+    function cstmdmnpg_enable_classic_editor( $enable ) {
+        if ( cstmdmnpg_is_our_cpt() ) {
+            return true;
+        } else {
+            return $enable;
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_divi_disable_bfb' ) ) {
+    function cstmdmnpg_divi_disable_bfb( $enabled ) {
+        if ( cstmdmnpg_is_our_cpt() ) {
+            return false;
+        } else {
+            return $enabled;
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_divi_should_load_framework' ) ) {
+    function cstmdmnpg_divi_should_load_framework( $should_load ) {
+        if ( cstmdmnpg_is_our_cpt() ) {
+            return true;
+        } else {
+            return $should_load;
+        }
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_divi_change_link' ) ) {
+    function cstmdmnpg_divi_change_link( $actions, $post ) {
+
+        if ( cstmdmnpg_is_our_cpt() && isset( $actions['divi'] ) ) {
+            unset( $actions['divi'] );
+        }
+        
+        return $actions;
+    }
+}
+
+/* Enable Divi Builder on our CPT */
+if ( ! function_exists( 'cstmdmnpg_divi_add_post_type' ) ) {
+    function cstmdmnpg_divi_add_post_type( $post_types ) {
+        array_push( $post_types, 'bws-admin_page' );
+
+        return $post_types;
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_status_change' ) ) {
+    function cstmdmnpg_status_change( $new_status, $old_status, $post ) {
+        global $wpdb;
+
+        if ( 'publish' != $new_status ) {
+            return;
+        }
+
+        if ( 'bws-admin_page' != $post->post_type || '' == $post->post_content || 'trash' == $post->post_status ) {
+            return;
+        }
+
+        $builder_page = preg_match( '/(\[vc_)|(\[et_)|(<!-- wp:)/', $post->post_content, $match );
+
+        if ( ! $builder_page ) {
+            return;
+        }
+
+        $pages = $wpdb->get_results(
+            "SELECT `ID`
+            FROM `" . $wpdb->prefix . "posts`
+            WHERE `post_type` = 'bws-admin_page'
+                AND `post_status` = 'publish'
+                AND `ID` != " . $post->ID
+        );
+        
+        $built_pages = 0;
+
+        foreach ( $pages as $page ) {
+            $post_meta = get_post_meta( $page->ID, 'bws-admin_page', true );
+            $built_pages += isset( $post_meta['isBuilder'] ) ? $post_meta['isBuilder'] : 0;
+        }
+
+        if ( $built_pages >= 3 && $builder_page ) {
+
+            // update the post to change post status
+            wp_update_post( array( 'ID' => $post->ID, 'post_status' => 'draft' ) );
+
+            /* Show admin notice for Gutenberg (shows only 'Publishing failde' and throws and error in console) */
+            add_settings_error(
+                'page_builder_error',
+                esc_attr( 'settings_updated' ),
+                __( 'You can add only 3 admin pages in free plugin version.', 'custom-admin-page' ),
+                'error'
+            );
+            
+            /* Show admin notice */
+            add_filter( 'redirect_post_location', 'cstmdmnpg_add_notice_query_var', 99 );
+        }
+
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_add_notice_query_var' ) ) {
+    function cstmdmnpg_add_notice_query_var( $location ) {
+        remove_filter( 'redirect_post_location', 'cstmdmnpg_add_notice_query_var', 99 );
+
+        return add_query_arg( array( 'builder_page' => '1' ), $location );
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_remove_published_notice' ) ) {
+    function cstmdmnpg_remove_published_notice( $messages ) {
+        if ( isset( $_GET['builder_page'] ) ) {
+            $messages['post'][6] = '';
+        }
+
+	    return $messages;
+    }
+}
+
+if ( ! function_exists( 'cstmdmnpg_admin_notices' ) ) {
+    function cstmdmnpg_admin_notices() {
+        $is_our_page = cstmdmnpg_is_our_cpt();
+        $is_needed_plugins_active = is_plugin_active( 'divi-builder/divi-builder.php' ) || is_plugin_active( 'js_composer/js_composer.php' ) || defined( 'ET_BUILDER_THEME' );
+        
+        if ( $is_our_page && $is_needed_plugins_active ) { ?>
+			<noscript><div class="error below-h2"><p><strong><?php _e( "Please, enable JavaScript in Your browser.", 'custom-admin-page' ); ?></strong></p></div></noscript>
+        <?php }
+
+        if ( ! isset( $_GET['builder_page'] ) ) {
+            return;
+        }
+
+        $message = __( 'You can add only 3 admin pages in free plugin version.', 'custom-admin-page' );
+
+        echo '<div class="notice notice-error is-dismissible"><p>' . $message . '</p></div>';
+    }
+}
+
+if ( ! function_exists ( 'cstmdmnpg_notice_change' ) ) {
+    function cstmdmnpg_notice_change( $messages ) {
+        if ( cstmdmnpg_is_our_cpt() ) {
+            $max = sizeof( $messages['post'] );
+    
+            for ( $i = 0; $i < $max; $i++ ) {
+                $messages['post'][$i] = str_replace( 'Post', __( 'Admin Page', 'custom-admin-page' ), $messages['post'][$i] );
+            }
+        }
+    
+        return $messages;
+    }
+}
+
+if ( ! function_exists ( 'cstmdmnpg_dequeue_styles' ) ) {
+    function cstmdmnpg_dequeue_styles() {
+        if ( cstmdmnpg_is_our_cpt() ) {
+            wp_dequeue_style( 'et_pb_admin_date_css' );
+        }
+    }
+}
+
 if ( ! function_exists ( 'cstmdmnpg_admin_head' ) ) {
 	function cstmdmnpg_admin_head() {
 		wp_enqueue_style( 'cstmdmnpg-stylesheet', plugins_url( 'css/style.css', __FILE__ ) );
-		if ( isset( $_GET['page'] ) && 'custom-admin-page.php' == $_GET['page'] ) {
 
-			wp_enqueue_script( 'cstmdmnpg-script', plugins_url( 'js/script.js', __FILE__ ), array( 'jquery' ) );
+        if ( isset( $GLOBALS['post_type'] ) && 'bws-admin_page' == $GLOBALS['post_type'] ) {
 
-			bws_enqueue_settings_scripts();
+            cstmdmnpg_add_help_tab();
+
+            /* Add plugin review block */
+            add_filter( 'admin_footer_text', 'cstmdmnpg_add_plugin_review', 11 );
+            add_filter( 'update_footer', '__return_empty_string', 11 );
+
+            wp_enqueue_script( 'cstmdmnpg-script', plugins_url( 'js/script.js', __FILE__ ), array( 'jquery' ) );
+
+            bws_enqueue_settings_scripts();
 
 			$script_vars = array(
-				'changeImageLabel'	=> __( 'Change Image', 'custom-admin-page' ),
-				'ok'				=> __( 'OK', 'custom-admin-page' ),
-				'cancel'			=> __( 'Cancel', 'custom-admin-page' ),
-				'ajax_nonce'		=> wp_create_nonce( 'cstmdmnpg_ajax_nonce' )
+				'changeImageLabel'	        => __( 'Change Image', 'custom-admin-page' ),
+				'ok'				        => __( 'OK', 'custom-admin-page' ),
+				'cancel'			        => __( 'Cancel', 'custom-admin-page' ),
+                'ajax_nonce'		        => wp_create_nonce( 'cstmdmnpg_ajax_nonce' ),
+                'ajax_url'                   => admin_url( 'admin-ajax.php' ),
 			);
 			wp_localize_script( 'cstmdmnpg-script', 'cstmdmnpgScriptVars', $script_vars );
 		}
-	}
-}
-
-/**
- * Ajax handler to retrieve a sample permalink.
- */
-if ( ! function_exists( 'wp_ajax_cstmdmnpg_sample_permalink' ) ) {
-	function wp_ajax_cstmdmnpg_sample_permalink() {
-		check_ajax_referer( 'cstmdmnpg_ajax_nonce', 'nonce' );
-		$title = isset( $_POST['new_title'] )? $_POST['new_title'] : '';
-		$slug = isset( $_POST['new_slug'] )? sanitize_title( $_POST['new_slug'] ) : '';
-		$page_id = isset( $_POST['page_id'] )? sanitize_title( $_POST['page_id'] ) : 0;
-		$page_parent = isset( $_POST['parent_slug'] )? esc_attr( $_POST['parent_slug'] ) : 0;
-
-		if ( empty( $slug ) ) {
-			$slug = ! empty( $title ) ? sanitize_title( $title ) : 'cstmdmnpg-page-' . $page_id;
-		}
-
-		$url = ( ( ! empty( $page_parent ) && in_array( preg_replace( "/( \?.* )$/", "", $page_parent ), array( 'index.php', 'edit.php', 'upload.php', 'link-manager.php', 'edit-comments.php', 'themes.php', 'plugins.php', 'users.php', 'tools.php', 'options-general.php' ) ) ) ? $page_parent : 'admin.php' ) . ( ( stripos( $page_parent, '?' ) ) ? '&' : '?' ) . 'page=';
-		?>
-		<strong><?php _e( 'Permalink', 'custom-admin-page' ); ?>:</strong>
-		<span id="sample-permalink"><?php echo self_admin_url( $url ); ?><span id="editable-post-name"><?php echo $slug; ?></span></span>
-		‎<span id="edit-slug-buttons"><button type="button" class="edit-slug button button-small hide-if-no-js" aria-label="<?php _e( 'Edit permalink', 'custom-admin-page' ); ?>"><?php _e( 'Edit', 'custom-admin-page' ); ?></button></span>
-		<span id="editable-post-name-full"><?php echo $slug; ?></span>
-		<?php die();
 	}
 }
 
@@ -280,8 +842,8 @@ if ( ! function_exists ( 'cstmdmnpg_plugin_banner' ) ) {
 	function cstmdmnpg_plugin_banner() {
 		global $hook_suffix, $cstmdmnpg_plugin_info;
 		if ( 'plugins.php' == $hook_suffix ) {
-			bws_plugin_banner_to_settings( $cstmdmnpg_plugin_info, 'cstmdmnpg_options', 'custom-admin-page', 'admin.php?page=custom-admin-page.php' );
-		} elseif ( isset( $_REQUEST['page'] ) && 'custom-admin-page.php' == $_REQUEST['page'] ) {
+			bws_plugin_banner_to_settings( $cstmdmnpg_plugin_info, 'cstmdmnpg_options', 'custom-admin-page', 'edit.php?post_type=bws-admin_page' );
+		} elseif ( isset( $GLOBALS['post_type'] ) && 'bws-admin_page' == $GLOBALS['post_type'] ) {
 			bws_plugin_suggest_feature_banner( $cstmdmnpg_plugin_info, 'cstmdmnpg_options', 'custom-admin-page' );
 		}
 	}
@@ -291,7 +853,7 @@ if ( ! function_exists ( 'cstmdmnpg_plugin_banner' ) ) {
 if ( ! function_exists( 'cstmdmnpg_action_links' ) ) {
 	function cstmdmnpg_action_links( $links, $file ) {
 		if ( ! is_network_admin() && $file == plugin_basename( __FILE__ ) ) {
-			$settings_link = '<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
+			$settings_link = '<a href="edit.php?post_type=bws-admin_page">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
 			array_unshift( $links, $settings_link );
 		}
 		return $links;
@@ -303,7 +865,7 @@ if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 	function cstmdmnpg_links( $links, $file ) {
 		if ( $file == plugin_basename( __FILE__ ) ) {
 			if ( ! is_network_admin() ) {
-				$links[]='<a href="admin.php?page=custom-admin-page.php">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
+				$links[]='<a href="edit.php?post_type=bws-admin_page">' . __( 'Settings', 'custom-admin-page' ) . '</a>';
 			}
 			$links[] = '<a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target="_blank">' . __( 'FAQ', 'custom-admin-page' ) . '</a>';
 			$links[] = '<a href="https://support.bestwebsoft.com">' . __( 'Support', 'custom-admin-page' ) . '</a>';
@@ -315,30 +877,12 @@ if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 /* Deleting plugin options on uninstalling */
 if ( ! function_exists( 'cstmdmnpg_uninstall' ) ) {
 	function cstmdmnpg_uninstall() {
-		global $wpdb;
-		if ( is_multisite() ) {
-			/* Get all blog ids */
-			$blogids = $wpdb->get_col( "SELECT `blog_id` FROM $wpdb->blogs" );
-			$old_blog = $wpdb->blogid;
-			$tables = '';
-			foreach ( $blogids as $blog_id ) {
-				switch_to_blog( $blog_id );
-				delete_option( 'cstmdmnpg_options' );
-				if ( ! empty( $tables ) )
-					$tables .= ', ';
-				$tables .= '`' . $wpdb->prefix . 'cstmdmnpg_pages`';
-			}
-			$wpdb->query( "DROP TABLE IF EXISTS " . $tables . ";" );
-			switch_to_blog( $old_blog );
-			restore_current_blog();
-		} else {
-			delete_option( 'cstmdmnpg_options' );
-			$wpdb->query( "DROP TABLE IF EXISTS `" . $wpdb->prefix . "cstmdmnpg_pages`;" );
-		}
 
-		require_once( dirname( __FILE__ ) . '/bws_menu/bws_include.php' );
-		bws_include_init( plugin_basename( __FILE__ ) );
-		bws_delete_plugin( plugin_basename( __FILE__ ) );
+        delete_option( 'cstmdmnpg_options' );
+
+        require_once( dirname( __FILE__ ) . '/bws_menu/bws_include.php' );
+        bws_include_init( plugin_basename( __FILE__ ) );
+        bws_delete_plugin( plugin_basename( __FILE__ ) );
 	}
 }
 
@@ -348,12 +892,29 @@ add_action( 'init', 'cstmdmnpg_init' );
 add_action( 'plugins_loaded', 'cstmdmnpg_plugins_loaded' );
 add_action( 'admin_init', 'cstmdmnpg_admin_init' );
 /* Adding 'BWS Plugins' admin menu */
-add_action( 'admin_menu', 'cstmdmnpg_add_pages' );
+add_action( 'admin_menu', 'cstmdmnpg_add_pages', 9);
 add_action( 'admin_enqueue_scripts', 'cstmdmnpg_admin_head' );
+/* Adding columns to table list */
+add_filter( 'manage_bws-admin_page_posts_columns' , 'cstmdmnpg_custom_columns' );
+add_filter( 'manage_edit-bws-admin_page_sortable_columns', 'cstmdmnpg_custom_columns_sortable' );
+add_action( 'manage_bws-admin_page_posts_custom_column', 'cstmdmnpg_custom_columns_content' );
+/* Adding Page builders support */
+add_action( 'admin_enqueue_scripts', 'cstmdmnpg_page_builder_support' );
+add_action( 'admin_print_styles', 'cstmdmnpg_dequeue_styles' );
+add_filter( 'et_builder_post_types', 'cstmdmnpg_divi_add_post_type' );
+add_filter( 'et_builder_enable_classic_editor', 'cstmdmnpg_enable_classic_editor' );
+add_filter( 'et_builder_bfb_enabled', 'cstmdmnpg_divi_disable_bfb', 11 );
+add_filter( 'et_builder_should_load_framework', 'cstmdmnpg_divi_should_load_framework' );
+/* Builder built page limit */
+add_action( 'transition_post_status','cstmdmnpg_status_change', 10, 3 );
+add_filter( 'post_updated_messages', 'cstmdmnpg_remove_published_notice' );
+add_action( 'admin_notices', 'cstmdmnpg_admin_notices' );
 /* Additional links on the plugin page */
 add_filter( 'plugin_action_links', 'cstmdmnpg_action_links', 10, 2 );
 add_filter( 'plugin_row_meta', 'cstmdmnpg_links', 10, 2 );
 
-add_action( 'admin_notices', 'cstmdmnpg_plugin_banner' );
+add_filter( 'post_updated_messages', 'cstmdmnpg_notice_change' );
 
-add_action( 'wp_ajax_cstmdmnpg-sample-permalink', 'wp_ajax_cstmdmnpg_sample_permalink' );
+add_action( 'save_post', 'cstmdmnpg_save_custom_fields', 1, 2 );
+
+add_action( 'admin_notices', 'cstmdmnpg_plugin_banner' );

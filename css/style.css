@@ -1,3 +1,7 @@
+#menu-posts-bws-admin_page .wp-menu-image:before {
+	content: "\e906";
+	font-family: 'bwsicons' !important;
+}
 .cstmdmnpg-image-url {
 	margin-bottom: 10px;
 }

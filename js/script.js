@@ -1,103 +1,17 @@
 ( function( $ ) {
 	$( document ).ready( function() {
 
-		$( '#cstmdmnpg_page_form #titlediv' ).on( 'click', '.edit-slug', function() {
-			var i, slug_value,
-				$el, revert_e,
-				c = 0,
-				real_slug = $( '#post_name' ),
-				revert_slug = real_slug.val(),
-				permalink = $( '#sample-permalink' ),
-				permalinkOrig = permalink.html(),
-				permalinkInner = $( '#sample-permalink a' ).html(),
-				buttons = $( '#edit-slug-buttons' ),
-				buttonsOrig = buttons.html(),
-				full = $( '#editable-post-name-full' ),
-				page_id = $( 'input[name="cstmdmnpg_page_id"]' ).val();
+		$( '.et-bfb-optin-cta' ).remove();
 
-			// Deal with Twemoji in the post-name
-			full.find( 'img' ).replaceWith( function() { return this.alt; } );
-			full = full.html();
-
-			permalink.html( permalinkInner );
-			$el = $( '#editable-post-name' );
-			revert_e = $el.html();
-
-			buttons.html( '<button type="button" class="save button button-small">' + cstmdmnpgScriptVars.ok + '</button> <button type="button" class="cancel button-link">' + cstmdmnpgScriptVars.cancel + '</button>' );
-
-			buttons.children( '.save' ).click( function() {
-				var new_slug = $el.children( 'input' ).val();
-
-				if ( new_slug == $( '#editable-post-name-full' ).text() ) {
-					buttons.children( '.cancel' ).click();
-					return;
+		if ( $( 'select[name="cstmdmnpg_parent"]' ).length > 0 ) {
+			$( 'select[name="cstmdmnpg_parent"]' ).change( function() {
+				if ( '' == $( this ).children( 'option:selected' ).val() ) {
+					$( 'tr' ).has( '.cstmdmnpg-image-url' ).show();
+				} else {
+					$( 'tr' ).has( '.cstmdmnpg-image-url' ).hide();
 				}
-				$.post( ajaxurl, {
-					action: 'cstmdmnpg-sample-permalink',
-					page_id: page_id,
-					new_slug: new_slug,
-					new_title: $( '#title' ).val(),
-					parent_slug: $( 'select[name="cstmdmnpg_parent"] option:selected' ).val(),
-					nonce: cstmdmnpgScriptVars.ajax_nonce
-				}, function( data ) {
-					var box = $( '#edit-slug-box' );
-					box.html( data );
-					if ( box.hasClass( 'hidden' ) ) {
-						box.fadeIn( 'fast', function() {
-							box.removeClass( 'hidden' );
-						} );
-					}
-
-					buttons.html( buttonsOrig );
-					permalink.html( permalinkOrig );
-					real_slug.val( new_slug );
-					$( '.edit-slug' ).focus();
-				} );
 			} );
-
-			buttons.children( '.cancel' ).click( function() {
-				$( '#view-post-btn' ).show();
-				$el.html( revert_e );
-				buttons.html( buttonsOrig );
-				permalink.html( permalinkOrig );
-				real_slug.val( revert_slug );
-				$( '.edit-slug' ).focus();
-			} );
-
-			for ( i = 0; i < full.length; ++i ) {
-				if ( '%' == full.charAt( i ) )
-					c++;
-			}
-
-			slug_value = ( c > full.length / 4 ) ? '' : full;
-			$el.html( '<input type="text" id="new-post-slug" value="' + slug_value + '" autocomplete="off" />' ).children( 'input' ).keydown( function( e ) {
-				var key = e.which;
-				// On enter, just save the new slug, don't save the post.
-				if ( 13 === key ) {
-					e.preventDefault();
-					buttons.children( '.save' ).click();
-				}
-				if ( 27 === key ) {
-					buttons.children( '.cancel' ).click();
-				}
-			} ).keyup( function() {
-				real_slug.val( this.value );
-			} ).focus();
-		} );
-
-		$( 'select[name=cstmdmnpg_parent]' ).change( function() {
-			if ( '' == $( 'select[name="cstmdmnpg_parent"] option:selected' ).val() )
-				$( '.cstmdmnpg_position, .cstmdmnpg_icon' ).show();
-			else
-				$( '.cstmdmnpg_position, .cstmdmnpg_icon' ).hide();
-		} ).trigger( 'change' );
-
-		$( 'select[name="cstmdmnpg_capability_level"]' ).focus( function() {
-			$( '#cstmdmnpg_capability_level' ).attr( 'checked', 'checked' );
-		} );
-		$( 'input[name="cstmdmnpg_capability"]' ).focus( function() {
-			$( '#cstmdmnpg_capability' ).attr( 'checked', 'checked' );
-		} );
+		}
 
 		if ( $( '.cstmdmnpg-upload-image' ).length > 0 ) {
 

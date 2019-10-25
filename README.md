@@ -1,13 +1,13 @@
 <a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/" target=_blank>Custom Admin Page WordPress Plugin</a>
 ========================
 
-<p>Simple plugin which adds unlimited custom pages to your WordPress admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, choose page position and icon.</p>
+<p>Simple plugin which adds unlimited WordPress custom pages to your admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, Gutenberg, WPBakery Page Builder, and Divi Builder. Choose page position and its icon.</p>
 <p>Download, install, and add your own admin pages in a few clicks!</p>
 <p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
-<h4>Features</h4>
+<h4>Free Features</h4>
 <ul>
 <li>Add unlimited number of custom pages</li>
-<li>Manage your custom page using TinyMCE editor</li>
+<li>Manage your custom page using TinyMCE or Gutenberg editor</li>
 <li>Make custom pages available for certain user roles</li>
 <li>Add custom page to parent page</li>
 <li>Set custom page order</li>
@@ -16,6 +16,21 @@
 <li>Incredibly simple settings for fast setup without modifying code</li>
 <li>Detailed step-by-step documentation and videos</li>
 </ul>
+<blockquote>
+<p><strong>Pro Features</strong></p>
+<p>All features from Free version included plus:</p>
+<ul>
+<li>Add unlimited number of custom pages using:
+<ul>
+<li>WPBakery Page Builder</li>
+<li>Divi Builder</li>
+<li>Gutenberg</li>
+</ul>
+</li>
+<li>Get answer to your support question within one business day (<a href="https://bestwebsoft.com/support-policy/" rel="nofollow">Support Policy</a>)</li>
+</ul>
+<p><a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=c00e18b325e058b53d0610fa0376bcdc" rel="nofollow">Upgrade to Pro Now</a></p>
+</blockquote>
 <p>If you have a feature suggestion or idea you&#8217;d like to see in the plugin, we&#8217;d love to hear about it! <a href="https://support.bestwebsoft.com/hc/en-us/requests/new" rel="nofollow">Suggest a Feature</a></p>
 <h4>Documentation &amp; Videos</h4>
 <ul>

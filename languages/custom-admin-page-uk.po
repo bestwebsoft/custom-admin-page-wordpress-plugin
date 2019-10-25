@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: custom-admin-page\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 17:23+0200\n"
-"PO-Revision-Date: 2018-12-21 17:23+0200\n"
+"POT-Creation-Date: 2019-07-04 14:07+0300\n"
+"PO-Revision-Date: 2019-07-04 14:09+0300\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language: uk\n"
@@ -13,223 +13,107 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.2.3\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
 "((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: custom-admin-page.php:37
-msgid "Custom Admin Page Settings"
-msgstr "Налаштування Custom Admin Page"
+#: custom-admin-page.php:41
+msgid "Upgrade to Pro"
+msgstr "Оновитись до Pro"
 
-#: custom-admin-page.php:201
+#: custom-admin-page.php:216 custom-admin-page.php:217
+#: custom-admin-page.php:220 custom-admin-page.php:221
+msgid "Custom Admin Page"
+msgstr "Custom Admin Page"
+
+#: custom-admin-page.php:218
+msgid "Admin Pages"
+msgstr "Адмiн Cторiнки"
+
+#: custom-admin-page.php:219
 msgid "Add New Page"
 msgstr "Додати нову сторінку"
 
-#: custom-admin-page.php:204
-msgid "WARNING"
-msgstr "УВАГА"
+#: custom-admin-page.php:222
+msgid "Search pages"
+msgstr "Пошук сторiнок"
 
-#: custom-admin-page.php:205
-msgid "The plugin works correctly only if JavaScript is enabled."
-msgstr "Плагін працює правильно, лише якщо ввімкнено JavaScript."
+#: custom-admin-page.php:223
+msgid "No page found"
+msgstr "Сторінока не знайдена"
 
-#: custom-admin-page.php:244 includes/pages.php:662
-msgid "Change Image"
-msgstr "Змінити зображення"
+#: custom-admin-page.php:224
+msgid "No page found in Trash"
+msgstr "Сторінок в кошику не знайдено"
 
-#: custom-admin-page.php:245
-msgid "OK"
-msgstr "Добре"
+#: custom-admin-page.php:225
+msgid "Admin Page published"
+msgstr "Адмiн. сторiнка опублiкована"
 
-#: custom-admin-page.php:246
-msgid "Cancel"
-msgstr "Скасувати"
+#: custom-admin-page.php:226
+msgid "Admin Page updated"
+msgstr "Адмiн. сторiнка оновлена"
 
-#: custom-admin-page.php:271 includes/pages.php:551
-msgid "Permalink"
-msgstr "Постійне посилання"
-
-#: custom-admin-page.php:273 includes/pages.php:553
-msgid "Edit permalink"
-msgstr "Редагувати постійне посилання"
-
-#: custom-admin-page.php:273 includes/pages.php:139 includes/pages.php:553
-msgid "Edit"
-msgstr "Редагувати"
-
-#: custom-admin-page.php:294 custom-admin-page.php:306
-msgid "Settings"
-msgstr "Налаштування"
-
-#: custom-admin-page.php:308
-msgid "FAQ"
-msgstr "FAQ"
-
-#: custom-admin-page.php:309
-msgid "Support"
-msgstr "Техпідтримка"
-
-#: includes/pages.php:22
-msgid "page"
-msgstr "сторінка"
-
-#: includes/pages.php:23
-msgid "pages"
-msgstr "сторінки"
-
-#: includes/pages.php:51
-msgid "No pages found in Trash."
-msgstr "Сторінок в кошику не знайдено."
-
-#: includes/pages.php:51
-msgid "No pages yet."
-msgstr "Сторінок не знайдено."
-
-#: includes/pages.php:61 includes/pages.php:533
-msgid "Title"
-msgstr "Назва"
-
-#: includes/pages.php:62 includes/pages.php:587 includes/pages.php:613
+#: custom-admin-page.php:319 custom-admin-page.php:406
+#: custom-admin-page.php:432
 msgid "Capability"
 msgstr "Рівень доступу"
 
-#: includes/pages.php:63 includes/pages.php:626
+#: custom-admin-page.php:320 custom-admin-page.php:445
 msgid "Parent"
 msgstr "Предок"
 
-#: includes/pages.php:86 includes/pages.php:142
-msgid "Delete Permanently"
-msgstr "Видалити остаточно"
-
-#: includes/pages.php:87 includes/pages.php:143
-msgid "Restore"
-msgstr "Відновити"
-
-#: includes/pages.php:89 includes/pages.php:140 includes/pages.php:170
-msgid "Trash"
-msgstr "Кошик"
-
-#: includes/pages.php:113
-msgid "in trash"
-msgstr "в кошику"
-
-#: includes/pages.php:169
-msgid "All"
-msgstr "Всі"
-
-#: includes/pages.php:226
-msgid "Pages per page"
-msgstr "Сторінок на сторінці"
-
-#: includes/pages.php:290
-msgid "Some errors occurred"
-msgstr "Виникли деякі помилки"
-
-#: includes/pages.php:291
-msgid "Page has been saved. Refresh the page to see the changes."
-msgstr "Дані сторінки збережені. Оновіть сторінку, щоб побачити зміни."
-
-#: includes/pages.php:292
-#, fuzzy
-#| msgid "Pages per page"
-msgid "Page has been updated."
-msgstr "Сторінок на сторінці"
-
-#: includes/pages.php:293
-msgid "Selected pages were moved to the trash."
-msgstr "Обрані сторінки переміщено до кошика."
-
-#: includes/pages.php:294
-msgid "Selected pages were restored from the trash."
-msgstr "Обрані сторінки відновлено ​​з кошика."
-
-#: includes/pages.php:295
-msgid "Selected pages were deleted."
-msgstr "Обрані сторінки видалено назавжди."
-
-#: includes/pages.php:296
-msgid "No pages were selected."
-msgstr "Не вибрано жодної сторінки."
-
-#: includes/pages.php:297
-msgid "Such name already exists"
-msgstr "Таке ім'я вже існує"
-
-#: includes/pages.php:476 includes/pages.php:511
-msgid "Edit page"
-msgstr "Редагувати сторінку"
-
-#: includes/pages.php:477 includes/pages.php:512
-msgid "Update page"
-msgstr "Оновити сторінку"
-
-#: includes/pages.php:534 includes/pages.php:540
-msgid "Save"
-msgstr "Зберегти"
-
-#: includes/pages.php:545
-msgid "Enter Page Title"
-msgstr "Введіть назву сторінки"
-
-#: includes/pages.php:557
-msgid "Slug"
-msgstr "Слаг"
-
-#: includes/pages.php:561
-msgid "Content"
-msgstr "Зміст"
-
-#: includes/pages.php:582
+#: custom-admin-page.php:391
 msgid "Page Attributes"
 msgstr "Атрибути сторінки"
 
-#: includes/pages.php:587
+#: custom-admin-page.php:406
 msgid ""
 "The capability level required for this menu to be displayed to the user."
 msgstr "Рівень доступу цього меню необхідний для відображення користувачеві."
 
-#: includes/pages.php:595
+#: custom-admin-page.php:414
 msgid "Level"
 msgstr "Рівень користувача"
 
-#: includes/pages.php:605 includes/pages.php:619
+#: custom-admin-page.php:424 custom-admin-page.php:438
 msgid "see"
 msgstr "дивись"
 
-#: includes/pages.php:605
+#: custom-admin-page.php:424
 msgid "Levels"
 msgstr "Рівні користувача"
 
-#: includes/pages.php:619
+#: custom-admin-page.php:438
 msgid "Capabilities"
 msgstr "Рівні доступу"
 
-#: includes/pages.php:629
+#: custom-admin-page.php:448
 msgid "no parent"
 msgstr "без предка"
 
-#: includes/pages.php:640
+#: custom-admin-page.php:459
 msgid "Order"
 msgstr "Порядок"
 
-#: includes/pages.php:641
+#: custom-admin-page.php:460
 msgid "The order in the menu where this page will appear."
 msgstr "Позиція в меню."
 
-#: includes/pages.php:641 includes/pages.php:651
+#: custom-admin-page.php:460 custom-admin-page.php:470
 msgid "Optional"
 msgstr "Необов'язково"
 
-#: includes/pages.php:649
+#: custom-admin-page.php:468
 msgid "Icon"
 msgstr "Значок"
 
-#: includes/pages.php:651
+#: custom-admin-page.php:470
 msgid "Icon URL for this menu."
 msgstr "URL-адресу іконки, використовуваної для цього меню."
 
-#: includes/pages.php:653
+#: custom-admin-page.php:472
 #, php-format
 msgid ""
 "Enter a base64-encoded SVG using a data URI, which will be colored to match "
@@ -238,7 +122,7 @@ msgstr ""
 "Введіть base64-кодоване SVG за допомогою даних URI, яке буде забарвлено "
 "відповідно до колірної схеми. Воно повинно починатися з %s."
 
-#: includes/pages.php:654
+#: custom-admin-page.php:473
 #, php-format
 msgid ""
 "Enter the name of the Dashicons helper class to use a font icon, e.g. %s."
@@ -246,7 +130,7 @@ msgstr ""
 "Введіть ім'я допоміжного класу Dashicons, щоб використовувати значок шрифту, "
 "наприклад, %s."
 
-#: includes/pages.php:655
+#: custom-admin-page.php:474
 #, php-format
 msgid ""
 "Enter %s to leave div.wp-menu-image empty so the icon can be added via CSS."
@@ -254,22 +138,141 @@ msgstr ""
 "Введіть %s, щоб залишити div.wp-menu-image порожнім, таким чином іконка може "
 "бути додана за допомогою CSS."
 
-#: includes/pages.php:662
+#: custom-admin-page.php:481
 msgid "Add Image"
 msgstr "Додати зображення"
 
-#: includes/pages.php:681
-#, php-format
-msgid "Search results for &#8220;%s&#8221;"
-msgstr "Результати пошуку для &#8220;%s&#8221;"
+#: custom-admin-page.php:481 custom-admin-page.php:777
+msgid "Change Image"
+msgstr "Змінити зображення"
 
-#: includes/pages.php:683
-msgid "Page filter"
-msgstr "Фільтр списку сторінок"
+#: custom-admin-page.php:681 custom-admin-page.php:720
+msgid "You can add only 3 admin pages in free plugin version."
+msgstr "Ви можете додати тiльки 3 адмiн. сторiнки у free версiї плагiну."
 
-#: includes/pages.php:686
-msgid "Search"
-msgstr "Пошук"
+#: custom-admin-page.php:713
+msgid "Please, enable JavaScript in Your browser."
+msgstr "Будь ласка, увiмкнiть JavaScript у Своему браузерi."
+
+#: custom-admin-page.php:731
+msgid "Admin Page"
+msgstr "Адмiн. сторiнка"
+
+#: custom-admin-page.php:778
+msgid "OK"
+msgstr "Добре"
+
+#: custom-admin-page.php:779
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: custom-admin-page.php:802 custom-admin-page.php:814
+msgid "Settings"
+msgstr "Налаштування"
+
+#: custom-admin-page.php:816
+msgid "FAQ"
+msgstr "FAQ"
+
+#: custom-admin-page.php:817
+msgid "Support"
+msgstr "Техпідтримка"
+
+#~ msgid "You cannot have more than 3 admin pages."
+#~ msgstr "Ви не можете створити бiльше трьох Адмiн. сторiнок."
+
+#~ msgid "Custom Admin Pages"
+#~ msgstr "Custom Admin Pages"
+
+#~ msgid "WARNING"
+#~ msgstr "УВАГА"
+
+#~ msgid "The plugin works correctly only if JavaScript is enabled."
+#~ msgstr "Плагін працює правильно, лише якщо ввімкнено JavaScript."
+
+#~ msgid "Permalink"
+#~ msgstr "Постійне посилання"
+
+#~ msgid "Edit permalink"
+#~ msgstr "Редагувати постійне посилання"
+
+#~ msgid "Edit"
+#~ msgstr "Редагувати"
+
+#~ msgid "page"
+#~ msgstr "сторінка"
+
+#~ msgid "pages"
+#~ msgstr "сторінки"
+
+#~ msgid "No pages yet."
+#~ msgstr "Сторінок не знайдено."
+
+#~ msgid "Title"
+#~ msgstr "Назва"
+
+#~ msgid "Delete Permanently"
+#~ msgstr "Видалити остаточно"
+
+#~ msgid "Restore"
+#~ msgstr "Відновити"
+
+#~ msgid "Trash"
+#~ msgstr "Кошик"
+
+#~ msgid "in trash"
+#~ msgstr "в кошику"
+
+#~ msgid "All"
+#~ msgstr "Всі"
+
+#~ msgid "Pages per page"
+#~ msgstr "Сторінок на сторінці"
+
+#~ msgid "Some errors occurred"
+#~ msgstr "Виникли деякі помилки"
+
+#~ msgid "Page has been saved. Refresh the page to see the changes."
+#~ msgstr "Дані сторінки збережені. Оновіть сторінку, щоб побачити зміни."
+
+#~ msgid "Selected pages were moved to the trash."
+#~ msgstr "Обрані сторінки переміщено до кошика."
+
+#~ msgid "Selected pages were restored from the trash."
+#~ msgstr "Обрані сторінки відновлено ​​з кошика."
+
+#~ msgid "Selected pages were deleted."
+#~ msgstr "Обрані сторінки видалено назавжди."
+
+#~ msgid "No pages were selected."
+#~ msgstr "Не вибрано жодної сторінки."
+
+#~ msgid "Such name already exists"
+#~ msgstr "Таке ім'я вже існує"
+
+#~ msgid "Edit page"
+#~ msgstr "Редагувати сторінку"
+
+#~ msgid "Update page"
+#~ msgstr "Оновити сторінку"
+
+#~ msgid "Save"
+#~ msgstr "Зберегти"
+
+#~ msgid "Enter Page Title"
+#~ msgstr "Введіть назву сторінки"
+
+#~ msgid "Slug"
+#~ msgstr "Слаг"
+
+#~ msgid "Content"
+#~ msgstr "Зміст"
+
+#~ msgid "Search results for &#8220;%s&#8221;"
+#~ msgstr "Результати пошуку для &#8220;%s&#8221;"
+
+#~ msgid "Page filter"
+#~ msgstr "Фільтр списку сторінок"
 
 #~ msgid "Page has been updated. Refresh the page to see the changes."
 #~ msgstr "Сторінка оновлена. Оновіть сторінку, щоб побачити зміни."

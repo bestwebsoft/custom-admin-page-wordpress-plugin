@@ -1,10 +1,10 @@
 === Custom Admin Page by BestWebSoft ===
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
-Tags: custom admin page, add admin page, add custom page, add admin menu, custom admin menu, dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
+Tags: custom admin page, Gutenberg admin page, Composer custom page, add admin menu, custom admin menu, Divi dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 3.9
-Tested up to: 5.2.2
-Stable tag: 0.1.8
+Tested up to: 5.2.4
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,16 +12,16 @@ Add unlimited custom pages to WordPress admin dashboard.
 
 == Description ==
 
-Simple plugin which adds unlimited custom pages to your WordPress admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, choose page position and icon.
+Simple plugin which adds unlimited WordPress custom pages to your admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, Gutenberg, WPBakery Page Builder, and Divi Builder. Choose page position and its icon.
 
 Download, install, and add your own admin pages in a few clicks!
 
 https://www.youtube.com/watch?v=Ecvb7F2sATs
 
-= Features =
+= Free Features =
 
 * Add unlimited number of custom pages
-* Manage your custom page using TinyMCE editor
+* Manage your custom page using TinyMCE or Gutenberg editor
 * Make custom pages available for certain user roles
 * Add custom page to parent page
 * Set custom page order
@@ -29,6 +29,18 @@ https://www.youtube.com/watch?v=Ecvb7F2sATs
 * Compatible with latest WordPress version
 * Incredibly simple settings for fast setup without modifying code
 * Detailed step-by-step documentation and videos
+
+> **Pro Features**
+>
+> All features from Free version included plus:
+>
+> * Add unlimited number of custom pages using:
+> 	* WPBakery Page Builder
+> 	* Divi Builder
+> 	* Gutenberg
+> * Get answer to your support question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
+>
+> [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=c00e18b325e058b53d0610fa0376bcdc)
 
 If you have a feature suggestion or idea you'd like to see in the plugin, we'd love to hear about it! [Suggest a Feature](https://support.bestwebsoft.com/hc/en-us/requests/new)
 
@@ -71,12 +83,17 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 == Screenshots ==
 
 1. Plugin`s settings page.
-2. Add New Page using the plugin.
-3. Custom page added by the plugin.
-4. Custom child page added by the plugin.
-
+2. Admin page`s settings.
+3. Custom page created with Divi Builder.
+4. Custom page created with WPBakery Page Builder.
+5. Page`s attributes.
 
 == Changelog ==
+
+= V1.0.0 - 25.10.2019 =
+* NEW : The compatibility with Gutenberg has been added.
+* NEW : The compatibility with WPBakery Page Builder has been added.
+* NEW : The compatibility with Divi Builder has been added.
 
 = V0.1.8 - 04.09.2019 =
 * Update: The deactivation feedback has been changed. Misleading buttons have been removed.
@@ -107,14 +124,17 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Upgrade Notice ==
 
+= V1.0.0 =
+* New features added.
+
 = V0.1.8 =
-* Usability improved
+* Usability improved.
 
 = V0.1.7 =
 * The compatibility with new WordPress version updated.
 
 = V0.1.6 =
-* Bug fixed. 
+* Bug fixed.
 
 = V0.1.5 =
 * The compatibility with new WordPress version updated.
