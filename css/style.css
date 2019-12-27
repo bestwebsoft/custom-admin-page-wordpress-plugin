@@ -11,3 +11,8 @@
 		margin-top: 15px;
 	}
 }
+@media only screen and ( max-width: 782px ) {
+	#menu-posts-bws-admin_page a.menu-top.wp-menu-open{
+		height: 52px;
+	}
+}

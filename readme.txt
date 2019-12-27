@@ -2,9 +2,9 @@
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, Gutenberg admin page, Composer custom page, add admin menu, custom admin menu, Divi dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
-Requires at least: 3.9
-Tested up to: 5.2.4
-Stable tag: 1.0.0
+Requires at least: 4.5
+Tested up to: 5.3.2
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,13 +82,16 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Screenshots ==
 
-1. Plugin`s settings page.
+1. Admin pages list.
 2. Admin page`s settings.
 3. Custom page created with Divi Builder.
 4. Custom page created with WPBakery Page Builder.
 5. Page`s attributes.
 
 == Changelog ==
+
+= V1.0.1 - 26.12.2019 =
+* NEW : Settings page was added.
 
 = V1.0.0 - 25.10.2019 =
 * NEW : The compatibility with Gutenberg has been added.
@@ -123,6 +126,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V1.0.1 =
+* Usability improved.
 
 = V1.0.0 =
 * New features added.
