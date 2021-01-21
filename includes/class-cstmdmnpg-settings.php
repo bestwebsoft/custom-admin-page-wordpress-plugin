@@ -30,10 +30,9 @@ if ( ! class_exists( 'Cstmdmnpg_Settings_Tabs' ) ) {
 				'options' 			 => $cstmdmnpg_options,
 				'tabs' 				 => $tabs,
 				'wp_slug'			 => 'custom-admin-page',
-				'pro_page' 			 => 'edit.php?post_type=bws-admin_page',
-                'bws_license_plugin' => 'custom-admin-page-pro/custom-admin-page-pro.php',
 				'link_key' 			 => '23e9c49f512f7a6d0900c5a1503ded4f',
 				'link_pn' 			 => '614',
+				'doc_link'           => 'https://docs.google.com/document/d/181D3GGP32aF7lr8ax1bJduUl0Fp0FbwqD2vK6KdYArQ/'
 			) );
         }
 

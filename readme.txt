@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, Gutenberg admin page, Composer custom page, add admin menu, custom admin menu, Divi dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 4.5
-Tested up to: 5.3.2
-Stable tag: 1.0.1
+Tested up to: 5.6
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=Ecvb7F2sATs
 
 = Free Features =
 
-* Add unlimited number of custom pages
+* Add unlimited number of custom pages using TinyMCE editor
 * Manage your custom page using TinyMCE or Gutenberg editor
 * Make custom pages available for certain user roles
 * Add custom page to parent page
@@ -38,6 +38,7 @@ https://www.youtube.com/watch?v=Ecvb7F2sATs
 > 	* WPBakery Page Builder
 > 	* Divi Builder
 > 	* Gutenberg
+> * Change page slug [NEW]
 > * Get answer to your support question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
 >
 > [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=c00e18b325e058b53d0610fa0376bcdc)
@@ -46,6 +47,7 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation & Videos =
 
+* [[Doc] User Guide](https://docs.google.com/document/d/181D3GGP32aF7lr8ax1bJduUl0Fp0FbwqD2vK6KdYArQ/edit)
 * [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
 
 = Help & Support =
@@ -90,6 +92,13 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.2 - 21.01.2021 =
+* PRO : Ability to change page slug has been added.
+* Bugfix : The bug with Gutenberg has been fixed.
+* Bugfix : The bug with order in the menu has been fixed.
+* Update : BWS Panel section was updated.
+* Update : All functionality was updated for WordPress 5.6.
+
 = V1.0.1 - 26.12.2019 =
 * NEW : Settings page was added.
 
@@ -126,6 +135,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V1.0.2 =
+* New features added.
+* Bugs fixed.
+* Plugin optimization completed.
 
 = V1.0.1 =
 * Usability improved.

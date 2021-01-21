@@ -2,8 +2,18 @@
 	content: "\e906";
 	font-family: 'bwsicons' !important;
 }
-.cstmdmnpg-image-url {
-	margin-bottom: 10px;
+.cstmdmnpg_wrap {
+	margin: 10px 20px 0 2px;
+}
+#adminmenu div.wp-menu-name {
+	padding: 8px 8px 8px 36px;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-word;
+	-ms-hyphens: auto;
+	-webkit-hyphens: auto;
+	hyphens: auto;
 }
 @media only screen and ( max-width: 410px ) {
 	.cstmdmnpg_add_new_button {

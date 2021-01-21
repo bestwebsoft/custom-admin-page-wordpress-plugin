@@ -6,12 +6,12 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 1.0.1
+Version: 1.0.2
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
 
-/*  © Copyright 2020  BestWebSoft  ( https://support.bestwebsoft.com )
+/*  © Copyright 2021  BestWebSoft  ( https://support.bestwebsoft.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -80,6 +80,10 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
             /* first - add parent page, than - add_submenu_page */
 			foreach ( $pages as $page ) {
 
+                if ( empty( $page->post_title ) ) {
+                    $page->post_title = sprintf( '(%s)', __( 'no title', 'custom-admin-page' ) );
+                }
+
 			    if ( null != $page->post_type ) {
                     $post_meta = get_post_meta( $page->ID, $page->post_type, true );
                 } else {
@@ -92,15 +96,12 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 			    }
 
 				if ( empty( $post_meta['parent'] ) || $post_meta['parent'] == $page->post_title ) {
-					if ( ! empty( $post_meta['icon'] ) ) {
-						if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
-							$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
-						} else {
-							$icon = $post_meta['icon'];
-						}
+					if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
+						$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
 					} else {
-						$icon = '';
+						$icon = $post_meta['icon'];
 					}
+
 					if ( '' == $post_meta['order'] ) {
                         $post_meta['order'] = null;
                     }
@@ -112,6 +113,10 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 				}
 			}
             foreach ( $pages as $page ) {
+
+                if ( empty( $page->post_title ) ) {
+                    $page->post_title = sprintf( '(%s)', __( 'no title', 'custom-admin-page' ) );
+                }
 
                 if ( null != $page->post_type ) {
                     $post_meta = get_post_meta( $page->ID, $page->post_type, true );
@@ -126,9 +131,9 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 
                 if ( ! empty( $post_meta['parent'] ) && $post_meta['parent'] != $page->post_title ) {
                     if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
-                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content' );
+                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
                     } else {
-                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content' );
+                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
                     }
                 }
             }
@@ -227,12 +232,13 @@ if ( ! function_exists ( 'cstmdmnpg_init' ) ) {
             'bws-admin_page',
             array(
                 'labels'                => array(
+                                            'menu_name'             => __( 'Custom Admin Page', 'custom-admin-page' ),
                                             'name'                  => __( 'Custom Admin Page', 'custom-admin-page' ),
                                             'singular_name'         => __( 'Custom Admin Page', 'custom-admin-page' ),
                                             'all_items'             => __( 'Admin Pages', 'custom-admin-page' ),
-                                            'add_new'               => __( 'Add New Page', 'custom-admin-page' ),
-                                            'add_new_item'          => __( 'Custom Admin Page', 'custom-admin-page' ),
-                                            'edit_item'				=> __( 'Custom Admin Page', 'custom-admin-page' ),
+                                            'add_new'               => __( 'Add New', 'custom-admin-page' ),
+                                            'add_new_item'          => __( 'Add New Admin Page', 'custom-admin-page' ),
+                                            'edit_item'				=> __( 'Edit Admin Page', 'custom-admin-page' ),
                                             'search_items'			=> __( 'Search pages', 'custom-admin-page' ),
                                             'not_found'				=> __( 'No page found', 'custom-admin-page' ),
                                             'not_found_in_trash'	=> __( 'No page found in Trash', 'custom-admin-page' ),
@@ -327,6 +333,7 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 
 		if ( ! isset( $cstmdmnpg_options['plugin_option_version'] ) || $cstmdmnpg_options['plugin_option_version'] != $cstmdmnpg_plugin_info["Version"] ) {
 			$options_default = cstmdmnpg_get_options_default();
+            $cstmdmnpg_options['hide_premium_options'] = array();
             $cstmdmnpg_options = array_merge( $cstmdmnpg_options, $options_default );
 			$update_option = true;
 		}
@@ -470,46 +477,75 @@ if ( ! function_exists( 'cstmdmnpg_add_meta_boxes' ) ) {
 
 if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
     function cstmdmnpg_post_custom_box() {
-        global $post, $menu;
+        global $post, $menu, $cstmdmnpg_options, $cstmdmnpg_plugin_info, $wp_version;
 
         $page_title = get_the_title( $post->ID );
+        $post_meta = get_post_meta( $post->ID, 'bws-admin_page', true );
 
-        $post_meta = get_post_meta( $post->ID, 'bws-admin_page', true ); ?>
+	    if ( ! bws_hide_premium_options_check( $cstmdmnpg_options ) ) { ?>
+            <div class="bws_pro_version_bloc">
+                <div class="bws_pro_version_table_bloc">
+                    <div class="bws_table_bg"></div>
+                    <table class="form-table bws_pro_version">
+                        <tr>
+                            <th><?php _e( 'Page Slug', 'custom-admin-page' ); ?></th>
+                            <td>
+                                <input disabled="disabled" type="text" name="cstmdmnpg_page_slug" value="<?php if ( ! empty( $post->post_name ) ) echo $post->post_name; ?>" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="bws_pro_version_tooltip">
+                    <a class="bws_button" href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=23e9c49f512f7a6d0900c5a1503ded4f&amp;pn=614&amp;v=<?php echo $cstmdmnpg_plugin_info["Version"]; ?>&amp;wp_v=<?php echo $wp_version; ?>" target="_blank" title="Custom Admin Page Pro">
+			            <?php _e( 'Upgrade to Pro', 'custom-admin-page' ); ?>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+            </div>
+	    <?php } ?>
         <table class="form-table">
             <tr>
-                <th><?php _e( 'Capability', 'custom-admin-page' ); ?> *<?php echo bws_add_help_box( __( 'The capability level required for this menu to be displayed to the user.', 'custom-admin-page' ) ); ?></th>
+                <th><?php _e( 'Capability', 'custom-admin-page' ); ?> *</th>
                 <td>
                     <table>
                         <tr>
                             <td style="padding: 0;">
                                 <fieldset>
                                     <label>
-                                        <input checked="checked" id="cstmdmnpg_capability_level" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $post_meta['capability'] ) && is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
+                                        <input checked="checked" id="cstmdmnpg_capability_level" class="bws_option_affect" data-affect-show=".cstmdmnpg_to_level" data-affect-hide=".cstmdmnpg_to_capability" type="radio" name="cstmdmnpg_capability_type" value="level" <?php if ( isset( $post_meta['capability'] ) && is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
                                         <?php _e( 'Level', 'custom-admin-page' ); ?>
-                                    </label>
-                                    <fieldset>
-                            </td>
-                            <td style="padding: 0;">
-                                <select name="cstmdmnpg_capability_level">
-                                    <?php for ( $i = 0; $i <= 10; $i++ ) { ?>
-                                        <option value="<?php echo $i; ?>" <?php if ( isset( $post_meta['capability'] ) && $post_meta['capability'] == $i ) echo 'selected '; ?>><?php echo $i; ?></option>
-                                    <?php } ?>
-                                </select>
-                                <span class="bws_info"><?php _e( 'see', 'custom-admin-page' ); ?> <a href="https://codex.wordpress.org/User_Levels#User_Level_Capabilities" target="_blank"><?php _e( 'Levels', 'custom-admin-page' ); ?></a></span>
+                                    </label><br>
+                                    <div class="cstmdmnpg_to_level">
+                                        <select name="cstmdmnpg_capability_level">
+                                            <?php for ( $i = 0; $i <= 10; $i++ ) { ?>
+                                                <option value="<?php echo $i; ?>" <?php if ( isset( $post_meta['capability'] ) && $post_meta['capability'] == $i ) echo 'selected '; ?>><?php echo $i; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <span class="bws_info"><?php _e( 'Level', 'custom-admin-page' ); ?> <a href="https://codex.wordpress.org/User_Levels#User_Level_Capabilities" target="_blank"><?php _e( 'Learn More', 'custom-admin-page' ); ?></a></span><br />
+                                        <span class="bws_info"><?php echo __( 'The capability level required for this menu to be displayed to the user.', 'custom-admin-page' ); ?></span>
+                                    </div>
+                                </fieldset>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding: 0;">
                                 <fieldset>
                                     <label for="cstmdmnpg_capability_type">
-                                        <input id="cstmdmnpg_capability_type" type="radio" name="cstmdmnpg_capability_type" value="name" <?php if ( isset( $post_meta['capability'] ) && ! is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
+                                        <input id="cstmdmnpg_capability_type" class="bws_option_affect" data-affect-show=".cstmdmnpg_to_capability" data-affect-hide=".cstmdmnpg_to_level" type="radio" name="cstmdmnpg_capability_type" value="name" <?php if ( isset( $post_meta['capability'] ) && ! is_numeric( $post_meta['capability'] ) ) echo 'checked'; ?>/>
                                         <?php _e( 'Capability', 'custom-admin-page' ); ?>
-                                    </label>
+                                    </label><br>
+                                    <div class="cstmdmnpg_to_capability">
+                                        <select name="cstmdmnpg_capability">
+			                                <?php $wp_roles = new WP_Roles();
+			                                $roles = $wp_roles->roles;
+
+			                                foreach ( $roles['administrator']['capabilities'] as $role => $bool ) { ?>
+                                                <option value="<?php echo $role; ?>" <?php if ( isset( $post_meta['capability'] ) && $post_meta['capability'] == $role ) echo 'selected '; ?>><?php echo $role; ?></option>
+			                                <?php } ?>
+                                        </select><br />
+                                        <span class="bws_info"><?php _e( 'Capability', 'custom-admin-page' ); ?> <a href="https://wordpress.org/support/article/roles-and-capabilities/#capabilities" target="_blank"><?php _e( 'Learn More', 'custom-admin-page' ); ?></a></span><br />
+                                    </div>
                                 </fieldset>
-                            </td>
-                            <td style="padding: 0;">
-                                <input type="text" id="cstmdmnpg_capability_type" name="cstmdmnpg_capability" value="<?php if ( isset( $post_meta['capability'] ) && ! is_numeric( $post_meta['capability'] ) ) echo $post_meta['capability']; ?>" />
-                                <span class="bws_info"><?php _e( 'see', 'custom-admin-page' ); ?> <a href="https://wordpress.org/support/article/roles-and-capabilities/#capabilities" target="_blank"><?php _e( 'Capabilities', 'custom-admin-page' ); ?></a></span>
                             </td>
                         </tr>
                     </table>
@@ -519,7 +555,7 @@ if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
                 <th><?php _e( 'Parent', 'custom-admin-page' ); ?></th>
                 <td>
                     <select name="cstmdmnpg_parent" style="max-width:100%;">
-                        <option value="">( <?php _e( 'no parent', 'custom-admin-page' ); ?> )</option>
+                        <option value="">( <?php _e( 'Parent Page - None', 'custom-admin-page' ); ?> )</option>
                         <?php foreach ( $menu as $menu_slug ) {
                             if ( '' != $menu_slug[0] && $menu_slug[0] != $page_title ) { ?>
                                 <option style="word-break: break-all;" value="<?php echo $menu_slug[2]; ?>" <?php if ( isset( $post_meta['parent'] ) && $menu_slug[2] == $post_meta['parent'] ) echo 'selected';?>><?php echo $menu_slug[0]; ?></option>
@@ -533,35 +569,63 @@ if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
                     <?php _e( 'Order', 'custom-admin-page' ); ?>
                 </th>
                 <td>
-                    <input type="number"  min="1" max="10000" name="cstmdmnpg_position" value="<?php if ( isset( $post_meta['order'] ) ) echo $post_meta['order']; ?>" />
-                    <p class="bws_info"><?php echo __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')'; ?></p>
+                    <input type="number"  min="0" max="10000" name="cstmdmnpg_position" value="<?php if ( isset( $post_meta['order'] ) ) echo $post_meta['order']; ?>" /><br />
+                    <span class="bws_info"><?php echo __( 'The order in the menu where this page will appear.', 'custom-admin-page' ) . ' (' . __( 'Optional', 'custom-admin-page' ) . ')'; ?></span>
                 </td>
             </tr>
-            <tr>
+            <tr id="cstmdmnpg_icon_to_page">
                 <th>
-                    <?php _e( 'Icon', 'custom-admin-page' );
-                    echo bws_add_help_box(
-                        __( 'Icon URL for this menu.', 'custom-admin-page' ) . ' ( ' . __( 'Optional', 'custom-admin-page' ) . ' )
-                                    <ul>
-                                        <li>* ' . sprintf( __( 'Enter a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ) . '</li>
-                                        <li>* ' . sprintf( __( 'Enter the name of the Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ) . '</li>
-                                        <li>* ' . sprintf( __( 'Enter %s to leave div.wp-menu-image empty so the icon can be added via CSS.', 'custom-admin-page' ), "<strong>'none'</strong>" ) . '</li>
-                                    </ul>'
-                    ); ?>
+                    <?php _e( 'Icon', 'custom-admin-page' ); ?>
                 </th>
                 <td>
                     <fieldset>
-                        <input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_icon" value="<?php if ( isset( $post_meta['icon'] ) ) echo $post_meta['icon']; ?>" />
-                        <input class="button-secondary cstmdmnpg-upload-image hide-if-no-js" type="button" value="<?php echo ( empty( $post_meta['icon'] ) ) ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>"/>
+                        <?php /**
+                         * @deprecated since 1.0.2
+                         * @todo remove after 21.07.2021
+                         */
+                        if ( ! isset( $post_meta['icon_name'] ) ) {
+                            if ( strpos( $post_meta['icon'], 'data:image/svg+xml;base64,' ) ) {
+	                            $post_meta['icon_name'] = 'svg';
+                            } elseif ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
+	                            $post_meta['icon_name'] = 'image';
+                            } elseif ( ! empty( $post_meta['icon'] ) ) {
+	                            $post_meta['icon_name'] = 'dashicons';
+                            } else {
+	                            $post_meta['icon_name'] = 'none';
+                            }
+                        } ?>
+                        <label>
+                            <input type="radio" name="cstmdmnpg_icon_image" value="none" <?php if ( ! empty( $post_meta['icon_name'] ) ) checked( $post_meta['icon_name'], 'none' ); elseif ( empty( $post_meta ) ) echo 'checked="checked"'; ?> />
+			                <?php _e( 'None', 'custom-admin-page' ); ?>
+                        </label><br>
+                        <label>
+                            <input type="radio" name="cstmdmnpg_icon_image" value="svg" <?php if ( ! empty( $post_meta['icon_name'] ) ) checked( $post_meta['icon_name'], 'svg' ); ?> />
+			                <?php _e( 'SVG Code', 'custom-admin-page' ); ?>
+                        </label><br>
+                        <div class="cstmdmnpg_to_svg_input">
+                            <input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_svg" value="<?php echo isset( $post_meta['icon'] ) && 'svg' == $post_meta['icon_name'] ? $post_meta['icon'] : ''; ?>" /><br />
+                            <span class="bws_info"><?php echo sprintf( __( 'Enter a base64-encoded SVG using a data URI, which will be colored to match the color scheme. This should begin with %s.', 'custom-admin-page' ), "<strong>'data:image/svg+xml;base64,'</strong>" ); ?></span><br />
+                        </div>
+                        <label>
+                            <input type="radio" name="cstmdmnpg_icon_image" value="image" <?php if ( ! empty( $post_meta['icon_name'] ) ) checked( $post_meta['icon_name'], 'image' ); ?> />
+			                <?php _e( 'Image', 'custom-admin-page' ); ?>
+                        </label><br>
+                        <div class="cstmdmnpg_to_image_input">
+                            <input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_image" value="<?php echo isset( $post_meta['icon'] ) && 'image' == $post_meta['icon_name'] ? $post_meta['icon'] : ''; ?>" />
+                            <input class="button-secondary cstmdmnpg-upload-image hide-if-no-js" type="button" value="<?php echo isset( $post_meta['icon'] ) && ! empty( $post_meta['icon_name'] ) && 'image' != $post_meta['icon_name'] ? __( 'Add Image', 'custom-admin-page' ) : __( 'Change Image', 'custom-admin-page' ); ?>"/><br />
+                        </div>
+                        <label>
+                            <input type="radio" name="cstmdmnpg_icon_image" value="dashicons" <?php if ( ! empty( $post_meta['icon_name'] ) ) checked( $post_meta['icon_name'], 'dashicons' ); ?> />
+			                <?php _e( 'Dashicon', 'custom-admin-page' ); ?>
+                        </label>
+                        <div class="cstmdmnpg_to_dashicon_input">
+                            <input class="cstmdmnpg-image-url" type="text" name="cstmdmnpg_dashicons" value="<?php echo isset( $post_meta['icon'] ) && 'dashicons' == $post_meta['icon_name'] ? $post_meta['icon'] : ''; ?>" /><br />
+                            <span class="bws_info"><?php echo sprintf( __( 'Enter the name of the Dashicons helper class to use a font icon, e.g. %s.', 'custom-admin-page' ), "<strong>'dashicons-chart-pie'</strong>" ); ?></span>
+                        </div>
                     </fieldset>
                 </td>
             </tr>
         </table>
-        <div class="cstmdmnpg_icon">
-            <div>
-
-            </div>
-        </div>
         <?php
     }
 }
@@ -583,12 +647,15 @@ if ( ! function_exists( 'cstmdmnpg_save_custom_fields' ) ) {
         }
 
         if ( ! isset(
-        		$_POST['cstmdmnpg_capability_type'],
-	            $_POST['cstmdmnpg_capability'],
-	            $_POST['cstmdmnpg_capability_level'],
-	            $_POST['cstmdmnpg_parent'],
-	            $_POST['cstmdmnpg_icon'],
-	            $_POST['cstmdmnpg_position']
+            $_POST['cstmdmnpg_capability_type'],
+            $_POST['cstmdmnpg_capability'],
+            $_POST['cstmdmnpg_capability_level'],
+            $_POST['cstmdmnpg_parent'],
+            $_POST['cstmdmnpg_icon_image'],
+            $_POST['cstmdmnpg_svg'],
+            $_POST['cstmdmnpg_image'],
+            $_POST['cstmdmnpg_dashicons'],
+            $_POST['cstmdmnpg_position']
         ) ) {
 			return;
         }
@@ -596,7 +663,7 @@ if ( ! function_exists( 'cstmdmnpg_save_custom_fields' ) ) {
         $is_builder  = preg_match( '/(\[vc_)|(\[et_)|(<!-- wp:)/', $post->post_content, $match );
 
         if ( 'name' == $_POST['cstmdmnpg_capability_type'] ) {
-            $capability = ( '' == $_POST['cstmdmnpg_capability'] ) ? 'read' : sanitize_text_field( $_POST['cstmdmnpg_capability'] );
+	        $capability = sanitize_text_field( $_POST['cstmdmnpg_capability'] );
         } else {
             $capability = intval( $_POST['cstmdmnpg_capability_level'] );
         }
@@ -604,13 +671,25 @@ if ( ! function_exists( 'cstmdmnpg_save_custom_fields' ) ) {
         $parent = sanitize_text_field( $_POST['cstmdmnpg_parent'] );
         $order = intval( $_POST['cstmdmnpg_position'] );
 
-        $icon = empty( $_POST['cstmdmnpg_parent'] ) ? sanitize_text_field( $_POST['cstmdmnpg_icon'] ) : '';
+	    if ( 'svg' == $_POST['cstmdmnpg_icon_image'] && ! empty( $_POST['cstmdmnpg_svg'] ) ) {
+		    $icon = sanitize_text_field( $_POST['cstmdmnpg_svg'] );
+		    $icon_name = $_POST['cstmdmnpg_icon_image'];
+	    } elseif ( 'image' == $_POST['cstmdmnpg_icon_image'] && ! empty( $_POST['cstmdmnpg_image'] ) ) {
+		    $icon = sanitize_text_field( $_POST['cstmdmnpg_image'] );
+		    $icon_name = $_POST['cstmdmnpg_icon_image'];
+	    } elseif ( 'dashicons' == $_POST['cstmdmnpg_icon_image'] && ! empty( $_POST['cstmdmnpg_dashicons'] ) ) {
+		    $icon = sanitize_text_field( $_POST['cstmdmnpg_dashicons'] );
+		    $icon_name = $_POST['cstmdmnpg_icon_image'];
+	    } else {
+		    $icon = $icon_name = 'none';
+	    }
 
         $data = array(
             'capability'      => $capability,
             'parent'          => $parent,
             'order'           => $order,
             'icon'            => $icon,
+            'icon_name'       => $icon_name,
             'isBuilder'       => $is_builder,
         );
         
@@ -632,10 +711,11 @@ if ( ! function_exists ( 'cstmdmnpg_page_content' ) ) {
                 } 
                 $divi_theme_active  = defined( 'ET_BUILDER_THEME' );
                 $divi_plugin_active = function_exists( 'et_is_builder_plugin_active' ) &&  et_is_builder_plugin_active(); ?>			
-                <div <?php body_class( 'wrap' ); ?> >
+                <div class="cstmdmnpg_wrap">
                     <?php if ( $divi_theme_active || $divi_plugin_active ) {
                         echo cstmdmnpg_add_divi_wrap( $post->post_content ) ;
                     } else {
+	                    wp_enqueue_style( 'wp-block-library', get_site_url() . '/wp-includes/css/dist/block-library/style.min.css' );
                         echo apply_filters( 'the_content', wp_unslash( $post->post_content ) );
                     } ?>
                 </div>
@@ -661,7 +741,7 @@ if ( ! function_exists( 'cstmdmnpg_add_divi_wrap' ) ) {
 if ( ! function_exists( 'cstmdmnpg_page_builder_support' ) ) {
     function cstmdmnpg_page_builder_support() {
         global $wpdb;
-        
+
         if ( isset( $_GET['page'] ) ) {
             $page_id = $wpdb->get_var( $wpdb->prepare( "SELECT `ID` FROM `" . $wpdb->posts . "` WHERE `post_type` = 'bws-admin_page' AND `post_name` = %s", $_GET['page'] ) );
 

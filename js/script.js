@@ -6,12 +6,34 @@
 		if ( $( 'select[name="cstmdmnpg_parent"]' ).length > 0 ) {
 			$( 'select[name="cstmdmnpg_parent"]' ).change( function() {
 				if ( '' == $( this ).children( 'option:selected' ).val() ) {
-					$( 'tr' ).has( '.cstmdmnpg-image-url' ).show();
+					$( '#cstmdmnpg_icon_to_page' ).show();
 				} else {
-					$( 'tr' ).has( '.cstmdmnpg-image-url' ).hide();
+					$( '#cstmdmnpg_icon_to_page' ).hide();
 				}
 			} );
 		}
+
+		$( 'input[name="cstmdmnpg_icon_image"]' ).on('change', function() {
+			var icon = $( this ).filter( ':checked' ).val();
+
+			switch( icon ) {
+				case 'none':
+					$( '.cstmdmnpg_to_image_input, .cstmdmnpg_to_svg_input, .cstmdmnpg_to_dashicon_input' ).hide();
+					break;
+				case 'svg':
+					$( '.cstmdmnpg_to_svg_input' ).show();
+					$( '.cstmdmnpg_to_dashicon_input, .cstmdmnpg_to_image_input' ).hide();
+					break;
+				case 'image':
+					$( '.cstmdmnpg_to_svg_input, .cstmdmnpg_to_dashicon_input' ).hide();
+					$( '.cstmdmnpg_to_image_input' ).show();
+					break;
+				case 'dashicons':
+					$( '.cstmdmnpg_to_image_input, .cstmdmnpg_to_svg_input' ).hide();
+					$( '.cstmdmnpg_to_dashicon_input' ).show();
+					break;
+			}
+		}).trigger('change');
 
 		if ( $( '.cstmdmnpg-upload-image' ).length > 0 ) {
 
