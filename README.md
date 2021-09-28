@@ -3,6 +3,7 @@
 
 <p>Simple plugin which adds unlimited WordPress custom pages to your admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, Gutenberg, WPBakery Page Builder, and Divi Builder. Choose page position and its icon.</p>
 <p>Download, install, and add your own admin pages in a few clicks!</p>
+<p><a href="https://bestwebsoft.com/demo-custom-admin-page/?ref=readme" rel="nofollow ugc">View Demo</a></p>
 <p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
 <h4>Free Features</h4>
 <ul>
@@ -27,7 +28,7 @@
 <li>Gutenberg</li>
 </ul>
 </li>
-<li>Change page slug [NEW]</li>
+<li>Change page slug</li>
 <li>Get answer to your support question within one business day (<a href="https://bestwebsoft.com/support-policy/" rel="nofollow ugc">Support Policy</a>)</li>
 </ul>
 <p><a href="https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=c00e18b325e058b53d0610fa0376bcdc" rel="nofollow ugc">Upgrade to Pro Now</a></p>
@@ -41,7 +42,7 @@
 <h4>Help &amp; Support</h4>
 <p>Visit our Help Center if you have any questions, our friendly Support Team is happy to help &#8211; <a href="https://support.bestwebsoft.com/" rel="nofollow ugc">https://support.bestwebsoft.com/</a></p>
 <h4>Affiliate Program</h4>
-<p>Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — <a href="https://bestwebsoft.com/affiliate/" rel="nofollow">https://bestwebsoft.com/affiliate/</a></p>
+<p>Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — https://bestwebsoft.com/affiliate/</p>
 <h4>Translation</h4>
 <ul>
 <li>Russian (ru_RU)</li>

@@ -32,7 +32,7 @@ if ( ! class_exists( 'Cstmdmnpg_Settings_Tabs' ) ) {
 				'wp_slug'			 => 'custom-admin-page',
 				'link_key' 			 => '23e9c49f512f7a6d0900c5a1503ded4f',
 				'link_pn' 			 => '614',
-				'doc_link'           => 'https://docs.google.com/document/d/181D3GGP32aF7lr8ax1bJduUl0Fp0FbwqD2vK6KdYArQ/'
+				'doc_link'           => 'https://bestwebsoft.com/documentation/custom-admin-page/custom-admin-page-user-guide/'
 			) );
         }
 

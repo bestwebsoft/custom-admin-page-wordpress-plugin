@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 1.0.2
+Version: 1.0.3
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
@@ -84,33 +84,27 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
                     $page->post_title = sprintf( '(%s)', __( 'no title', 'custom-admin-page' ) );
                 }
 
-			    if ( null != $page->post_type ) {
-                    $post_meta = get_post_meta( $page->ID, $page->post_type, true );
-                } else {
-                    /**
-                     * Remove old table
-                     * @deprecated 1.0.1
-                     * @todo Remove function after 01.05.2020
-                     */
-                    $post_meta = $wpdb->get_row( "SELECT `capability`, `parent_page` AS 'parent', `position` AS 'order', `icon` FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `id` = " . $page->ID, ARRAY_A );
-			    }
+			    
+                $post_meta = get_post_meta( $page->ID, $page->post_type, true );
+               
+                if ( ! empty( $post_meta ) ) {
+    				if ( empty( $post_meta['parent'] ) || $post_meta['parent'] == $page->post_title ) {
+    					if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
+    						$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
+    					} else {
+    						$icon = $post_meta['icon'];
+    					}
 
-				if ( empty( $post_meta['parent'] ) || $post_meta['parent'] == $page->post_title ) {
-					if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
-						$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
-					} else {
-						$icon = $post_meta['icon'];
-					}
-
-					if ( '' == $post_meta['order'] ) {
-                        $post_meta['order'] = null;
-                    }
-					if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
-						add_menu_page( $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
-					} else {
-						add_menu_page( $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
-					}
-				}
+    					if ( '' == $post_meta['order'] ) {
+                            $post_meta['order'] = null;
+                        }
+    					if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
+    						add_menu_page( $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
+    					} else {
+    						add_menu_page( $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $icon, $post_meta['order'] );
+    					}
+    				}
+                }
 			}
             foreach ( $pages as $page ) {
 
@@ -118,22 +112,15 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
                     $page->post_title = sprintf( '(%s)', __( 'no title', 'custom-admin-page' ) );
                 }
 
-                if ( null != $page->post_type ) {
-                    $post_meta = get_post_meta( $page->ID, $page->post_type, true );
-                } else {
-                    /**
-                     * Remove old table
-                     * @deprecated 1.0.1
-                     * @todo Remove function after 01.05.2020
-                     */
-                    $post_meta = $wpdb->get_row( "SELECT `capability`, `parent_page` AS 'parent', `position` AS 'order', `icon` FROM `" . $wpdb->prefix . "cstmdmnpg_pages` WHERE `id` = " . $page->ID, ARRAY_A );
-                }
+                $post_meta = get_post_meta( $page->ID, $page->post_type, true );
 
-                if ( ! empty( $post_meta['parent'] ) && $post_meta['parent'] != $page->post_title ) {
-                    if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
-                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
-                    } else {
-                        add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
+                if ( ! empty( $post_meta ) ) {
+                    if ( ! empty( $post_meta['parent'] ) && $post_meta['parent'] != $page->post_title ) {
+                        if ( is_numeric( $post_meta['capability'] ) && in_array( intval( $post_meta['capability'] ), range( 0, 10 ) ) ) {
+                            add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, 'level_' . $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
+                        } else {
+                            add_submenu_page( $post_meta['parent'], $page->post_title, $page->post_title, $post_meta['capability'], $page->post_name, 'cstmdmnpg_page_content', $post_meta['order'] );
+                        }
                     }
                 }
             }
@@ -338,42 +325,6 @@ if ( ! function_exists( 'cstmdmnpg_settings' ) ) {
 			$update_option = true;
 		}
 
-		/**
-		 * Remove old table
-		 * @deprecated 1.0.1
-		 * @todo Remove function after 01.05.2020
-		 */
-		if ( isset( $cstmdmnpg_options['plugin_db_version'] ) ) {
-			unset( $cstmdmnpg_options['plugin_db_version'] );
-			$update_option = true;
-
-			$old_table_name = $wpdb->prefix . 'cstmdmnpg_pages';
-
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$old_table_name'" ) == $old_table_name ) {
-				if ( is_multisite() ) {
-                    /* Get all blog ids */
-                    $blogids = $wpdb->get_col( "SELECT `blog_id` FROM $wpdb->blogs" );
-                    $old_blog = $wpdb->blogid;
-                    $tables = '';
-                    foreach ( $blogids as $blog_id ) {
-                        switch_to_blog( $blog_id );
-                        $old_table_name = $wpdb->prefix . 'cstmdmnpg_pages';
-                        cstmdmnpg_transfer_data( $old_table_name );
-                        if ( ! empty( $tables ) ) {
-                            $tables .= ', ';
-                        }
-                        $tables .= "`$old_table_name`";
-                    }
-                    $wpdb->query( "DROP TABLE IF EXISTS " . $tables . ";" );
-                    switch_to_blog( $old_blog );
-                    restore_current_blog();
-                } else {
-                    cstmdmnpg_transfer_data( $old_table_name );
-                    $wpdb->query( "DROP TABLE IF EXISTS `$old_table_name`;" );
-                }
-			}
-		}
-
 		if ( isset( $update_option ) ) {
 			update_option( 'cstmdmnpg_options', $cstmdmnpg_options );
 		}
@@ -416,13 +367,13 @@ if ( ! function_exists( 'cstmdmnpg_custom_columns_content' ) ) {
 
         switch ( $column ) {
             case 'capability' :
-                $capability = get_post_meta( $post->ID, 'bws-admin_page', true );
+                $capability = get_post_meta( $post->ID, $post->post_type, true );
 
                 echo ( ! empty( $capability ) ? $capability['capability'] : '' );
                 break;
 
             case 'parent' :
-                $parent = get_post_meta( $post->ID, 'bws-admin_page', true );
+                $parent = get_post_meta( $post->ID, $post->post_type, true );
                 if ( ! empty( $parent['parent'] ) ) {
                     foreach ( $menu as $menu_slug ) {
                         if ( $parent['parent'] == $menu_slug[2] ) {
@@ -480,7 +431,7 @@ if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
         global $post, $menu, $cstmdmnpg_options, $cstmdmnpg_plugin_info, $wp_version;
 
         $page_title = get_the_title( $post->ID );
-        $post_meta = get_post_meta( $post->ID, 'bws-admin_page', true );
+        $post_meta = get_post_meta( $post->ID, $post->post_type, true );
 
 	    if ( ! bws_hide_premium_options_check( $cstmdmnpg_options ) ) { ?>
             <div class="bws_pro_version_bloc">
@@ -579,21 +530,6 @@ if ( ! function_exists( 'cstmdmnpg_post_custom_box' ) ) {
                 </th>
                 <td>
                     <fieldset>
-                        <?php /**
-                         * @deprecated since 1.0.2
-                         * @todo remove after 21.07.2021
-                         */
-                        if ( ! isset( $post_meta['icon_name'] ) ) {
-                            if ( strpos( $post_meta['icon'], 'data:image/svg+xml;base64,' ) ) {
-	                            $post_meta['icon_name'] = 'svg';
-                            } elseif ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
-	                            $post_meta['icon_name'] = 'image';
-                            } elseif ( ! empty( $post_meta['icon'] ) ) {
-	                            $post_meta['icon_name'] = 'dashicons';
-                            } else {
-	                            $post_meta['icon_name'] = 'none';
-                            }
-                        } ?>
                         <label>
                             <input type="radio" name="cstmdmnpg_icon_image" value="none" <?php if ( ! empty( $post_meta['icon_name'] ) ) checked( $post_meta['icon_name'], 'none' ); elseif ( empty( $post_meta ) ) echo 'checked="checked"'; ?> />
 			                <?php _e( 'None', 'custom-admin-page' ); ?>
@@ -692,7 +628,7 @@ if ( ! function_exists( 'cstmdmnpg_save_custom_fields' ) ) {
             'icon_name'       => $icon_name,
             'isBuilder'       => $is_builder,
         );
-        
+
         update_post_meta( $post->ID, 'bws-admin_page', $data );
     }
 }
@@ -860,7 +796,7 @@ if ( ! function_exists( 'cstmdmnpg_status_change' ) ) {
         $built_pages = 0;
 
         foreach ( $pages as $page ) {
-            $post_meta = get_post_meta( $page->ID, 'bws-admin_page', true );
+            $post_meta = get_post_meta( $page->ID, $page->post_type, true );
             $built_pages += isset( $post_meta['isBuilder'] ) ? $post_meta['isBuilder'] : 0;
         }
 
@@ -972,7 +908,9 @@ if ( ! function_exists( 'cstmdmnpg_settings_page' ) ) {
 		if ( ! class_exists( 'Bws_Settings_Tabs' ) )
             require_once( dirname( __FILE__ ) . '/bws_menu/class-bws-settings.php' );
         require_once( dirname( __FILE__ ) . '/includes/class-cstmdmnpg-settings.php' );
-		$page = new Cstmdmnpg_Settings_Tabs( plugin_basename( __FILE__ ) ); ?>
+		$page = new Cstmdmnpg_Settings_Tabs( plugin_basename( __FILE__ ) ); 
+        if ( method_exists( $page, 'add_request_feature' ) )
+            $page->add_request_feature(); ?>
 		<div class="wrap">
 			<h1><?php _e( 'Custom Admin Page Settings', 'custom-admin-page' ); ?></h1>
 			<?php $page->display_content(); ?>
@@ -1019,8 +957,19 @@ if ( ! function_exists( 'cstmdmnpg_links' ) ) {
 /* Deleting plugin options on uninstalling */
 if ( ! function_exists( 'cstmdmnpg_uninstall' ) ) {
 	function cstmdmnpg_uninstall() {
+        global $wpdb;
+        $pro_exist = array_key_exists( 'custom-admin-page-pro/custom-admin-page-pro.php', get_plugins() );
+        if ( ! $pro_exist ) {
+            $wpdb->delete( 
+                "{$wpdb->prefix}posts",
+                array(
+                    'post_type' => 'bws-admin_page'
+                )
+            );
 
-        delete_option( 'cstmdmnpg_options' );
+           delete_option( 'cstmdmnpg_options' );
+        }
+        
 
         require_once( dirname( __FILE__ ) . '/bws_menu/bws_include.php' );
         bws_include_init( plugin_basename( __FILE__ ) );

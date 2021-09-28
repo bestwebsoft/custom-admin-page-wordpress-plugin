@@ -3,8 +3,8 @@ Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, Gutenberg admin page, Composer custom page, add admin menu, custom admin menu, Divi dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 4.5
-Tested up to: 5.6
-Stable tag: 1.0.2
+Tested up to: 5.8.1
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ Add unlimited custom pages to WordPress admin dashboard.
 Simple plugin which adds unlimited WordPress custom pages to your admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, Gutenberg, WPBakery Page Builder, and Divi Builder. Choose page position and its icon.
 
 Download, install, and add your own admin pages in a few clicks!
+
+[View Demo](https://bestwebsoft.com/demo-custom-admin-page/?ref=readme)
 
 https://www.youtube.com/watch?v=Ecvb7F2sATs
 
@@ -38,7 +40,7 @@ https://www.youtube.com/watch?v=Ecvb7F2sATs
 > 	* WPBakery Page Builder
 > 	* Divi Builder
 > 	* Gutenberg
-> * Change page slug [NEW]
+> * Change page slug
 > * Get answer to your support question within one business day ([Support Policy](https://bestwebsoft.com/support-policy/))
 >
 > [Upgrade to Pro Now](https://bestwebsoft.com/products/wordpress/plugins/custom-admin-page/?k=c00e18b325e058b53d0610fa0376bcdc)
@@ -47,12 +49,16 @@ If you have a feature suggestion or idea you'd like to see in the plugin, we'd l
 
 = Documentation & Videos =
 
-* [[Doc] User Guide](https://docs.google.com/document/d/181D3GGP32aF7lr8ax1bJduUl0Fp0FbwqD2vK6KdYArQ/edit)
-* [[Doc] Installation](https://docs.google.com/document/d/1-hvn6WRvWnOqj5v5pLUk7Awyu87lq5B_dO-Tv-MC9JQ/)
+* [[Doc] User Guide](https://bestwebsoft.com/documentation/custom-admin-page/custom-admin-page-user-guide/)
+* [[Doc] Installation](https://bestwebsoft.com/documentation/how-to-install-a-wordpress-product/how-to-install-a-wordpress-plugin/)
 
 = Help & Support =
 
 Visit our Help Center if you have any questions, our friendly Support Team is happy to help - <https://support.bestwebsoft.com/>
+
+= Affiliate Program =
+
+Earn 20% commission by selling the premium WordPress plugins and themes by BestWebSoft — https://bestwebsoft.com/affiliate/
 
 = Translation =
 
@@ -91,6 +97,12 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 5. Page`s attributes.
 
 == Changelog ==
+
+= V1.0.3 - 20.09.2021 =
+* Bugfix : The issue with deleting custom post types with uninstalling the plugin has been fixed.
+* Bugfix : The issue with editing and saving posts has been fixed.
+* Update : BWS Panel section was updated.
+* Update : All functionality was updated for WordPress 5.8.1.
 
 = V1.0.2 - 21.01.2021 =
 * PRO : Ability to change page slug has been added.
@@ -135,6 +147,11 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V1.0.3 =
+* Bugs fixed.
+* Plugin optimization completed.
+* The compatibility with new WordPress version updated.
 
 = V1.0.2 =
 * New features added.
