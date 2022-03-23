@@ -1,10 +1,10 @@
-=== Custom Admin Page by BestWebSoft ===
+=== Custom Admin Page by BestWebSoft - Configurable WordPress Dashboard Pages Plugin ===
 Contributors: bestwebsoft
 Donate link: https://bestwebsoft.com/donate/
 Tags: custom admin page, Gutenberg admin page, Composer custom page, add admin menu, custom admin menu, Divi dashboard page, custom dashboard, create custom page, create admin pages, unlimited custom pages, castom pages, cutsom pages
 Requires at least: 4.5
-Tested up to: 5.8.1
-Stable tag: 1.0.3
+Tested up to: 5.9
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,10 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 
 == Changelog ==
 
+= V1.0.4 - 21.03.2022 =
+* Update : BWS Panel section was updated.
+* Update : All functionality was updated for WordPress 5.9.
+
 = V1.0.3 - 20.09.2021 =
 * Bugfix : The issue with deleting custom post types with uninstalling the plugin has been fixed.
 * Bugfix : The issue with editing and saving posts has been fixed.
@@ -147,6 +151,9 @@ Please make sure that the problem hasn't been discussed yet on our forum (<https
 * NEW : The Custom Admin Page by BestWebSoft plugin is ready for use.
 
 == Upgrade Notice ==
+
+= V1.0.4 =
+* Usability improved.
 
 = V1.0.3 =
 * Bugs fixed.

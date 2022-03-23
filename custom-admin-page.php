@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 1.0.3
+Version: 1.0.4
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
 */
