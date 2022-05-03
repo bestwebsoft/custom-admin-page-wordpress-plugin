@@ -526,15 +526,15 @@ if ( ! class_exists( 'Bws_Settings_Tabs' ) ) {
 		 * @access private
 		 */
 		private function tab_custom_code() {
-			global $pdfprnt_options;
+			global $bstwbsftwppdtplgns_options, $wp_version;
 			?>
 			<h3 class="bws_tab_label"><?php esc_html_e( 'Custom Code', 'bestwebsoft' ); ?></h3>
 			<?php
 			$this->help_phrase();
-			$bws_hide_premium = bws_hide_premium_options_check( $pdfprnt_options );
+			$bws_hide_premium = bws_hide_premium_options_check( $bstwbsftwppdtplgns_options );
 			?>
 			<hr>
-			<h4><?php esc_html_e( 'The ability to add custom code is avaliable in the Pro version', 'bestwebsoft' ); ?></h4>
+			<h4><?php esc_html_e( 'The ability to add custom code is available in the Pro version. If the Pro version is not available please contact us via Help Center', 'bestwebsoft' ); ?> (<a href="<?php echo esc_url( 'https://support.bestwebsoft.com/hc/en-us/requests/new' ); ?>"><?php echo esc_url( 'https://support.bestwebsoft.com/hc/en-us/requests/new' ); ?></a>)</h4>
 			<?php
 			if ( ! $bws_hide_premium ) {
 				?>
@@ -603,7 +603,7 @@ if ( ! class_exists( 'Bws_Settings_Tabs' ) ) {
 						</div>
 					</div>
 					<div class="bws_pro_version_tooltip">
-						<a class="bws_button" href="https://bestwebsoft.com/products/wordpress/plugins/pdf-print/?k=d9da7c9c2046bed8dfa38d005d4bffdb&amp;pn=101&amp;v=2.3.1&amp;wp_v=5.8.3" target="_blank" title="PDF &amp; Print">Upgrade to Pro</a>
+						<a class="bws_button" href="<?php echo esc_url( $this->plugins_info['PluginURI'] ); ?>?k=<?php echo esc_attr( $this->link_key ); ?>&amp;pn=<?php echo esc_attr( $this->link_pn ); ?>&amp;v=<?php echo esc_attr( $this->plugins_info['Version'] ); ?>&amp;wp_v=<?php echo esc_attr( $wp_version ); ?>" target="_blank" title="<?php echo $this->plugins_info["Name"]; ?>">Upgrade to Pro</a>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -611,7 +611,7 @@ if ( ! class_exists( 'Bws_Settings_Tabs' ) ) {
 			} else {
 				?>
 				<div class="bws_pro_version_tooltip">
-					<a class="bws_button" href="https://bestwebsoft.com/products/wordpress/plugins/pdf-print/?k=d9da7c9c2046bed8dfa38d005d4bffdb&amp;pn=101&amp;v=2.3.1&amp;wp_v=5.8.3" target="_blank" title="PDF &amp; Print">Upgrade to Pro</a>
+					<a class="bws_button" href="<?php echo esc_url( $this->plugins_info['PluginURI'] ); ?>?k=<?php echo esc_attr( $this->link_key ); ?>&amp;pn=<?php echo esc_attr( $this->link_pn ); ?>&amp;v=<?php echo esc_attr( $this->plugins_info['Version'] ); ?>&amp;wp_v=<?php echo esc_attr( $wp_version ); ?>" target="_blank" title="<?php echo $this->plugins_info["Name"]; ?>">Upgrade to Pro</a>
 					<div class="clear"></div>
 				</div>
 				<?php

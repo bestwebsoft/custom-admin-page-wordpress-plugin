@@ -141,7 +141,7 @@ if ( ! function_exists( 'bws_add_deactivation_feedback_dialog_box' ) ) {
 			$plugin_id = sanitize_title( $plugin_data['Name'] );
 
 			$script .= "(function($) {
-					var modalHtml = " . json_encode( esc_html( $modal_html ) ) . ",
+					var modalHtml = " . wp_json_encode( $modal_html ) . ",
 					    \$modal                = $( modalHtml ),
 					    \$deactivateLink       = $( '#the-list .active[data-plugin=\"" . $basename . "\"] .deactivate a' ),
 						\$anonymousFeedback    = \$modal.find( '.bws-modal-anonymous-label' ),
