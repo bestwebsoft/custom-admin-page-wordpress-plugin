@@ -2,94 +2,96 @@ msgid ""
 msgstr ""
 "Project-Id-Version: custom-admin-page\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-20 13:31+0200\n"
-"PO-Revision-Date: 2021-01-20 13:32+0200\n"
+"POT-Creation-Date: 2024-06-11 12:05+0300\n"
+"PO-Revision-Date: 2024-06-11 12:24+0300\n"
 "Last-Translator: plugin@bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language-Team: bestwebsoft.com <plugin@bestwebsoft.com>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n%10==1 && n%100!=11) ? 3 : "
 "((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;esc_html_e;esc_html__;esc_attr_e;"
+"esc_attr__\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 3.4.3\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: bws_menu\n"
 
-#: custom-admin-page.php:39 custom-admin-page.php:963
+#: custom-admin-page.php:40 custom-admin-page.php:385
 msgid "Custom Admin Page Settings"
 msgstr "Налаштування Custom Admin Page"
 
-#: custom-admin-page.php:40 custom-admin-page.php:984 custom-admin-page.php:996
+#: custom-admin-page.php:41 custom-admin-page.php:1112
+#: custom-admin-page.php:1130
 msgid "Settings"
 msgstr "Налаштування"
 
-#: custom-admin-page.php:57 custom-admin-page.php:500
+#: custom-admin-page.php:58 custom-admin-page.php:498
 msgid "Upgrade to Pro"
 msgstr "Оновитись до Pro"
 
-#: custom-admin-page.php:84 custom-admin-page.php:118
+#: custom-admin-page.php:87 custom-admin-page.php:114
 msgid "no title"
 msgstr "без назви"
 
-#: custom-admin-page.php:235 custom-admin-page.php:236
-#: custom-admin-page.php:237
+#: custom-admin-page.php:236 custom-admin-page.php:237
+#: custom-admin-page.php:238
 msgid "Custom Admin Page"
 msgstr "Custom Admin Page"
 
-#: custom-admin-page.php:238
+#: custom-admin-page.php:239
 msgid "Admin Pages"
 msgstr "Адмiн Cторiнки"
 
-#: custom-admin-page.php:239
+#: custom-admin-page.php:240
 msgid "Add New"
 msgstr "Додати Нову"
 
-#: custom-admin-page.php:240
+#: custom-admin-page.php:241
 msgid "Add New Admin Page"
 msgstr "Додати Нову Сторінку"
 
-#: custom-admin-page.php:241
+#: custom-admin-page.php:242
 msgid "Edit Admin Page"
 msgstr "Редагувати Сторінку Адміністратора"
 
-#: custom-admin-page.php:242
+#: custom-admin-page.php:243
 msgid "Search pages"
 msgstr "Пошук сторiнок"
 
-#: custom-admin-page.php:243
+#: custom-admin-page.php:244
 msgid "No page found"
 msgstr "Сторінока не знайдена"
 
-#: custom-admin-page.php:244
+#: custom-admin-page.php:245
 msgid "No page found in Trash"
 msgstr "Сторінок в кошику не знайдено"
 
-#: custom-admin-page.php:245
+#: custom-admin-page.php:246
 msgid "Admin Page published"
 msgstr "Адмiн. сторiнка опублiкована"
 
-#: custom-admin-page.php:246
+#: custom-admin-page.php:247
 msgid "Admin Page updated"
 msgstr "Адмiн. сторiнка оновлена"
 
-#: custom-admin-page.php:401 custom-admin-page.php:508
-#: custom-admin-page.php:535 custom-admin-page.php:546
+#: custom-admin-page.php:402 custom-admin-page.php:508
+#: custom-admin-page.php:535 custom-admin-page.php:548
 msgid "Capability"
 msgstr "Рівень доступу"
 
-#: custom-admin-page.php:402 custom-admin-page.php:555
+#: custom-admin-page.php:403 custom-admin-page.php:557
 msgid "Parent"
 msgstr "Предок"
 
-#: custom-admin-page.php:474
+#: custom-admin-page.php:468
 msgid "Page Attributes"
 msgstr "Атрибути сторінки"
 
-#: custom-admin-page.php:491
+#: custom-admin-page.php:489
 msgid "Page Slug"
 msgstr "Слаг сторінки"
 
@@ -97,7 +99,7 @@ msgstr "Слаг сторінки"
 msgid "Level"
 msgstr "Рівень користувача"
 
-#: custom-admin-page.php:524 custom-admin-page.php:546
+#: custom-admin-page.php:524 custom-admin-page.php:548
 msgid "Learn More"
 msgstr "Дiхнатися Більше"
 
@@ -106,35 +108,35 @@ msgid ""
 "The capability level required for this menu to be displayed to the user."
 msgstr "Рівень доступу цього меню необхідний для відображення користувачеві."
 
-#: custom-admin-page.php:558
+#: custom-admin-page.php:560
 msgid "Parent Page - None"
 msgstr "Батьківська сторінка - Немає"
 
-#: custom-admin-page.php:569
+#: custom-admin-page.php:575
 msgid "Order"
 msgstr "Порядок"
 
-#: custom-admin-page.php:573
+#: custom-admin-page.php:579
 msgid "The order in the menu where this page will appear."
 msgstr "Позиція в меню."
 
-#: custom-admin-page.php:573
+#: custom-admin-page.php:579
 msgid "Optional"
 msgstr "Необов'язково"
 
-#: custom-admin-page.php:578
+#: custom-admin-page.php:584
 msgid "Icon"
 msgstr "Значок"
 
-#: custom-admin-page.php:584
+#: custom-admin-page.php:598
 msgid "None"
 msgstr "Немає"
 
-#: custom-admin-page.php:588
+#: custom-admin-page.php:607
 msgid "SVG Code"
 msgstr "SVG код"
 
-#: custom-admin-page.php:592
+#: custom-admin-page.php:611
 #, php-format
 msgid ""
 "Enter a base64-encoded SVG using a data URI, which will be colored to match "
@@ -143,31 +145,23 @@ msgstr ""
 "Введіть base64-кодоване SVG за допомогою даних URI, яке буде забарвлено "
 "відповідно до колірної схеми. Воно повинно починатися з %s."
 
-#: custom-admin-page.php:596
+#: custom-admin-page.php:620
 msgid "Image"
 msgstr "Зображення"
 
-#: custom-admin-page.php:600
+#: custom-admin-page.php:624
 msgid "Add Image"
 msgstr "Додати зображення"
 
-#: custom-admin-page.php:600 custom-admin-page.php:944
+#: custom-admin-page.php:624 custom-admin-page.php:1077
 msgid "Change Image"
 msgstr "Змінити зображення"
 
-#: custom-admin-page.php:601
-#, php-format
-msgid ""
-"Enter %s to leave div.wp-menu-image empty so the icon can be added via CSS."
-msgstr ""
-"Введіть %s, щоб залишити div.wp-menu-image порожнім, таким чином іконка може "
-"бути додана за допомогою CSS."
-
-#: custom-admin-page.php:605
+#: custom-admin-page.php:634
 msgid "Dashicon"
 msgstr "Dashicon"
 
-#: custom-admin-page.php:609
+#: custom-admin-page.php:638
 #, php-format
 msgid ""
 "Enter the name of the Dashicons helper class to use a font icon, e.g. %s."
@@ -175,45 +169,53 @@ msgstr ""
 "Введіть ім'я допоміжного класу Dashicons, щоб використовувати значок шрифту, "
 "наприклад, %s."
 
-#: custom-admin-page.php:862 custom-admin-page.php:904
+#: custom-admin-page.php:966 custom-admin-page.php:1024
 msgid "You can add only 3 admin pages in free plugin version."
 msgstr "Ви можете додати тiльки 3 адмiн. сторiнки у free версiї плагiну."
 
-#: custom-admin-page.php:897
+#: custom-admin-page.php:1016
 msgid "Please, enable JavaScript in Your browser."
 msgstr "Будь ласка, увiмкнiть JavaScript у Своему браузерi."
 
-#: custom-admin-page.php:916
+#: custom-admin-page.php:1042
 msgid "Admin Page"
 msgstr "Адмiн. сторiнка"
 
-#: custom-admin-page.php:945
+#: custom-admin-page.php:1078
 msgid "OK"
 msgstr "Добре"
 
-#: custom-admin-page.php:946
+#: custom-admin-page.php:1079
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: custom-admin-page.php:998
+#: custom-admin-page.php:1132
 msgid "FAQ"
 msgstr "FAQ"
 
-#: custom-admin-page.php:999
+#: custom-admin-page.php:1133
 msgid "Support"
 msgstr "Техпідтримка"
 
-#: includes/class-cstmdmnpg-settings.php:20
+#: includes/class-cstmdmnpg-settings.php:28
 msgid "Misc"
 msgstr "Різне"
 
-#: includes/class-cstmdmnpg-settings.php:21
+#: includes/class-cstmdmnpg-settings.php:29
 msgid "Custom Code"
 msgstr "Користувацький код"
 
-#: includes/class-cstmdmnpg-settings.php:22
+#: includes/class-cstmdmnpg-settings.php:30
 msgid "License Key"
 msgstr "Ліцензійний ключ"
+
+#, php-format
+#~ msgid ""
+#~ "Enter %s to leave div.wp-menu-image empty so the icon can be added via "
+#~ "CSS."
+#~ msgstr ""
+#~ "Введіть %s, щоб залишити div.wp-menu-image порожнім, таким чином іконка "
+#~ "може бути додана за допомогою CSS."
 
 #~ msgid "see"
 #~ msgstr "дивись"

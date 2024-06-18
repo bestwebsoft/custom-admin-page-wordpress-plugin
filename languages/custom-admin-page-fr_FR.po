@@ -1,0 +1,208 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2024-06-11 12:24+0300\n"
+"PO-Revision-Date: 2024-06-11 12:28+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.3\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;esc_html_e;esc_attr__;esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: src/bws_menu\n"
+
+#: src/custom-admin-page.php:40 src/custom-admin-page.php:385
+msgid "Custom Admin Page Settings"
+msgstr "Paramètres de la page d'administration personnalisée"
+
+#: src/custom-admin-page.php:41 src/custom-admin-page.php:1112
+#: src/custom-admin-page.php:1130
+msgid "Settings"
+msgstr "Réglages"
+
+#: src/custom-admin-page.php:58 src/custom-admin-page.php:498
+msgid "Upgrade to Pro"
+msgstr "Passer à la version Pro"
+
+#: src/custom-admin-page.php:87 src/custom-admin-page.php:114
+msgid "no title"
+msgstr "pas de titre"
+
+#: src/custom-admin-page.php:236 src/custom-admin-page.php:237
+#: src/custom-admin-page.php:238
+msgid "Custom Admin Page"
+msgstr "Page d'administration personnalisée"
+
+#: src/custom-admin-page.php:239
+msgid "Admin Pages"
+msgstr "Pages Admin"
+
+#: src/custom-admin-page.php:240
+msgid "Add New"
+msgstr "Ajouter"
+
+#: src/custom-admin-page.php:241
+msgid "Add New Admin Page"
+msgstr "Ajouter un nouveau Menu Admin"
+
+#: src/custom-admin-page.php:242
+msgid "Edit Admin Page"
+msgstr "Modifier le Menu Admin"
+
+#: src/custom-admin-page.php:243
+msgid "Search pages"
+msgstr "Pages de recherche"
+
+#: src/custom-admin-page.php:244
+msgid "No page found"
+msgstr "Aucune page trouvée"
+
+#: src/custom-admin-page.php:245
+msgid "No page found in Trash"
+msgstr "Aucune page n'a été trouvée dans Trash"
+
+#: src/custom-admin-page.php:246
+msgid "Admin Page published"
+msgstr "Page d'administration publiée"
+
+#: src/custom-admin-page.php:247
+msgid "Admin Page updated"
+msgstr "Mise à jour de la page d'administration"
+
+#: src/custom-admin-page.php:402 src/custom-admin-page.php:508
+#: src/custom-admin-page.php:535 src/custom-admin-page.php:548
+msgid "Capability"
+msgstr "Capacité"
+
+#: src/custom-admin-page.php:403 src/custom-admin-page.php:557
+msgid "Parent"
+msgstr "Parent"
+
+#: src/custom-admin-page.php:468
+msgid "Page Attributes"
+msgstr "Attributs de page"
+
+#: src/custom-admin-page.php:489
+msgid "Page Slug"
+msgstr "Trace de page"
+
+#: src/custom-admin-page.php:516 src/custom-admin-page.php:524
+msgid "Level"
+msgstr "Niveau"
+
+#: src/custom-admin-page.php:524 src/custom-admin-page.php:548
+msgid "Learn More"
+msgstr "En savoir plus"
+
+#: src/custom-admin-page.php:525
+msgid ""
+"The capability level required for this menu to be displayed to the user."
+msgstr ""
+"Le niveau de capacité requis pour que ce menu soit affiché à l'utilisateur."
+
+#: src/custom-admin-page.php:560
+msgid "Parent Page - None"
+msgstr "Page parentale - Aucune"
+
+#: src/custom-admin-page.php:575
+msgid "Order"
+msgstr "Commande"
+
+#: src/custom-admin-page.php:579
+msgid "The order in the menu where this page will appear."
+msgstr "L'ordre dans lequel cette page apparaîtra dans le menu."
+
+#: src/custom-admin-page.php:579
+msgid "Optional"
+msgstr "Optionnel"
+
+#: src/custom-admin-page.php:584
+msgid "Icon"
+msgstr "Icône"
+
+#: src/custom-admin-page.php:598
+msgid "None"
+msgstr "Rien"
+
+#: src/custom-admin-page.php:607
+msgid "SVG Code"
+msgstr "Code SVG icône"
+
+#: src/custom-admin-page.php:611
+#, php-format
+msgid ""
+"Enter a base64-encoded SVG using a data URI, which will be colored to match "
+"the color scheme. This should begin with %s."
+msgstr ""
+"Saisissez un SVG encodé en base64 à l'aide d'un URI de données, qui sera "
+"coloré pour correspondre à la palette de couleurs. Il doit commencer par %s."
+
+#: src/custom-admin-page.php:620
+msgid "Image"
+msgstr "Image"
+
+#: src/custom-admin-page.php:624
+msgid "Add Image"
+msgstr "Ajouter une image"
+
+#: src/custom-admin-page.php:624 src/custom-admin-page.php:1077
+msgid "Change Image"
+msgstr "Modifier l’image"
+
+#: src/custom-admin-page.php:634
+msgid "Dashicon"
+msgstr "Dashicon"
+
+#: src/custom-admin-page.php:638
+#, php-format
+msgid ""
+"Enter the name of the Dashicons helper class to use a font icon, e.g. %s."
+msgstr ""
+"Saisissez le nom de la classe d'aide Dashicons pour utiliser une icône de "
+"police, par exemple %s."
+
+#: src/custom-admin-page.php:966 src/custom-admin-page.php:1024
+msgid "You can add only 3 admin pages in free plugin version."
+msgstr ""
+"Vous ne pouvez ajouter que 3 pages d'administration dans la version "
+"gratuite du plugin."
+
+#: src/custom-admin-page.php:1016
+msgid "Please, enable JavaScript in Your browser."
+msgstr "Veuillez activer JavaScript dans votre navigateur."
+
+#: src/custom-admin-page.php:1042
+msgid "Admin Page"
+msgstr "Page de l’administration"
+
+#: src/custom-admin-page.php:1078
+msgid "OK"
+msgstr "OK"
+
+#: src/custom-admin-page.php:1079
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/custom-admin-page.php:1132
+msgid "FAQ"
+msgstr "FAQ"
+
+#: src/custom-admin-page.php:1133
+msgid "Support"
+msgstr "Support"
+
+#: src/includes/class-cstmdmnpg-settings.php:28
+msgid "Misc"
+msgstr "Divers"
+
+#: src/includes/class-cstmdmnpg-settings.php:29
+msgid "Custom Code"
+msgstr "Code personnalisé"
+
+#: src/includes/class-cstmdmnpg-settings.php:30
+msgid "License Key"
+msgstr "Clé de licence"
