@@ -6,7 +6,7 @@ Description: Add unlimited custom pages to WordPress admin dashboard.
 Author: BestWebSoft
 Text Domain: custom-admin-page
 Domain Path: /languages
-Version: 1.0.7
+Version: 1.0.9
 Author URI: https://bestwebsoft.com/
 License: GPLv2 or later
  */
@@ -91,11 +91,7 @@ if ( ! function_exists( 'cstmdmnpg_add_pages' ) ) {
 
 				if ( ! empty( $post_meta ) ) {
 					if ( empty( $post_meta['parent'] ) || $post_meta['parent'] === $page->post_title ) {
-						if ( filter_var( $post_meta['icon'], FILTER_VALIDATE_URL ) ) {
-							$icon = $post_meta['icon'] . '" style="max-width: 20px; max-height: 20px;';
-						} else {
-							$icon = $post_meta['icon'];
-						}
+						$icon = $post_meta['icon'];
 
 						if ( '' === $post_meta['order'] ) {
 							$post_meta['order'] = null;
@@ -799,7 +795,7 @@ if ( ! function_exists( 'cstmdmnpg_page_builder_support' ) ) {
 
 					$WPB = new Vc_Base();
 					$WPB->frontCss();
-					$WPB->addFrontCss();
+					$WPB->addShortcodesCss();
 					$WPB->addNoScript();
 					$WPB->frontJsRegister();
 					$WPB->fixPContent();
@@ -1064,7 +1060,7 @@ if ( ! function_exists( 'cstmdmnpg_admin_head' ) ) {
 	 */
 	function cstmdmnpg_admin_head() {
 		global $cstmdmnpg_plugin_info;
-		wp_enqueue_style( 'cstmdmnpg-stylesheet', plugins_url( 'css/style.css', __FILE__ ), array(), $cstmdmnpg_plugin_info['Version'] );
+		wp_enqueue_style( 'cstmdmnpg-stylesheet', plugins_url( 'css/style.css', __FILE__ ), array(), $cstmdmnpg_plugin_info['Version'] . '0.1' );
 
 		if ( cstmdmnpg_is_our_cpt() ) {
 

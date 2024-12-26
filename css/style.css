@@ -15,6 +15,10 @@
 	-webkit-hyphens: auto;
 	hyphens: auto;
 }
+.wp-menu-image img {
+	max-width: 20px;
+	max-height: 20px;
+}
 @media only screen and ( max-width: 410px ) {
 	.cstmdmnpg_add_new_button {
 		display: inline-block;

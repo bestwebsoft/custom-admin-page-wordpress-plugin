@@ -4,7 +4,7 @@
 <p>Simple plugin which adds unlimited WordPress custom pages to your admin dashboard. Add as many pages as you want, customize the appearance using TinyMCE, Gutenberg, WPBakery Page Builder, and Divi Builder. Choose page position and its icon.</p>
 <p>Download, install, and add your own admin pages in a few clicks!</p>
 <p><a href="https://bestwebsoft.com/demo-custom-admin-page/?ref=readme" rel="nofollow ugc">View Demo</a></p>
-<p><span class="embed-youtube" style="text-align:center; display: block;"></span></p>
+<p></p>
 <h4>Free Features</h4>
 <ul>
 <li>Add unlimited number of custom pages using TinyMCE editor</li>
